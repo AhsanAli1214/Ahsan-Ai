@@ -40,7 +40,7 @@ export function AppSidebar() {
     <Sidebar side="left" collapsible="icon">
       <SidebarHeader className="border-b">
         <div className="flex items-center gap-2">
-          <AIHubExpressLogo className="h-8 w-8 text-primary" />
+          <AIHubExpressLogo className="h-8 w-8" />
           <span className="font-headline text-lg font-semibold">AI Hub Express</span>
         </div>
       </SidebarHeader>

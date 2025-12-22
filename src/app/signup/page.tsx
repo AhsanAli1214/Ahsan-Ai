@@ -58,7 +58,7 @@ export default function SignupPage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
             <Link href="/" className="mb-4 flex items-center gap-2">
-                <AIHubExpressLogo className="h-10 w-10 text-primary" />
+                <AIHubExpressLogo className="h-10 w-10" />
             </Link>
             <h1 className="font-headline text-3xl font-bold">Create an Account</h1>
             <p className="text-muted-foreground">Get started with your personalized AI hub</p>
