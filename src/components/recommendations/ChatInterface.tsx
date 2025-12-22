@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { cn, parseLinks } from '@/lib/utils';
-import { Bot, Copy, Send, User as UserIcon, Lightbulb, ExternalLink, Languages, Loader2, Speaker, Pause, Play } from 'lucide-react';
+import { Bot, Copy, Send, User as UserIcon, Lightbulb, ExternalLink, Languages, Loader2, Speaker, Pause, Play, ChevronDown } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
@@ -77,7 +77,7 @@ function MessageBubble({
   return (
     <div
       className={cn(
-        'flex items-end gap-3',
+        'group flex items-end gap-3',
         isUser ? 'justify-end' : 'justify-start'
       )}
     >
@@ -86,23 +86,25 @@ function MessageBubble({
       )}
       <div
         className={cn(
-          'relative max-w-[85%] sm:max-w-[80%] rounded-lg',
+          'relative max-w-[85%] sm:max-w-[80%] rounded-2xl p-0.5',
           isUser
-            ? 'rounded-br-none bg-primary text-primary-foreground'
-            : 'rounded-bl-none border bg-card'
+            ? 'rounded-br-lg bg-primary text-primary-foreground'
+            : 'rounded-bl-lg border bg-card'
         )}
       >
         <div className="p-3 break-words">
-             <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
-                  a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
-                }}
-            >
-                {textContent}
-            </ReactMarkdown>
+             <div className="break-words">
+                <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    rehypePlugins={[rehypeRaw]}
+                    components={{
+                    p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                    a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
+                    }}
+                >
+                    {textContent}
+                </ReactMarkdown>
+            </div>
 
              {message.originalContent && (
                 <button 
@@ -136,54 +138,56 @@ function MessageBubble({
             </div>
         )}
 
-        {!isUser && (
-          <div className="flex items-center justify-end gap-1 border-t p-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              onClick={() => handleCopy(message.content)}
-            >
-              <Copy className="h-4 w-4 text-muted-foreground" />
-            </Button>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
+        <div className={cn("absolute -bottom-2 flex items-center gap-1 transition-opacity opacity-0 group-hover:opacity-100", isUser ? 'left-2' : 'right-2' )}>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+            onClick={() => handleCopy(message.content)}
+          >
+            <Copy className="h-4 w-4 text-muted-foreground" />
+          </Button>
+          {!isUser && (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+                    disabled={isTranslating}
+                  >
+                      {isTranslating ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : <Languages className="h-4 w-4 text-muted-foreground" />}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <ScrollArea className="h-64">
+                    {LANGUAGES.map((lang) => (
+                      <DropdownMenuItem key={lang.code} onSelect={() => handleTranslate(lang.code as Language)}>
+                        {lang.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </ScrollArea>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7"
-                  disabled={isTranslating}
+                  className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+                  onClick={handleAudioClick}
+                  disabled={isBuffering}
                 >
-                    {isTranslating ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : <Languages className="h-4 w-4 text-muted-foreground" />}
+                  {isBuffering ? (
+                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                  ) : isPlaying ? (
+                    <Pause className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <Speaker className="h-4 w-4 text-muted-foreground" />
+                  )}
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <ScrollArea className="h-64">
-                  {LANGUAGES.map((lang) => (
-                    <DropdownMenuItem key={lang.code} onSelect={() => handleTranslate(lang.code as Language)}>
-                      {lang.name}
-                    </DropdownMenuItem>
-                  ))}
-                </ScrollArea>
-              </DropdownMenuContent>
-            </DropdownMenu>
-             <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7"
-                onClick={handleAudioClick}
-                disabled={isBuffering}
-              >
-                {isBuffering ? (
-                  <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                ) : isPlaying ? (
-                  <Pause className="h-4 w-4 text-muted-foreground" />
-                ) : (
-                  <Speaker className="h-4 w-4 text-muted-foreground" />
-                )}
-              </Button>
-          </div>
-        )}
+            </>
+          )}
+        </div>
       </div>
       {isUser && (
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
@@ -198,7 +202,7 @@ function TypingIndicator() {
   return (
     <div className="flex items-end gap-3">
        <AhsanAiHubLogo className="h-10 w-10 shrink-0" />
-      <div className="flex items-center space-x-1 rounded-lg border bg-card p-3">
+      <div className="flex items-center space-x-1 rounded-2xl border bg-card p-3">
         <span className="h-2 w-2 animate-pulse rounded-full bg-muted-foreground [animation-delay:-0.3s]" />
         <span className="h-2 w-2 animate-pulse rounded-full bg-muted-foreground [animation-delay:-0.15s]" />
         <span className="h-2 w-2 animate-pulse rounded-full bg-muted-foreground" />
@@ -228,7 +232,7 @@ export function ChatInterface({
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
   const [isAudioBuffering, setIsAudioBuffering] = useState(false);
-
+  const [showScrollButton, setShowScrollButton] = useState(false);
 
   useEffect(() => {
     if (initialPrompt) {
@@ -260,11 +264,14 @@ export function ChatInterface({
     }
   }, [messages]);
   
-  useEffect(() => {
+  const scrollToBottom = (behavior: 'smooth' | 'auto' = 'auto') => {
     if (scrollAreaRef.current) {
-        const behavior = enableAnimations ? 'smooth' : 'auto';
         scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior });
     }
+  }
+  
+  useEffect(() => {
+    scrollToBottom(enableAnimations ? 'smooth' : 'auto');
   }, [messages, isLoading, enableAnimations]);
 
   useEffect(() => {
@@ -406,10 +413,15 @@ export function ChatInterface({
     }
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    const atBottom = scrollHeight - scrollTop - clientHeight < 10;
+    setShowScrollButton(!atBottom);
+  }
 
   return (
     <div className="relative flex h-full flex-col">
-      <ScrollArea className="flex-1" ref={scrollAreaRef}>
+      <ScrollArea className="flex-1" ref={scrollAreaRef} onScroll={handleScroll}>
         <div className="mx-auto max-w-3xl space-y-6 p-4">
           {messages.length === 0 && !isLoading ? (
             <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
@@ -446,6 +458,13 @@ export function ChatInterface({
           )}
           {isLoading && enableTypingIndicator && <TypingIndicator />}
         </div>
+         {showScrollButton && (
+            <div className="absolute bottom-4 right-4 z-10">
+                <Button size="icon" className="rounded-full shadow-lg" onClick={() => scrollToBottom('smooth')}>
+                    <ChevronDown className="h-5 w-5" />
+                </Button>
+            </div>
+        )}
       </ScrollArea>
       <div className="border-t bg-background/95 p-4">
         <div className="mx-auto max-w-3xl rounded-lg border bg-card p-2 shadow-sm">
@@ -474,3 +493,5 @@ export function ChatInterface({
     </div>
   );
 }
+
+    
