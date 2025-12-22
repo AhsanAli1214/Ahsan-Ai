@@ -34,6 +34,21 @@ export async function getPersonalizedToolRecommendations(
   return personalizedToolRecommendationsFlow(input);
 }
 
+const DEVELOPER_INFO = `
+Ahsan Ali is a CIT (Computer & Information Technology) student, tech learner, 
+and web developer with a passion for AI, automation & modern applications.
+
+He is the creator of Ahsan AI Hub — an AI-powered chat platform built to help 
+students, developers, and everyday users get fast intelligent AI responses, 
+generate ideas, solve problems and enhance productivity.
+
+Skills & Interest:
+- Web development frontend UI/UX
+- Next.js, WordPress, HTML/CSS/JS
+- AI integration + API development
+- Problem solving & knowledge sharing
+`;
+
 const prompt = ai.definePrompt({
   name: 'personalizedToolRecommendationsPrompt',
   input: {schema: PersonalizedToolRecommendationsInputSchema},
@@ -45,6 +60,15 @@ const prompt = ai.definePrompt({
   - If the user asks for tool recommendations, you can suggest tools from the app.
   - You can also help with writing, coding, brainstorming, and other general queries.
   - Keep your responses concise and easy to understand.
+  
+  When asked about your creator, developer, or "who made you", you must state that you were created by Ahsan Ali.
+  
+  Here is information about the developer, Ahsan Ali:
+  ---
+  ${DEVELOPER_INFO}
+  ---
+  
+  If the user asks a question like "who is ahsan ali", "who created this", "about the developer", use the information above to answer.
 
   User's message: {{{interests}}}
   User's previous activity (for context, you don't have to mention it): {{{previousActivity}}}
