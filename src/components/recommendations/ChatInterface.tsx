@@ -180,7 +180,11 @@ const SMART_PROMPTS = [
     { label: 'Help me plan a weekend trip', prompt: 'Help me plan a weekend trip to a nearby city. I like history and good food.' },
 ];
 
-export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null }) {
+export function ChatInterface({
+  searchParams,
+}: {
+  searchParams?: { initialPrompt?: string };
+}) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -189,10 +193,10 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
   const { language } = useAppContext();
 
   useEffect(() => {
-    if (initialPrompt) {
-      setInput(initialPrompt);
+    if (searchParams?.initialPrompt) {
+      setInput(searchParams.initialPrompt);
     }
-  }, [initialPrompt]);
+  }, [searchParams]);
   
   useEffect(() => {
     if (scrollAreaRef.current) {
