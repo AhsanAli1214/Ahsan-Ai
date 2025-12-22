@@ -68,8 +68,10 @@ export default function SettingsPage() {
   const [enableAnimations, setEnableAnimations] = useState(true);
   const [enableTypingIndicator, setEnableTypingIndicator] = useState(true);
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     try {
       const storedPersonality = localStorage.getItem(
         'personalityMode'
@@ -105,6 +107,10 @@ export default function SettingsPage() {
     setEnableTypingIndicator(value);
     localStorage.setItem('enableTypingIndicator', JSON.stringify(value));
   };
+  
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="flex h-full flex-col">
