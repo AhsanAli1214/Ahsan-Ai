@@ -39,7 +39,7 @@ function MessageBubble({
     onPlayAudio: (text: string) => void,
     isPlaying: boolean,
     isBuffering: boolean,
-    onPauseAudio: () => void
+    onPauseAudio: () => void 
 }) {
   const { toast } = useToast();
   const isUser = message.role === 'user';
@@ -75,79 +75,81 @@ function MessageBubble({
   }
 
   return (
-    <div
-      className={cn(
-        'group flex items-start gap-3',
-        isUser ? 'justify-end' : 'justify-start'
-      )}
-    >
-      {!isUser && (
-        <AhsanAiHubLogo className="h-10 w-10 shrink-0 self-start" />
-      )}
+    <div className="group relative pb-8">
       <div
         className={cn(
-          'relative max-w-[85%] sm:max-w-[80%] rounded-2xl p-3 break-words',
-          isUser
-            ? 'rounded-br-lg bg-primary text-primary-foreground'
-            : 'rounded-bl-lg border bg-card'
+          'flex items-start gap-3',
+          isUser ? 'justify-end' : 'justify-start'
         )}
       >
-        <div>
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={{
-              p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
-              a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
-            }}
-          >
-            {textContent}
-          </ReactMarkdown>
-        </div>
-        {message.originalContent && (
-          <button 
-            className="mt-2 text-xs text-muted-foreground hover:underline"
-            onClick={() => onTranslate(message.id, message.content, message.translatedTo || 'en')}
-          >
-            Show Original
-          </button>
+        {!isUser && (
+          <AhsanAiHubLogo className="h-10 w-10 shrink-0 self-start" />
         )}
-        
-        {links.length > 0 && (
-          <div className="mt-3 border-t pt-3 space-y-2">
-            {links.map((link, index) => (
-              <Card key={index} className="overflow-hidden bg-card/50">
-                <div className="p-3 flex items-center gap-2">
-                   <a href={link.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 truncate flex-1 hover:underline">{link.text}</a>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0">
-                          <LinkIcon className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem asChild>
-                          <a href={link.link} target="_blank" rel="noopener noreferrer">
-                            <ExternalLink className="mr-2 h-4 w-4" /> Open Link
-                          </a>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleCopy(link.link)}>
-                           <Copy className="mr-2 h-4 w-4" /> Copy Link
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-              </Card>
-            ))}
+        <div
+          className={cn(
+            'relative max-w-[90%] sm:max-w-[80%] rounded-2xl p-3 break-words',
+            isUser
+              ? 'rounded-br-lg bg-primary text-primary-foreground'
+              : 'rounded-bl-lg border bg-card'
+          )}
+        >
+          <div className="break-words">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              components={{
+                p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
+              }}
+            >
+              {textContent}
+            </ReactMarkdown>
+          </div>
+          {message.originalContent && (
+            <button 
+              className="mt-2 text-xs text-muted-foreground hover:underline"
+              onClick={() => onTranslate(message.id, message.content, message.translatedTo || 'en')}
+            >
+              Show Original
+            </button>
+          )}
+          
+          {links.length > 0 && (
+            <div className="mt-3 border-t pt-3 space-y-2">
+              {links.map((link, index) => (
+                <Card key={index} className="overflow-hidden bg-card/50">
+                  <div className="p-3 flex items-center gap-2">
+                     <a href={link.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 truncate flex-1 hover:underline">{link.text}</a>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0">
+                            <LinkIcon className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem asChild>
+                            <a href={link.link} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="mr-2 h-4 w-4" /> Open Link
+                            </a>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleCopy(link.link)}>
+                             <Copy className="mr-2 h-4 w-4" /> Copy Link
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+        {isUser && (
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
+            <UserIcon className="h-5 w-5" />
           </div>
         )}
       </div>
-      {isUser && (
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-          <UserIcon className="h-5 w-5" />
-        </div>
-      )}
-      <div className={cn("absolute -bottom-7 flex items-center gap-1 transition-opacity opacity-0 group-hover:opacity-100", isUser ? 'right-12' : 'left-12' )}>
+      <div className={cn("absolute bottom-0 flex items-center gap-1", isUser ? 'right-12' : 'left-12' )}>
         <Button
           variant="ghost"
           size="icon"
