@@ -37,7 +37,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar side="left" collapsible="icon">
+    <Sidebar side="left" collapsible="icon" className="hidden md:block">
       <SidebarHeader className="border-b">
         <div className="flex items-center gap-2">
           <AhsanAiHubLogo className="h-8 w-8" />
