@@ -13,6 +13,7 @@ import {
   Copy,
   Edit3,
   Grid,
+  Image as ImageIcon,
   Loader2,
   Mail,
   PenTool,
@@ -25,6 +26,7 @@ import {
   generateStudyMaterialAction,
   explainProgrammingAction,
   solveMathAction,
+  generateImageAction,
 } from '@/app/actions';
 import { cn } from '@/lib/utils';
 import type {
@@ -33,8 +35,9 @@ import type {
     GenerateBlogPostInput,
     GenerateStudyMaterialInput,
   } from '@/ai/flows/content-tools';
+import Image from 'next/image';
 
-type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math';
+type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math' | 'image';
 
 const toolsList = [
   {
@@ -90,6 +93,15 @@ const toolsList = [
     color: 'text-red-500',
     borderColor: 'border-red-500/30',
     bgColor: 'bg-red-500/15',
+  },
+   {
+    id: 'image',
+    label: 'Image Generator',
+    icon: ImageIcon,
+    desc: 'Create images from text',
+    color: 'text-orange-500',
+    borderColor: 'border-orange-500/30',
+    bgColor: 'bg-orange-500/15',
   },
 ];
 
@@ -150,6 +162,9 @@ export default function ContentToolsPage() {
         case 'math':
             result = await solveMathAction({ problem: input });
             break;
+        case 'image':
+            result = await generateImageAction({ prompt: input });
+            break;
         default:
           throw new Error('No tool selected');
       }
@@ -184,7 +199,7 @@ export default function ContentToolsPage() {
     if (!selectedTool) {
       return (
         <div className="p-4 lg:p-6">
-          <div className="mb-8">
+          <div className="mb-8 text-center">
             <h2 className="font-headline text-3xl font-bold">Content Tools</h2>
             <p className="mt-2 text-muted-foreground">
               Powerful AI-driven utilities to create, enhance, and solve with
@@ -253,6 +268,7 @@ export default function ContentToolsPage() {
                             selectedTool === 'blog' ? 'Choose content length for your article.' :
                             selectedTool === 'study' ? 'Select learning material format.' :
                             selectedTool === 'code' ? 'Specify programming language and paste your code.' :
+                            selectedTool === 'image' ? 'Describe the image you want to generate.' :
                             'Enter your equation or problem to get a solution.'
                         }
                     </p>
@@ -307,6 +323,7 @@ export default function ContentToolsPage() {
                             selectedTool === 'blog' ? 'Enter the topic for your blog post...' :
                             selectedTool === 'study' ? 'Enter the topic you want to study...' :
                             selectedTool === 'code' ? 'Paste your code snippet here...' :
+                            selectedTool === 'image' ? 'A futuristic cityscape at sunset, with flying cars and neon lights...' :
                             'Enter your math problem here...'
                         }
                         value={input}
@@ -326,7 +343,7 @@ export default function ContentToolsPage() {
                 <Card className="mt-8">
                      <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Result</CardTitle>
-                        {output && !loading && (
+                        {output && !loading && selectedTool !== 'image' && (
                             <Button variant="ghost" size="sm" onClick={handleCopy}>
                                 <Copy className="mr-2 h-4 w-4" />
                                 Copy
@@ -335,13 +352,16 @@ export default function ContentToolsPage() {
                     </CardHeader>
                     <CardContent>
                         {loading && (
-                            <div className="space-y-2">
-                                <div className="h-4 w-1/4 animate-pulse rounded-md bg-muted" />
-                                <div className="h-4 w-full animate-pulse rounded-md bg-muted" />
-                                <div className="h-4 w-3/4 animate-pulse rounded-md bg-muted" />
-                            </div>
+                           <div className="flex items-center justify-center p-8">
+                             <Loader2 className="h-10 w-10 animate-spin text-primary" />
+                           </div>
                         )}
-                        {output && (
+                        {output && selectedTool === 'image' && (
+                           <div className="relative aspect-square w-full overflow-hidden rounded-lg border">
+                             <Image src={output} alt="Generated image" fill className="object-cover" />
+                           </div>
+                        )}
+                        {output && selectedTool !== 'image' && (
                            <div className="prose prose-sm dark:prose-invert mt-4 max-w-none whitespace-pre-wrap rounded-lg border bg-secondary/20 p-4">
                                 {output}
                            </div>

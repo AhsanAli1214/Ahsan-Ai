@@ -2,7 +2,7 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import {
   BookText,
   Code,
@@ -55,7 +55,7 @@ export default function HomePage() {
     <div className="flex h-full flex-col">
       <AppHeader title="Home" />
       <div className="flex-1 overflow-y-auto p-4 lg:p-6">
-        <div className="space-y-8">
+        <div className="mx-auto max-w-4xl space-y-8">
           {/* Hero Section */}
           <div className="rounded-lg bg-accent p-6 text-accent-foreground shadow-md md:p-8">
             <div className="flex items-center gap-4 md:gap-6">
@@ -67,10 +67,10 @@ export default function HomePage() {
                   Ahsan Ai Hub
                 </h1>
                 <p className="mt-1 text-lg text-accent-foreground/80">
-                  Intelligent AI Companion
+                  Your Intelligent AI Companion
                 </p>
                 <p className="mt-1 text-sm text-accent-foreground/70">
-                  Powered by Advanced AI
+                  Powered by Advanced Google Gemini Models
                 </p>
               </div>
             </div>
@@ -102,20 +102,20 @@ export default function HomePage() {
           </div>
           
           {/* Mode Section */}
-            <Card className="flex items-center justify-between p-4 lg:col-span-1">
-                <div className='flex items-center'>
-                    <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 text-accent">
-                        <Smile className="h-5 w-5" />
-                    </div>
-                    <div>
-                        <p className="text-xs text-muted-foreground">Current Mode</p>
-                        <p className="font-semibold">Creative</p>
-                    </div>
-                </div>
-              <Button variant="ghost" size="sm" asChild>
-                <Link href="/settings">Change</Link>
-              </Button>
-            </Card>
+          <Card className="flex items-center justify-between p-4">
+              <div className='flex items-center'>
+                  <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 text-accent">
+                      <Smile className="h-5 w-5" />
+                  </div>
+                  <div>
+                      <p className="text-xs text-muted-foreground">Current Mode</p>
+                      <p className="font-semibold">Creative</p>
+                  </div>
+              </div>
+            <Button variant="ghost" size="sm" asChild>
+              <Link href="/settings">Change</Link>
+            </Button>
+          </Card>
 
 
           {/* Smart Prompts Section */}

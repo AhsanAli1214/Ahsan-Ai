@@ -11,13 +11,14 @@ import {
 import { AhsanAiHubLogo } from '@/components/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Sparkles, Home, Info, Mail, PenTool, HelpCircle, Settings } from 'lucide-react';
+import { Sparkles, Home, Info, Mail, PenTool, HelpCircle, Settings, AppWindow } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSidebar } from '@/components/ui/sidebar';
 
 const mainNav = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'AI Chat', href: '/recommendations', icon: Sparkles },
+  { name: 'All Tools', href: '/tools', icon: AppWindow },
   { name: 'Content Tools', href: '/content-tools', icon: PenTool },
   { name: 'Settings', href: '/settings', icon: Settings },
   { name: 'About', href: '/about', icon: Info },

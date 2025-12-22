@@ -85,10 +85,10 @@ function TypingIndicator() {
 }
 
 const SMART_PROMPTS = [
-    { label: "Explain this to me like I'm five", prompt: "Explain this to me like I'm five: " },
-    { label: 'Summarize the following text', prompt: 'Summarize the following text: ' },
-    { label: 'Write a poem about...', prompt: 'Write a poem about a rainy day.' },
-    { label: 'Translate to French', prompt: 'Translate this to French: ' },
+    { label: "Suggest some creative ideas for a new project", prompt: "Suggest some creative ideas for a new project related to AI." },
+    { label: 'What are some interesting facts about space?', prompt: 'What are some interesting facts about space?' },
+    { label: 'Write a short story about a friendly robot', prompt: 'Write a short story about a friendly robot who discovers a hidden talent.' },
+    { label: 'Help me plan a weekend trip', prompt: 'Help me plan a weekend trip to a nearby city. I like history and good food.' },
 ];
 
 export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null }) {
@@ -193,25 +193,27 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
         </div>
       </ScrollArea>
       <div className="border-t bg-background/95 p-4">
-        <div className="mx-auto flex max-w-3xl items-end gap-3 rounded-lg border bg-card p-2 shadow-sm">
-          <Textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSend();
-              }
-            }}
-            placeholder="Ask me anything..."
-            className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
-            rows={1}
-            disabled={isLoading}
-          />
-          <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-9 w-9 shrink-0">
-            <Send className="h-4 w-4" />
-            <span className="sr-only">Send</span>
-          </Button>
+        <div className="mx-auto max-w-3xl rounded-lg border bg-card p-2 shadow-sm">
+           <div className="flex items-end gap-3">
+            <Textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                }
+                }}
+                placeholder="Ask me anything..."
+                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+                rows={1}
+                disabled={isLoading}
+            />
+            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-9 w-9 shrink-0">
+                <Send className="h-4 w-4" />
+                <span className="sr-only">Send</span>
+            </Button>
+           </div>
         </div>
       </div>
     </div>
