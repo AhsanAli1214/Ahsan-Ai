@@ -51,7 +51,7 @@
     {
       "id": "developer-avatar",
       "description": "A portrait of the developer",
-      "imageUrl": "https://images.unsplash.com/photo-1737575655055-e3967cbefd03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGV2ZWxvcGVyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY2MzAwNDk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://storage.googleapis.com/gweb-aistudio-images/prompt-images/1766632007883_2.jpg",
       "imageHint": "developer portrait"
     }
   ]
