@@ -21,6 +21,7 @@ import {
   type SolveMathInput,
   type TranslateTextInput,
 } from '@/ai/flows/content-tools';
+import { textToSpeech, TextToSpeechInput } from '@/ai/flows/tts';
 import type { Language } from '@/lib/languages';
 
 // Personalized Recommendations Action
@@ -110,5 +111,20 @@ export async function translateTextAction(input: {text: string; targetLanguage: 
   } catch (error) {
     console.error('Error translating text:', error);
     return { success: false, error: 'Failed to translate text.' };
+  }
+}
+
+
+// Text-to-Speech Action
+type TextToSpeechResult = { success: true; data: string } | { success: false; error: string };
+
+export async function textToSpeechAction(input: TextToSpeechInput): Promise<TextToSpeechResult> {
+  try {
+    const { audio } = await textToSpeech(input);
+    return { success: true, data: audio };
+  } catch (error) {
+    console.error('Error in textToSpeechAction:', error);
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred during text-to-speech conversion.';
+    return { success: false, error: errorMessage };
   }
 }

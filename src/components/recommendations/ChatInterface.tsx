@@ -1,12 +1,12 @@
 'use client';
 
-import { getRecommendationsAction, translateTextAction } from '@/app/actions';
-import { AhsanAILogo, AhsanAiHubLogo } from '@/components/icons';
+import { getRecommendationsAction, translateTextAction, textToSpeechAction } from '@/app/actions';
+import { AhsanAiHubLogo } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { cn, parseLinks } from '@/lib/utils';
-import { Bot, Copy, Send, User as UserIcon, Lightbulb, ExternalLink, Languages, Loader2 } from 'lucide-react';
+import { Bot, Copy, Send, User as UserIcon, Lightbulb, ExternalLink, Languages, Loader2, Speaker, Pause, Play } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
@@ -25,7 +25,21 @@ type Message = {
   translatedTo?: Language;
 };
 
-function MessageBubble({ message, onTranslate }: { message: Message, onTranslate: (messageId: string, text: string, lang: Language) => void }) {
+function MessageBubble({ 
+    message, 
+    onTranslate, 
+    onPlayAudio, 
+    isPlaying, 
+    isBuffering,
+    onPauseAudio 
+}: { 
+    message: Message, 
+    onTranslate: (messageId: string, text: string, lang: Language) => void,
+    onPlayAudio: (text: string) => void,
+    isPlaying: boolean,
+    isBuffering: boolean,
+    onPauseAudio: () => void
+}) {
   const { toast } = useToast();
   const isUser = message.role === 'user';
   const [isTranslating, setIsTranslating] = useState(false);
@@ -49,6 +63,14 @@ function MessageBubble({ message, onTranslate }: { message: Message, onTranslate
     setIsTranslating(true);
     await onTranslate(message.id, message.originalContent || message.content, lang);
     setIsTranslating(false);
+  }
+
+  const handleAudioClick = () => {
+    if (isPlaying) {
+      onPauseAudio();
+    } else {
+      onPlayAudio(message.originalContent || message.content);
+    }
   }
 
   return (
@@ -146,6 +168,21 @@ function MessageBubble({ message, onTranslate }: { message: Message, onTranslate
                 </ScrollArea>
               </DropdownMenuContent>
             </DropdownMenu>
+             <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={handleAudioClick}
+                disabled={isBuffering}
+              >
+                {isBuffering ? (
+                  <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                ) : isPlaying ? (
+                  <Pause className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <Speaker className="h-4 w-4 text-muted-foreground" />
+                )}
+              </Button>
           </div>
         )}
       </div>
@@ -190,7 +227,11 @@ export function ChatInterface({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const { language } = useAppContext();
+  const { personalityMode } = useAppContext();
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
+  const [isAudioBuffering, setIsAudioBuffering] = useState(false);
+
 
   useEffect(() => {
     if (searchParams?.initialPrompt) {
@@ -204,6 +245,71 @@ export function ChatInterface({
     }
   }, [messages, isLoading]);
 
+  useEffect(() => {
+    if (audio) {
+      const handleEnded = () => {
+        setActiveMessageId(null);
+      };
+      audio.addEventListener('ended', handleEnded);
+      return () => {
+        audio.removeEventListener('ended', handleEnded);
+        audio.pause();
+        setAudio(null);
+      };
+    }
+  }, [audio]);
+  
+  const playAudio = (audioDataUri: string) => {
+    const newAudio = new Audio(audioDataUri);
+    setAudio(newAudio);
+    newAudio.play();
+  };
+  
+  const handlePlayAudio = async (messageId: string, text: string) => {
+    if (activeMessageId === messageId && audio) {
+        if (!audio.paused) {
+            audio.pause();
+            setActiveMessageId(null);
+            return;
+        } else {
+            audio.play();
+            return;
+        }
+    }
+    
+    if (audio) {
+      audio.pause();
+    }
+    
+    setActiveMessageId(messageId);
+    setIsAudioBuffering(true);
+    
+    try {
+      const result = await textToSpeechAction({ text });
+      if (result.success) {
+        playAudio(result.data);
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Audio Failed',
+        description: error instanceof Error ? error.message : 'Could not play audio.',
+      });
+      setActiveMessageId(null);
+    } finally {
+        setIsAudioBuffering(false);
+    }
+  };
+
+  const handlePauseAudio = () => {
+    if (audio && !audio.paused) {
+      audio.pause();
+      setActiveMessageId(null);
+    }
+  };
+  
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -256,13 +362,12 @@ export function ChatInterface({
     const targetMessage = messages.find(m => m.id === messageId);
     if (!targetMessage) return;
 
-    // If it's already translated, revert to original
-    if(targetMessage.originalContent) {
+    if(targetMessage.originalContent && targetMessage.translatedTo?.toString() === lang.toString()) {
         setMessages(prev => prev.map(m => m.id === messageId ? {...m, content: m.originalContent!, originalContent: undefined, translatedTo: undefined} : m));
         return;
     }
 
-    const result = await translateTextAction({ text, targetLanguage: lang });
+    const result = await translateTextAction({ text, targetLanguage: lang as string });
     if (result.success) {
       setMessages(prev => prev.map(m => m.id === messageId ? {...m, content: result.data, originalContent: text, translatedTo: lang } : m));
       toast({ title: `Translated to ${LANGUAGES.find(l => l.code === lang)?.name || lang}` });
@@ -283,7 +388,7 @@ export function ChatInterface({
           {messages.length === 0 && !isLoading ? (
             <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-accent/20">
-                    <AhsanAILogo className="h-12 w-12 text-accent" />
+                    <AhsanAiHubLogo className="h-12 w-12 text-accent" />
                 </div>
                 <div>
                     <h2 className="text-2xl font-semibold">How can I help you today?</h2>
@@ -304,7 +409,15 @@ export function ChatInterface({
             </div>
           ) : (
             messages.map((message) => (
-              <MessageBubble key={message.id} message={message} onTranslate={handleTranslateMessage} />
+              <MessageBubble 
+                key={message.id} 
+                message={message} 
+                onTranslate={handleTranslateMessage} 
+                onPlayAudio={(text) => handlePlayAudio(message.id, text)}
+                isPlaying={activeMessageId === message.id && audio ? !audio.paused : false}
+                isBuffering={activeMessageId === message.id && isAudioBuffering}
+                onPauseAudio={handlePauseAudio}
+                />
             ))
           )}
           {isLoading && <TypingIndicator />}
