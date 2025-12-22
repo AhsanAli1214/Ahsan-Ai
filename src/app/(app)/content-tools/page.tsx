@@ -12,11 +12,11 @@ import {
   Code,
   Copy,
   Edit3,
-  Grid,
-  Image as ImageIcon,
   Loader2,
   Mail,
   PenTool,
+  Grid,
+  ArrowRight,
 } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -26,84 +26,105 @@ import {
   generateStudyMaterialAction,
   explainProgrammingAction,
   solveMathAction,
-  generateImageAction,
 } from '@/app/actions';
 import { cn } from '@/lib/utils';
 import type {
-    EnhanceTextInput,
-    GenerateEmailInput,
-    GenerateBlogPostInput,
-    GenerateStudyMaterialInput,
-  } from '@/ai/flows/content-tools';
+  EnhanceTextInput,
+  GenerateEmailInput,
+  GenerateBlogPostInput,
+  GenerateStudyMaterialInput,
+} from '@/ai/flows/content-tools';
 import Image from 'next/image';
+import { PlaceHolderImages, type ImagePlaceholder } from '@/lib/placeholder-images';
 
-type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math' | 'image';
+type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math';
 
-const toolsList = [
+const toolsList: {
+  id: Tool;
+  label: string;
+  icon: React.ElementType;
+  desc: string;
+  imageId: string;
+}[] = [
   {
     id: 'enhance',
     label: 'Text Enhancer',
     icon: Edit3,
-    desc: 'Grammar, style, rewriting',
-    color: 'text-purple-500',
-    borderColor: 'border-purple-500/30',
-    bgColor: 'bg-purple-500/15',
+    desc: 'Improve grammar, style, and clarity',
+    imageId: 'content-tool-enhance',
   },
   {
     id: 'email',
     label: 'Email Writer',
     icon: Mail,
-    desc: 'Professional communications',
-    color: 'text-blue-500',
-    borderColor: 'border-blue-500/30',
-    bgColor: 'bg-blue-500/15',
+    desc: 'Craft professional, casual, or formal emails',
+    imageId: 'content-tool-email',
   },
   {
     id: 'blog',
     label: 'Blog Generator',
     icon: PenTool,
-    desc: 'SEO-optimized content',
-    color: 'text-pink-500',
-    borderColor: 'border-pink-500/30',
-    bgColor: 'bg-pink-500/15',
+    desc: 'Create engaging, SEO-optimized articles',
+    imageId: 'content-tool-blog',
   },
   {
     id: 'study',
     label: 'Study Assistant',
     icon: BookOpen,
-    desc: 'Learning materials',
-    color: 'text-green-500',
-    borderColor: 'border-green-500/30',
-    bgColor: 'bg-green-500/15',
+    desc: 'Generate notes, explanations, and flashcards',
+    imageId: 'content-tool-study',
   },
   {
     id: 'code',
     label: 'Code Explainer',
     icon: Code,
-    desc: 'Programming concepts',
-    color: 'text-yellow-500',
-    borderColor: 'border-yellow-500/30',
-    bgColor: 'bg-yellow-500/15',
+    desc: 'Understand programming concepts and snippets',
+    imageId: 'content-tool-code',
   },
   {
     id: 'math',
     label: 'Math Solver',
     icon: Grid,
-    desc: 'Solutions & explanations',
-    color: 'text-red-500',
-    borderColor: 'border-red-500/30',
-    bgColor: 'bg-red-500/15',
-  },
-   {
-    id: 'image',
-    label: 'Image Generator',
-    icon: ImageIcon,
-    desc: 'Create images from text',
-    color: 'text-orange-500',
-    borderColor: 'border-orange-500/30',
-    bgColor: 'bg-orange-500/15',
+    desc: 'Get step-by-step solutions and explanations',
+    imageId: 'content-tool-math',
   },
 ];
+
+const getImageForTool = (tool: (typeof toolsList)[0]): ImagePlaceholder | undefined => {
+    return PlaceHolderImages.find((img) => img.id === tool.imageId);
+}
+
+function ToolCard({ tool, onSelect }: { tool: (typeof toolsList)[0], onSelect: () => void }) {
+  const image = getImageForTool(tool);
+  return (
+    <Card className="group flex flex-col overflow-hidden transition-all hover:shadow-xl">
+      <CardHeader className="p-0">
+        <div className="relative h-48 w-full">
+          {image && (
+            <Image
+              src={image.imageUrl}
+              alt={tool.label}
+              fill
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              data-ai-hint={image.imageHint}
+            />
+          )}
+           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+           <div className="absolute bottom-0 left-0 p-4">
+             <h3 className="font-headline text-2xl font-bold text-white">{tool.label}</h3>
+           </div>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-1 flex-col p-4">
+        <p className="flex-1 text-muted-foreground">{tool.desc}</p>
+        <Button onClick={onSelect} className="mt-4 w-full">
+          Open Tool <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
+
 
 export default function ContentToolsPage() {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
@@ -162,9 +183,6 @@ export default function ContentToolsPage() {
         case 'math':
             result = await solveMathAction({ problem: input });
             break;
-        case 'image':
-            result = await generateImageAction({ prompt: input });
-            break;
         default:
           throw new Error('No tool selected');
       }
@@ -199,48 +217,19 @@ export default function ContentToolsPage() {
     if (!selectedTool) {
       return (
         <div className="p-4 lg:p-6">
-          <div className="mb-8 text-center">
-            <h2 className="font-headline text-3xl font-bold">Content Tools</h2>
-            <p className="mt-2 text-muted-foreground">
-              Powerful AI-driven utilities to create, enhance, and solve with
-              professional quality.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {toolsList.map((tool) => (
-              <Card
-                key={tool.id}
-                className={cn(
-                  'flex cursor-pointer flex-col justify-between p-6 transition-all hover:shadow-lg hover:-translate-y-1 border-2',
-                  tool.borderColor
-                )}
-                onClick={() => setSelectedTool(tool.id as Tool)}
-              >
-                <div>
-                  <div
-                    className={cn(
-                      'mb-4 flex h-14 w-14 items-center justify-center rounded-lg',
-                      tool.bgColor
-                    )}
-                  >
-                    <tool.icon className={cn('h-7 w-7', tool.color)} />
-                  </div>
-                  <h3 className="font-headline text-xl font-semibold">
-                    {tool.label}
-                  </h3>
-                  <p className="mt-1 text-muted-foreground">{tool.desc}</p>
-                </div>
-                <div
-                  className={cn(
-                    'mt-4 inline-block self-start rounded-full px-3 py-1 text-sm font-semibold',
-                    tool.bgColor,
-                    tool.color
-                  )}
-                >
-                  Select Tool →
-                </div>
-              </Card>
-            ))}
+          <div className="mx-auto max-w-6xl space-y-8">
+            <div className="mb-8 text-center">
+              <h1 className="font-headline text-4xl font-bold">Content Tools</h1>
+              <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
+                Powerful AI-driven utilities to create, enhance, and solve with
+                professional quality.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {toolsList.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} onSelect={() => setSelectedTool(tool.id)} />
+                ))}
+            </div>
           </div>
         </div>
       );
@@ -256,8 +245,8 @@ export default function ContentToolsPage() {
             </Button>
 
             <div className="mb-8 flex items-center gap-4">
-                 <div className={cn('flex h-16 w-16 items-center justify-center rounded-lg', currentTool?.bgColor)}>
-                    {currentTool && <currentTool.icon className={cn('h-8 w-8', currentTool.color)} />}
+                 <div className={cn('flex h-16 w-16 items-center justify-center rounded-lg bg-primary/10')}>
+                    {currentTool && <currentTool.icon className={cn('h-8 w-8', 'text-primary')} />}
                 </div>
                 <div>
                     <h2 className="font-headline text-3xl font-bold">{currentTool?.label}</h2>
@@ -268,7 +257,6 @@ export default function ContentToolsPage() {
                             selectedTool === 'blog' ? 'Choose content length for your article.' :
                             selectedTool === 'study' ? 'Select learning material format.' :
                             selectedTool === 'code' ? 'Specify programming language and paste your code.' :
-                            selectedTool === 'image' ? 'Describe the image you want to generate.' :
                             'Enter your equation or problem to get a solution.'
                         }
                     </p>
@@ -323,7 +311,6 @@ export default function ContentToolsPage() {
                             selectedTool === 'blog' ? 'Enter the topic for your blog post...' :
                             selectedTool === 'study' ? 'Enter the topic you want to study...' :
                             selectedTool === 'code' ? 'Paste your code snippet here...' :
-                            selectedTool === 'image' ? 'A futuristic cityscape at sunset, with flying cars and neon lights...' :
                             'Enter your math problem here...'
                         }
                         value={input}
@@ -343,7 +330,7 @@ export default function ContentToolsPage() {
                 <Card className="mt-8">
                      <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Result</CardTitle>
-                        {output && !loading && selectedTool !== 'image' && (
+                        {output && !loading && (
                             <Button variant="ghost" size="sm" onClick={handleCopy}>
                                 <Copy className="mr-2 h-4 w-4" />
                                 Copy
@@ -356,12 +343,7 @@ export default function ContentToolsPage() {
                              <Loader2 className="h-10 w-10 animate-spin text-primary" />
                            </div>
                         )}
-                        {output && selectedTool === 'image' && (
-                           <div className="relative aspect-square w-full overflow-hidden rounded-lg border">
-                             <Image src={output} alt="Generated image" fill className="object-cover" />
-                           </div>
-                        )}
-                        {output && selectedTool !== 'image' && (
+                        {output && (
                            <div className="prose prose-sm dark:prose-invert mt-4 max-w-none whitespace-pre-wrap rounded-lg border bg-secondary/20 p-4">
                                 {output}
                            </div>

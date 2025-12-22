@@ -53,6 +53,42 @@
       "description": "A portrait of the developer",
       "imageUrl": "https://i.postimg.cc/tgnh55CZ/developer.jpg",
       "imageHint": "developer portrait"
+    },
+    {
+      "id": "content-tool-enhance",
+      "description": "Text Enhancer Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1588725838521-ed1a6f059a5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "editing text"
+    },
+    {
+      "id": "content-tool-email",
+      "description": "Email Writer Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1557853123-3c42815f9b60?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "writing email"
+    },
+    {
+      "id": "content-tool-blog",
+      "description": "Blog Post Generator Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "blogging setup"
+    },
+    {
+      "id": "content-tool-study",
+      "description": "Study Assistant Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "studying books"
+    },
+    {
+      "id": "content-tool-code",
+      "description": "Code Explainer Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "code on screen"
+    },
+    {
+      "id": "content-tool-math",
+      "description": "Math Solver Tool",
+      "imageUrl": "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "imageHint": "math equations"
     }
   ]
 }

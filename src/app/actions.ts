@@ -12,14 +12,12 @@ import {
   generateStudyMaterial,
   explainProgramming,
   solveMath,
-  generateImage,
   type EnhanceTextInput,
   type GenerateEmailInput,
   type GenerateBlogPostInput,
   type GenerateStudyMaterialInput,
   type ExplainProgrammingInput,
   type SolveMathInput,
-  type GenerateImageInput,
 } from '@/ai/flows/content-tools';
 
 // Personalized Recommendations Action
@@ -100,17 +98,4 @@ export async function solveMathAction(input: SolveMathInput): Promise<ContentToo
     console.error('Error solving math problem:', error);
     return { success: false, error: 'Failed to solve math problem.' };
   }
-}
-
-export async function generateImageAction(input: GenerateImageInput): Promise<ContentToolResult> {
-    try {
-      const { image } = await generateImage(input);
-      if (!image) {
-        throw new Error('No image was generated.');
-      }
-      return { success: true, data: image };
-    } catch (error) {
-      console.error('Error generating image:', error);
-      return { success: false, error: 'Failed to generate image.' };
-    }
 }
