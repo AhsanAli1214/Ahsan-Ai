@@ -90,9 +90,6 @@ export default function HomePage() {
                 <p className="mt-1 text-lg text-accent-foreground/80">
                   Your Intelligent AI Companion
                 </p>
-                <p className="mt-1 text-sm text-accent-foreground/70">
-                  Powered by Advanced Google Gemini Models
-                </p>
               </div>
             </div>
           </div>
