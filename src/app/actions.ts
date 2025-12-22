@@ -27,7 +27,7 @@ import {
   type AssistResumeInput,
   type GenerateStoryInput,
 } from '@/ai/flows/content-tools';
-import { textToSpeech, TextToSpeechInput } from '@/ai/flows/tts';
+import { textToSpeech, type TextToSpeechInput } from '@/ai/flows/tts';
 import type { Language } from '@/lib/languages';
 
 // Personalized Recommendations Action
