@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
-import { Bot, Copy, Send, User as UserIcon } from 'lucide-react';
+import { Bot, Copy, Send, User as UserIcon, Lightbulb } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Card } from '@/components/ui/card';
 
 type Message = {
   id: string;
@@ -39,13 +40,13 @@ function MessageBubble({ message }: { message: Message }) {
       )}
       <div
         className={cn(
-          'max-w-[80%] rounded-lg p-3',
+          'relative max-w-[80%] rounded-lg p-3',
           isUser
             ? 'rounded-br-none bg-primary text-primary-foreground'
             : 'rounded-bl-none border bg-card'
         )}
       >
-        <p className="text-sm leading-relaxed">{message.content}</p>
+        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
         {!isUser && (
           <div className="mt-2 flex justify-end">
             <Button
@@ -70,7 +71,7 @@ function MessageBubble({ message }: { message: Message }) {
 
 function TypingIndicator() {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-start gap-3">
        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
           <Bot className="h-5 w-5" />
         </div>
@@ -84,7 +85,7 @@ function TypingIndicator() {
 }
 
 const SMART_PROMPTS = [
-    { label: 'Explain this to me like I\'m five', prompt: 'Explain this to me like I\'m five: ' },
+    { label: "Explain this to me like I'm five", prompt: "Explain this to me like I'm five: " },
     { label: 'Summarize the following text', prompt: 'Summarize the following text: ' },
     { label: 'Write a poem about...', prompt: 'Write a poem about a rainy day.' },
     { label: 'Translate to French', prompt: 'Translate this to French: ' },
@@ -107,7 +108,7 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
     if (scrollAreaRef.current) {
         scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
     }
-  }, [messages]);
+  }, [messages, isLoading]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
@@ -142,6 +143,12 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
         description:
           result.error || 'Unable to get recommendations. Please try again.',
       });
+       const newErrorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: "Sorry, I couldn't process that. Please try again.",
+      };
+      setMessages((prev) => [...prev, newErrorMessage]);
     }
 
     setIsLoading(false);
@@ -156,16 +163,24 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
       <ScrollArea className="flex-1" ref={scrollAreaRef}>
         <div className="mx-auto max-w-3xl space-y-6 p-4">
           {messages.length === 0 && !isLoading ? (
-            <div className="flex h-full flex-col items-center justify-center gap-4 text-center pt-20">
+            <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
                 <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-accent/20">
                     <AhsanAILogo className="h-12 w-12 text-accent" />
                 </div>
-                <h2 className="text-2xl font-semibold">How can I help you today?</h2>
-                 <div className="flex flex-wrap justify-center gap-2">
+                <div>
+                    <h2 className="text-2xl font-semibold">How can I help you today?</h2>
+                    <p className="mt-1 text-muted-foreground">Start a conversation or try one of these prompts.</p>
+                </div>
+                 <div className="w-full max-w-md space-y-3">
                     {SMART_PROMPTS.map((prompt) => (
-                        <Button key={prompt.label} variant="outline" size="sm" onClick={() => handlePromptClick(prompt.prompt)}>
-                            {prompt.label}
-                        </Button>
+                        <Card key={prompt.label} className="cursor-pointer p-4 text-left transition-all hover:bg-accent/10" onClick={() => handlePromptClick(prompt.prompt)}>
+                            <div className="flex items-center gap-3">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary">
+                                    <Lightbulb className="h-5 w-5 text-secondary-foreground" />
+                                </div>
+                                <span className="flex-1 font-medium">{prompt.label}</span>
+                            </div>
+                        </Card>
                     ))}
                 </div>
             </div>
@@ -177,7 +192,7 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
           {isLoading && <TypingIndicator />}
         </div>
       </ScrollArea>
-      <div className="border-t bg-background">
+      <div className="border-t bg-background/95">
         <div className="mx-auto flex max-w-3xl items-end gap-2 p-4">
           <Textarea
             value={input}
@@ -193,7 +208,7 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
             rows={1}
             disabled={isLoading}
           />
-          <Button onClick={handleSend} disabled={isLoading || !input.trim()}>
+          <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-10 w-10 shrink-0">
             <Send className="h-4 w-4" />
             <span className="sr-only">Send</span>
           </Button>
