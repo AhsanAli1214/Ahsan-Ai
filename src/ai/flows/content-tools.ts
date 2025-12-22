@@ -264,3 +264,44 @@ Solution:`,
     return output ?? { result: '' };
   }
 );
+
+
+// Translator
+const TranslateTextInputSchema = z.object({
+  text: z.string().describe('The text to translate.'),
+  targetLanguage: z.string().describe('The target language to translate to.'),
+});
+export type TranslateTextInput = z.infer<typeof TranslateTextInputSchema>;
+
+const TranslateTextOutputSchema = z.object({
+  translatedText: z.string().describe('The translated text.'),
+});
+export type TranslateTextOutput = z.infer<typeof TranslateTextOutputSchema>;
+
+export async function translateText(input: TranslateTextInput): Promise<TranslateTextOutput> {
+  return translateTextFlow(input);
+}
+
+const translateTextFlow = ai.defineFlow(
+  {
+    name: 'translateTextFlow',
+    inputSchema: TranslateTextInputSchema,
+    outputSchema: TranslateTextOutputSchema,
+  },
+  async ({ text, targetLanguage }) => {
+    const { output } = await ai.generate({
+      model: 'googleai/gemini-2.5-flash',
+      prompt: `Translate the following text to ${targetLanguage}. Return ONLY the translated text.
+Text:
+"""
+${text}
+"""
+`,
+      output: {
+        schema: z.object({ translatedText: z.string() })
+      }
+    });
+
+    return output ?? { translatedText: '' };
+  }
+);

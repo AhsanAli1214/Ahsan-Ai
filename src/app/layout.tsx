@@ -3,6 +3,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/contexts/theme-context';
+import { AppProvider } from '@/context/AppContext';
 
 export const metadata: Metadata = {
   title: 'Ahsan Ai Hub',
@@ -29,8 +30,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <Toaster />
+          <AppProvider>
+            {children}
+            <Toaster />
+          </AppProvider>
         </ThemeProvider>
       </body>
     </html>

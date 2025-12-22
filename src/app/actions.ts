@@ -12,12 +12,14 @@ import {
   generateStudyMaterial,
   explainProgramming,
   solveMath,
+  translateText,
   type EnhanceTextInput,
   type GenerateEmailInput,
   type GenerateBlogPostInput,
   type GenerateStudyMaterialInput,
   type ExplainProgrammingInput,
   type SolveMathInput,
+  type TranslateTextInput,
 } from '@/ai/flows/content-tools';
 
 // Personalized Recommendations Action
@@ -97,5 +99,15 @@ export async function solveMathAction(input: SolveMathInput): Promise<ContentToo
   } catch (error) {
     console.error('Error solving math problem:', error);
     return { success: false, error: 'Failed to solve math problem.' };
+  }
+}
+
+export async function translateTextAction(input: TranslateTextInput): Promise<{ success: true, data: string } | { success: false, error: string }> {
+  try {
+    const { translatedText } = await translateText(input);
+    return { success: true, data: translatedText };
+  } catch (error) {
+    console.error('Error translating text:', error);
+    return { success: false, error: 'Failed to translate text.' };
   }
 }

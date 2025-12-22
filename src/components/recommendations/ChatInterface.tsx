@@ -1,30 +1,48 @@
 'use client';
 
-import { getRecommendationsAction } from '@/app/actions';
+import { getRecommendationsAction, translateTextAction } from '@/app/actions';
 import { AhsanAILogo } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
-import { cn } from '@/lib/utils';
-import { Bot, Copy, Send, User as UserIcon, Lightbulb } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { cn, parseLinks } from '@/lib/utils';
+import { Bot, Copy, Send, User as UserIcon, Lightbulb, ExternalLink, Languages, Loader2 } from 'lucide-react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
+import { useAppContext } from '@/context/AppContext';
 
 type Message = {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  originalContent?: string;
 };
 
-function MessageBubble({ message }: { message: Message }) {
+function MessageBubble({ message, onTranslate }: { message: Message, onTranslate: (messageId: string, text: string) => void }) {
   const { toast } = useToast();
   const isUser = message.role === 'user';
+  const [isTranslating, setIsTranslating] = useState(false);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(message.content);
+  const links = useMemo(() => parseLinks(message.content), [message.content]);
+  const textContent = useMemo(() => {
+    let content = message.content;
+    links.forEach(link => {
+      content = content.replace(link.link, '');
+    });
+    return content.trim();
+  }, [message.content, links]);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
     toast({ title: 'Copied to clipboard' });
   };
+  
+  const handleTranslate = async () => {
+    setIsTranslating(true);
+    await onTranslate(message.id, message.originalContent || message.content);
+    setIsTranslating(false);
+  }
 
   return (
     <div
@@ -40,22 +58,64 @@ function MessageBubble({ message }: { message: Message }) {
       )}
       <div
         className={cn(
-          'relative max-w-[80%] rounded-lg p-3',
+          'relative max-w-[80%] rounded-lg',
           isUser
             ? 'rounded-br-none bg-primary text-primary-foreground'
             : 'rounded-bl-none border bg-card'
         )}
       >
-        <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+        <div className="p-3">
+            <p className="text-sm leading-relaxed whitespace-pre-wrap">{textContent}</p>
+             {message.originalContent && (
+                <button 
+                  className="mt-2 text-xs text-muted-foreground hover:underline"
+                  onClick={() => onTranslate(message.id, message.content)}
+                >
+                  Show Original
+                </button>
+            )}
+        </div>
+
+        {links.length > 0 && (
+            <div className="border-t p-3 space-y-2">
+                {links.map((link, index) => (
+                    <Card key={index} className="overflow-hidden">
+                        <div className="p-2">
+                            <a href={link.link} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-500 truncate block hover:underline">{link.text}</a>
+                        </div>
+                        <div className="flex border-t">
+                            <Button variant="ghost" size="sm" className="flex-1 rounded-none border-r" asChild>
+                                <a href={link.link} target="_blank" rel="noopener noreferrer">
+                                    <ExternalLink className="mr-2 h-4 w-4" /> Open
+                                </a>
+                            </Button>
+                            <Button variant="ghost" size="sm" className="flex-1 rounded-none" onClick={() => handleCopy(link.link)}>
+                                <Copy className="mr-2 h-4 w-4" /> Copy
+                            </Button>
+                        </div>
+                    </Card>
+                ))}
+            </div>
+        )}
+
         {!isUser && (
-          <div className="mt-2 flex justify-end">
+          <div className="flex items-center justify-end gap-1 border-t p-1">
             <Button
               variant="ghost"
               size="icon"
               className="h-7 w-7"
-              onClick={handleCopy}
+              onClick={() => handleCopy(message.content)}
             >
               <Copy className="h-4 w-4 text-muted-foreground" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-7 w-7"
+              onClick={handleTranslate}
+              disabled={isTranslating}
+            >
+                {isTranslating ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : <Languages className="h-4 w-4 text-muted-foreground" />}
             </Button>
           </div>
         )}
@@ -97,6 +157,7 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const { language } = useAppContext();
 
   useEffect(() => {
     if (initialPrompt) {
@@ -157,6 +218,30 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
   const handlePromptClick = (prompt: string) => {
     setInput(prompt);
   }
+  
+  const handleTranslateMessage = async (messageId: string, text: string) => {
+    const targetMessage = messages.find(m => m.id === messageId);
+    if (!targetMessage) return;
+
+    // If it's already translated, revert to original
+    if(targetMessage.originalContent) {
+        setMessages(prev => prev.map(m => m.id === messageId ? {...m, content: m.originalContent!, originalContent: undefined} : m));
+        return;
+    }
+
+    const result = await translateTextAction({ text, targetLanguage: language });
+    if (result.success) {
+      setMessages(prev => prev.map(m => m.id === messageId ? {...m, content: result.data, originalContent: text } : m));
+      toast({ title: `Translated to ${language}` });
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Translation Failed',
+        description: result.error,
+      });
+    }
+  };
+
 
   return (
     <div className="relative flex h-full flex-col">
@@ -186,7 +271,7 @@ export function ChatInterface({ initialPrompt }: { initialPrompt?: string | null
             </div>
           ) : (
             messages.map((message) => (
-              <MessageBubble key={message.id} message={message} />
+              <MessageBubble key={message.id} message={message} onTranslate={handleTranslateMessage} />
             ))
           )}
           {isLoading && <TypingIndicator />}

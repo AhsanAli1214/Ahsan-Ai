@@ -109,7 +109,14 @@ export default function SettingsPage() {
   };
   
   if (!mounted) {
-    return null;
+    return (
+      <div className="flex h-full flex-col">
+        <AppHeader title="Settings" />
+        <div className="flex-1 overflow-y-auto p-4 lg:p-6">
+          {/* Skeleton or loading state can go here */}
+        </div>
+      </div>
+    );
   }
 
   return (
