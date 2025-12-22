@@ -22,6 +22,8 @@ import {
   Share2,
   FileText,
   Feather,
+  Image as ImageIcon,
+  Download,
 } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -35,6 +37,7 @@ import {
   generateSocialMediaPostAction,
   assistResumeAction,
   generateStoryAction,
+  generateImageAction,
 } from '@/app/actions';
 import { cn } from '@/lib/utils';
 import type {
@@ -56,7 +59,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { LANGUAGES, Language } from '@/lib/languages';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math' | 'translate' | 'social' | 'resume' | 'story';
+type Tool = 'enhance' | 'email' | 'blog' | 'study' | 'code' | 'math' | 'translate' | 'social' | 'resume' | 'story' | 'image';
 
 const toolsList: {
   id: Tool;
@@ -65,6 +68,13 @@ const toolsList: {
   desc: string;
   imageId: string;
 }[] = [
+  {
+    id: 'image',
+    label: 'Image Generator',
+    icon: ImageIcon,
+    desc: 'Create visuals from text prompts',
+    imageId: 'content-tool-image',
+  },
   {
     id: 'enhance',
     label: 'Text Enhancer',
@@ -196,6 +206,9 @@ export default function ContentToolsPage() {
     let result;
     try {
       switch (selectedTool) {
+        case 'image':
+          result = await generateImageAction({ prompt: input });
+          break;
         case 'enhance':
           result = await enhanceTextAction({
             text: input,
@@ -323,6 +336,7 @@ export default function ContentToolsPage() {
                     <h2 className="font-headline text-3xl font-bold">{currentTool?.label}</h2>
                     <p className="mt-1 text-muted-foreground">
                         {
+                            selectedTool === 'image' ? 'Enter a prompt to generate an image.' :
                             selectedTool === 'enhance' ? 'Choose your enhancement type and input text.' :
                             selectedTool === 'email' ? 'Select tone and provide context for the email.' :
                             selectedTool === 'blog' ? 'Choose content length for your article.' :
@@ -417,6 +431,7 @@ export default function ContentToolsPage() {
                     {/* Input */}
                     <Textarea 
                         placeholder={
+                            selectedTool === 'image' ? 'Enter a prompt for the image...' :
                             selectedTool === 'enhance' ? 'Enter text to enhance...' :
                             selectedTool === 'email' ? 'Enter the purpose or main points of your email...' :
                             selectedTool === 'blog' ? 'Enter the topic for your blog post...' :
@@ -445,11 +460,19 @@ export default function ContentToolsPage() {
                 <Card className="mt-8">
                      <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle>Result</CardTitle>
-                        {output && !loading && (
+                        {output && !loading && selectedTool !== 'image' && (
                             <Button variant="ghost" size="sm" onClick={handleCopy}>
                                 <Copy className="mr-2 h-4 w-4" />
                                 Copy
                             </Button>
+                        )}
+                         {output && !loading && selectedTool === 'image' && (
+                            <a href={output} download="generated-image.png">
+                                <Button variant="ghost" size="sm">
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Download
+                                </Button>
+                            </a>
                         )}
                     </CardHeader>
                     <CardContent>
@@ -458,7 +481,12 @@ export default function ContentToolsPage() {
                              <Loader2 className="h-10 w-10 animate-spin text-primary" />
                            </div>
                         )}
-                        {output && (
+                        {output && selectedTool === 'image' && (
+                            <div className="relative aspect-square w-full max-w-lg mx-auto rounded-lg overflow-hidden border">
+                                <Image src={output} alt="Generated image" layout="fill" objectFit="contain" />
+                            </div>
+                        )}
+                        {output && selectedTool !== 'image' && (
                             <div className="prose prose-sm dark:prose-invert mt-4 max-w-none rounded-lg border bg-secondary/20 p-4">
                                 <ReactMarkdown
                                     remarkPlugins={[remarkGfm]}

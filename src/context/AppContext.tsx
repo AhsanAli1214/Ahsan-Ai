@@ -22,6 +22,7 @@ interface AppContextType {
   setEnableAnimations: (enabled: boolean) => void;
   enableTypingIndicator: boolean;
   setEnableTypingIndicator: (enabled: boolean) => void;
+  clearChatHistory: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -92,6 +93,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const clearChatHistory = () => {
+    if (isMounted) {
+        localStorage.removeItem('chatHistory');
+    }
+  };
+
   if (!isMounted) {
     return null; // Or a loading spinner
   }
@@ -102,7 +109,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
         personalityMode, setPersonalityMode, 
         language, setLanguage,
         enableAnimations, setEnableAnimations,
-        enableTypingIndicator, setEnableTypingIndicator
+        enableTypingIndicator, setEnableTypingIndicator,
+        clearChatHistory,
     }}>
       {children}
     </AppContext.Provider>

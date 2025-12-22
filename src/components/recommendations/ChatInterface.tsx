@@ -75,8 +75,8 @@ function MessageBubble({
   }
 
   return (
-    <div className="group relative pb-8">
-      <div
+    <div className="group relative flex flex-col">
+       <div
         className={cn(
           'flex items-start gap-3',
           isUser ? 'justify-end' : 'justify-start'
@@ -87,7 +87,7 @@ function MessageBubble({
         )}
         <div
           className={cn(
-            'relative max-w-[90%] sm:max-w-[80%] rounded-2xl p-3 break-words',
+            'relative max-w-[85%] sm:max-w-[80%] rounded-2xl p-3 break-words',
             isUser
               ? 'rounded-br-lg bg-primary text-primary-foreground'
               : 'rounded-bl-lg border bg-card'
@@ -149,11 +149,11 @@ function MessageBubble({
           </div>
         )}
       </div>
-      <div className={cn("absolute bottom-0 flex items-center gap-1", isUser ? 'right-12' : 'left-12' )}>
+      <div className={cn("mt-1 flex items-center gap-1", isUser ? 'self-end mr-12' : 'self-start ml-12' )}>
         <Button
           variant="ghost"
           size="icon"
-          className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+          className="h-7 w-7 opacity-80 hover:opacity-100"
           onClick={() => handleCopy(message.content)}
         >
           <Copy className="h-4 w-4 text-muted-foreground" />
@@ -165,7 +165,7 @@ function MessageBubble({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+                  className="h-7 w-7 opacity-80 hover:opacity-100"
                   disabled={isTranslating}
                 >
                     {isTranslating ? <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" /> : <Languages className="h-4 w-4 text-muted-foreground" />}
@@ -184,7 +184,7 @@ function MessageBubble({
             <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 bg-card/80 backdrop-blur-sm hover:bg-card"
+                className="h-7 w-7 opacity-80 hover:opacity-100"
                 onClick={handleAudioClick}
                 disabled={isBuffering}
               >
@@ -425,9 +425,9 @@ export function ChatInterface({
   }
 
   return (
-    <div className="relative flex h-full flex-col">
+    <div className="relative flex h-full flex-col bg-background">
       <ScrollArea className="flex-1" ref={scrollAreaRef} onScroll={handleScroll}>
-        <div className="mx-auto max-w-3xl space-y-8 p-4">
+        <div className="mx-auto max-w-3xl space-y-6 p-4">
           {messages.length === 0 && !isLoading ? (
             <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
                 <AhsanAiHubLogo className="h-24 w-24" />

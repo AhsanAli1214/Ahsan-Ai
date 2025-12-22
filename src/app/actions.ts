@@ -16,6 +16,7 @@ import {
   generateSocialMediaPost,
   assistResume,
   generateStory,
+  generateImage,
   type EnhanceTextInput,
   type GenerateEmailInput,
   type GenerateBlogPostInput,
@@ -26,6 +27,7 @@ import {
   type GenerateSocialMediaPostInput,
   type AssistResumeInput,
   type GenerateStoryInput,
+  type GenerateImageInput,
 } from '@/ai/flows/content-tools';
 import { textToSpeech, type TextToSpeechInput } from '@/ai/flows/tts';
 import type { Language } from '@/lib/languages';
@@ -151,6 +153,17 @@ export async function generateStoryAction(input: GenerateStoryInput): Promise<Co
     }
 }
 
+export async function generateImageAction(
+  input: GenerateImageInput
+): Promise<ContentToolResult> {
+  try {
+    const { imageUrl } = await generateImage(input);
+    return { success: true, data: imageUrl };
+  } catch (error) {
+    console.error('Error generating image:', error);
+    return { success: false, error: 'Failed to generate image.' };
+  }
+}
 
 // Text-to-Speech Action
 type TextToSpeechResult = { success: true; data: string } | { success: false; error: string };
