@@ -10,14 +10,19 @@ export const metadata: Metadata = {
 export default function RecommendationsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   const initialPrompt = searchParams?.initialPrompt || '';
+
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="AI Chat" />
       <div className="flex-1 overflow-hidden">
-        <ChatInterface initialPrompt={Array.isArray(initialPrompt) ? initialPrompt[0] : initialPrompt} />
+        <ChatInterface
+          initialPrompt={
+            Array.isArray(initialPrompt) ? initialPrompt[0] : initialPrompt
+          }
+        />
       </div>
     </div>
   );
