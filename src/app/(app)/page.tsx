@@ -156,7 +156,7 @@ export default function HomePage() {
                     </div>
                 </div>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/">Change</Link>
+                <Link href="/features">Change</Link>
               </Button>
             </Card>
 
