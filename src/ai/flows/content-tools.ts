@@ -25,12 +25,12 @@ const enhanceTextFlow = ai.defineFlow(
     inputSchema: EnhanceTextInputSchema,
     outputSchema: EnhanceTextOutputSchema,
   },
-  async (input) => {
-    const prompt = `You are a text enhancement AI. The user wants to ${input.mode} the following text. Please provide the result.
+  async ({text, mode}) => {
+    const prompt = `You are a text enhancement AI. The user wants to ${mode} the following text. Please provide the result.
 
 Text:
 """
-{{{text}}}
+${text}
 """
 
 Result:`;
@@ -38,7 +38,6 @@ Result:`;
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: { text: input.text },
     });
     return { result: output.text! };
   }
@@ -68,18 +67,17 @@ const generateEmailFlow = ai.defineFlow(
     inputSchema: GenerateEmailInputSchema,
     outputSchema: GenerateEmailOutputSchema,
   },
-  async (input) => {
+  async ({context, tone, details}) => {
     const prompt = `You are an email writing assistant. Write an email with the following requirements:
-- Purpose/Context: {{{context}}}
-- Tone: {{{tone}}}
-{{#if details}}- Additional Details: {{{details}}}{{/if}}
+- Purpose/Context: ${context}
+- Tone: ${tone}
+${details ? `- Additional Details: ${details}` : ''}
 
 Generated Email:`;
 
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: input,
     });
     return { result: output.text! };
   }
@@ -108,15 +106,14 @@ const generateBlogPostFlow = ai.defineFlow(
     inputSchema: GenerateBlogPostInputSchema,
     outputSchema: GenerateBlogPostOutputSchema,
   },
-  async (input) => {
-    const prompt = `You are a blog post generator. Write a {{length}} blog post about the following topic: "{{topic}}". Ensure it is well-structured and engaging.
+  async ({topic, length}) => {
+    const prompt = `You are a blog post generator. Write a ${length} blog post about the following topic: "${topic}". Ensure it is well-structured and engaging.
 
 Blog Post:`;
 
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: input,
     });
     return { result: output.text! };
   }
@@ -144,15 +141,14 @@ const generateStudyMaterialFlow = ai.defineFlow(
     inputSchema: GenerateStudyMaterialInputSchema,
     outputSchema: GenerateStudyMaterialOutputSchema,
   },
-  async (input) => {
-    const prompt = `You are a study assistant. Generate study material for the topic "{{topic}}". The desired format is "{{type}}".
+  async ({topic, type}) => {
+    const prompt = `You are a study assistant. Generate study material for the topic "${topic}". The desired format is "${type}".
 
 Study Material:`;
 
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: input,
     });
     return { result: output.text! };
   }
@@ -181,12 +177,12 @@ const explainProgrammingFlow = ai.defineFlow(
     inputSchema: ExplainProgrammingInputSchema,
     outputSchema: ExplainProgrammingOutputSchema,
   },
-  async (input) => {
-    const prompt = `You are a code explainer. Explain the following{{#if language}} {{language}}{{/if}} code snippet.
+  async ({code, language}) => {
+    const prompt = `You are a code explainer. Explain the following ${language || ''} code snippet.
 
 Code:
 \`\`\`
-{{{code}}}
+${code}
 \`\`\`
 
 Explanation:`;
@@ -194,7 +190,6 @@ Explanation:`;
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: input,
     });
     return { result: output.text! };
   }
@@ -222,17 +217,16 @@ const solveMathFlow = ai.defineFlow(
     inputSchema: SolveMathInputSchema,
     outputSchema: SolveMathOutputSchema,
   },
-  async (input) => {
+  async ({problem}) => {
     const prompt = `You are a math solver. Solve the following problem and provide a step-by-step explanation.
 
-Problem: {{{problem}}}
+Problem: ${problem}
 
 Solution:`;
 
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
       prompt: prompt,
-      input: input,
     });
     return { result: output.text! };
   }
