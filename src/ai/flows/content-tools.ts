@@ -28,7 +28,19 @@ const enhanceTextFlow = ai.defineFlow(
   async ({ text, mode }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a text enhancement AI. The user wants to ${mode} the following text. Please provide the result.\n\nText:\n"""\n${text}\n"""\n\nResult:`,
+      prompt: `You are a text enhancement AI. Your task is to ${mode} the following text.
+- If the mode is 'grammar', correct any grammatical errors, spelling mistakes, and punctuation.
+- If the mode is 'improve', enhance the clarity, flow, and vocabulary of the text while preserving the original meaning.
+- If the mode is 'rewrite', rewrite the entire text to make it sound more professional and compelling.
+
+Return only the resulting text.
+
+Text:
+"""
+${text}
+"""
+
+Result:`,
       output: {
         schema: z.object({ result: z.string() })
       }
@@ -65,7 +77,15 @@ const generateEmailFlow = ai.defineFlow(
   async ({ context, tone, details }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are an email writing assistant. Write an email with the following requirements:\n- Purpose/Context: ${context}\n- Tone: ${tone}\n${details ? `- Additional Details: ${details}` : ''}\n\nGenerated Email:`,
+      prompt: `You are an expert email writing assistant. Write a complete email based on the following requirements. The email should include a subject line and a body.
+
+- Purpose/Context: ${context}
+- Tone: ${tone}
+${details ? `- Additional Details to include: ${details}` : ''}
+
+Format the output clearly, starting with "Subject:".
+
+Generated Email:`,
       output: {
         schema: z.object({ result: z.string() })
       }
@@ -100,7 +120,20 @@ const generateBlogPostFlow = ai.defineFlow(
   async ({ topic, length }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a blog post generator. Write a ${length} blog post about the following topic: "${topic}". Ensure it is well-structured and engaging.\n\nBlog Post:`,
+      prompt: `You are an expert blog post generator. Write a well-structured, engaging, and SEO-friendly blog post.
+
+Topic: "${topic}"
+Length: ${length} (short: ~300 words, medium: ~700 words, long: ~1200 words)
+
+The blog post should include:
+1. A catchy and relevant title.
+2. An introduction that hooks the reader.
+3. A body with clear headings for different sections.
+4. A concluding summary.
+
+Format the output using Markdown.
+
+Blog Post:`,
        output: {
         schema: z.object({ result: z.string() })
       }
@@ -134,7 +167,16 @@ const generateStudyMaterialFlow = ai.defineFlow(
   async ({ topic, type }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a study assistant. Generate study material for the topic "${topic}". The desired format is "${type}".\n\nStudy Material:`,
+      prompt: `You are a helpful study assistant. Generate study material for the given topic and format.
+
+Topic: "${topic}"
+Format: "${type}"
+
+- If 'explanation', provide a clear and comprehensive explanation of the topic.
+- If 'notes', create structured, bulleted notes summarizing the key points.
+- If 'flashcards', generate a list of questions and answers in the format "Q: [Question]\nA: [Answer]".
+
+Study Material:`,
        output: {
         schema: z.object({ result: z.string() })
       }
@@ -169,7 +211,14 @@ const explainProgrammingFlow = ai.defineFlow(
   async ({ code, language }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a code explainer. Explain the following ${language || ''} code snippet.\n\nCode:\n\`\`\`\n${code}\n\`\`\`\n\nExplanation:`,
+      prompt: `You are an expert code explainer. Provide a clear, line-by-line explanation of the following ${language || ''} code snippet. Explain the purpose, logic, and what each part of the code does.
+
+Code:
+\`\`\`${language || ''}
+${code}
+\`\`\`
+
+Explanation:`,
        output: {
         schema: z.object({ result: z.string() })
       }
@@ -203,7 +252,11 @@ const solveMathFlow = ai.defineFlow(
   async ({ problem }) => {
     const { output } = await ai.generate({
       model: 'googleai/gemini-2.5-flash',
-      prompt: `You are a math solver. Solve the following problem and provide a step-by-step explanation.\n\nProblem: ${problem}\n\nSolution:`,
+      prompt: `You are a math solver AI. Solve the following problem and provide a detailed, step-by-step explanation of how you arrived at the solution.
+
+Problem: ${problem}
+
+Solution:`,
        output: {
         schema: z.object({ result: z.string() })
       }

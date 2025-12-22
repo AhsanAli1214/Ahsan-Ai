@@ -2,7 +2,7 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
@@ -119,7 +119,7 @@ export default function ContentToolsPage() {
         case 'enhance':
           result = await enhanceTextAction({
             text: input,
-            mode: (options.enhanceMode as EnhanceTextInput['mode']) || 'grammar',
+            mode: (options.enhanceMode as EnhanceTextInput['mode']) || 'improve',
           });
           break;
         case 'email':
@@ -196,7 +196,7 @@ export default function ContentToolsPage() {
               <Card
                 key={tool.id}
                 className={cn(
-                  'flex cursor-pointer flex-col justify-between p-6 transition-all hover:shadow-lg hover:-translate-y-1',
+                  'flex cursor-pointer flex-col justify-between p-6 transition-all hover:shadow-lg hover:-translate-y-1 border-2',
                   tool.borderColor
                 )}
                 onClick={() => setSelectedTool(tool.id as Tool)}
@@ -222,7 +222,7 @@ export default function ContentToolsPage() {
                     tool.color
                   )}
                 >
-                  Get Started →
+                  Select Tool →
                 </div>
               </Card>
             ))}
@@ -237,97 +237,118 @@ export default function ContentToolsPage() {
         <div className="p-4 lg:p-6">
             <Button variant="ghost" onClick={() => { setSelectedTool(null); setInput(''); setOutput(''); setOptions({})}} className="mb-6">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Tools
+                Back to All Tools
             </Button>
 
-            <div className="mb-8">
-                <h2 className="font-headline text-3xl font-bold">{currentTool?.label}</h2>
-                <p className="mt-2 text-muted-foreground">
-                    {
-                        selectedTool === 'enhance' ? 'Choose your enhancement type and input text' :
-                        selectedTool === 'email' ? 'Select tone and provide context' :
-                        selectedTool === 'blog' ? 'Choose content length for your article' :
-                        selectedTool === 'study' ? 'Select learning material format' :
-                        selectedTool === 'code' ? 'Specify programming language and paste your code' :
-                        'Enter your equation or problem'
-                    }
-                </p>
+            <div className="mb-8 flex items-center gap-4">
+                 <div className={cn('flex h-16 w-16 items-center justify-center rounded-lg', currentTool?.bgColor)}>
+                    {currentTool && <currentTool.icon className={cn('h-8 w-8', currentTool.color)} />}
+                </div>
+                <div>
+                    <h2 className="font-headline text-3xl font-bold">{currentTool?.label}</h2>
+                    <p className="mt-1 text-muted-foreground">
+                        {
+                            selectedTool === 'enhance' ? 'Choose your enhancement type and input text.' :
+                            selectedTool === 'email' ? 'Select tone and provide context for the email.' :
+                            selectedTool === 'blog' ? 'Choose content length for your article.' :
+                            selectedTool === 'study' ? 'Select learning material format.' :
+                            selectedTool === 'code' ? 'Specify programming language and paste your code.' :
+                            'Enter your equation or problem to get a solution.'
+                        }
+                    </p>
+                </div>
             </div>
             
-            {/* Options */}
-            <div className="mb-6 space-y-4">
-                {selectedTool === 'enhance' && (
-                    <div className="flex flex-wrap gap-2">
-                        {(['grammar', 'improve', 'rewrite'] as EnhanceTextInput['mode'][]).map(opt => (
-                            <Button key={opt} variant={options.enhanceMode === opt ? 'default' : 'outline'} onClick={() => handleOptionChange('enhanceMode', opt)}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</Button>
-                        ))}
+            <Card>
+                <CardContent className="p-6">
+                    {/* Options */}
+                    <div className="mb-6 space-y-4">
+                        {selectedTool === 'enhance' && (
+                            <div className="flex flex-wrap gap-2">
+                                {(['grammar', 'improve', 'rewrite'] as EnhanceTextInput['mode'][]).map(opt => (
+                                    <Button key={opt} variant={(options.enhanceMode || 'improve') === opt ? 'default' : 'outline'} onClick={() => handleOptionChange('enhanceMode', opt)}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</Button>
+                                ))}
+                            </div>
+                        )}
+                        {selectedTool === 'email' && (
+                            <div className="space-y-4">
+                                <div className="flex flex-wrap gap-2">
+                                    {(['professional', 'casual', 'formal'] as GenerateEmailInput['tone'][]).map(tone => (
+                                        <Button key={tone} variant={(options.emailTone || 'professional') === tone ? 'default' : 'outline'} onClick={() => handleOptionChange('emailTone', tone)}>{tone.charAt(0).toUpperCase() + tone.slice(1)}</Button>
+                                    ))}
+                                </div>
+                                <Input placeholder="Additional details (optional)..." value={options.emailDetails || ''} onChange={e => handleOptionChange('emailDetails', e.target.value)} />
+                            </div>
+                        )}
+                        {selectedTool === 'blog' && (
+                            <div className="flex flex-wrap gap-2">
+                                {(['short', 'medium', 'long'] as GenerateBlogPostInput['length'][]).map(len => (
+                                    <Button key={len} variant={(options.blogLength || 'medium') === len ? 'default' : 'outline'} onClick={() => handleOptionChange('blogLength', len)}>{len.charAt(0).toUpperCase() + len.slice(1)}</Button>
+                                ))}
+                            </div>
+                        )}
+                        {selectedTool === 'study' && (
+                            <div className="flex flex-wrap gap-2">
+                                {(['explanation', 'notes', 'flashcards'] as GenerateStudyMaterialInput['type'][]).map(type => (
+                                    <Button key={type} variant={(options.studyType || 'explanation') === type ? 'default' : 'outline'} onClick={() => handleOptionChange('studyType', type)}>{type.charAt(0).toUpperCase() + type.slice(1)}</Button>
+                                ))}
+                            </div>
+                        )}
+                        {selectedTool === 'code' && (
+                            <Input placeholder="Language (e.g., JavaScript, Python)" value={options.codeLanguage || ''} onChange={e => handleOptionChange('codeLanguage', e.target.value)} />
+                        )}
                     </div>
-                )}
-                 {selectedTool === 'email' && (
-                    <div className="space-y-4">
-                        <div className="flex flex-wrap gap-2">
-                            {(['professional', 'casual', 'formal'] as GenerateEmailInput['tone'][]).map(tone => (
-                                <Button key={tone} variant={options.emailTone === tone ? 'default' : 'outline'} onClick={() => handleOptionChange('emailTone', tone)}>{tone.charAt(0).toUpperCase() + tone.slice(1)}</Button>
-                            ))}
-                        </div>
-                        <Input placeholder="Additional details (optional)..." value={options.emailDetails || ''} onChange={e => handleOptionChange('emailDetails', e.target.value)} />
-                    </div>
-                )}
-                {selectedTool === 'blog' && (
-                    <div className="flex flex-wrap gap-2">
-                        {(['short', 'medium', 'long'] as GenerateBlogPostInput['length'][]).map(len => (
-                            <Button key={len} variant={options.blogLength === len ? 'default' : 'outline'} onClick={() => handleOptionChange('blogLength', len)}>{len.charAt(0).toUpperCase() + len.slice(1)}</Button>
-                        ))}
-                    </div>
-                )}
-                {selectedTool === 'study' && (
-                    <div className="flex flex-wrap gap-2">
-                        {(['explanation', 'notes', 'flashcards'] as GenerateStudyMaterialInput['type'][]).map(type => (
-                            <Button key={type} variant={options.studyType === type ? 'default' : 'outline'} onClick={() => handleOptionChange('studyType', type)}>{type.charAt(0).toUpperCase() + type.slice(1)}</Button>
-                        ))}
-                    </div>
-                )}
-                {selectedTool === 'code' && (
-                    <Input placeholder="Language (e.g., JavaScript)" value={options.codeLanguage || ''} onChange={e => handleOptionChange('codeLanguage', e.target.value)} />
-                )}
-            </div>
 
-            {/* Input */}
-            <Textarea 
-                placeholder={
-                    selectedTool === 'enhance' ? 'Enter text to enhance...' :
-                    selectedTool === 'email' ? 'Email purpose/context...' :
-                    selectedTool === 'blog' ? 'Blog topic...' :
-                    selectedTool === 'study' ? 'Topic to study...' :
-                    selectedTool === 'code' ? 'Paste code here...' :
-                    'Enter math problem...'
-                }
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                className="min-h-[150px] text-base"
-            />
+                    {/* Input */}
+                    <Textarea 
+                        placeholder={
+                            selectedTool === 'enhance' ? 'Enter text to enhance...' :
+                            selectedTool === 'email' ? 'Enter the purpose or main points of your email...' :
+                            selectedTool === 'blog' ? 'Enter the topic for your blog post...' :
+                            selectedTool === 'study' ? 'Enter the topic you want to study...' :
+                            selectedTool === 'code' ? 'Paste your code snippet here...' :
+                            'Enter your math problem here...'
+                        }
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        className="min-h-[200px] text-base"
+                    />
 
-            <Button onClick={handleProcess} disabled={loading} size="lg" className="mt-4 w-full">
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? 'Processing...' : 'Generate'}
-            </Button>
+                    <Button onClick={handleProcess} disabled={loading} size="lg" className="mt-4 w-full">
+                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {loading ? 'Generating...' : 'Generate Result'}
+                    </Button>
+                </CardContent>
+            </Card>
             
             {/* Output */}
-            {output && (
-                <Card className="mt-8 p-6">
-                    <div className="flex items-center justify-between">
-                        <h3 className="font-headline text-xl font-semibold">Result</h3>
-                        <Button variant="ghost" size="sm" onClick={handleCopy}>
-                            <Copy className="mr-2 h-4 w-4" />
-                            Copy
-                        </Button>
-                    </div>
-                    <div className="prose prose-sm dark:prose-invert mt-4 max-w-none whitespace-pre-wrap">
-                        {output}
-                    </div>
+            {(loading || output) && (
+                <Card className="mt-8">
+                     <CardHeader className="flex flex-row items-center justify-between">
+                        <CardTitle>Result</CardTitle>
+                        {output && !loading && (
+                            <Button variant="ghost" size="sm" onClick={handleCopy}>
+                                <Copy className="mr-2 h-4 w-4" />
+                                Copy
+                            </Button>
+                        )}
+                    </CardHeader>
+                    <CardContent>
+                        {loading && (
+                            <div className="space-y-2">
+                                <div className="h-4 w-1/4 animate-pulse rounded-md bg-muted" />
+                                <div className="h-4 w-full animate-pulse rounded-md bg-muted" />
+                                <div className="h-4 w-3/4 animate-pulse rounded-md bg-muted" />
+                            </div>
+                        )}
+                        {output && (
+                           <div className="prose prose-sm dark:prose-invert mt-4 max-w-none whitespace-pre-wrap rounded-lg border bg-secondary/20 p-4">
+                                {output}
+                           </div>
+                        )}
+                    </CardContent>
                 </Card>
             )}
-
         </div>
     );
   };
