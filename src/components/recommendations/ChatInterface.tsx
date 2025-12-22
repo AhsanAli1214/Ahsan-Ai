@@ -1,7 +1,7 @@
 'use client';
 
 import { getRecommendationsAction, translateTextAction } from '@/app/actions';
-import { AhsanAILogo } from '@/components/icons';
+import { AhsanAILogo, AhsanAiHubLogo } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Textarea } from '@/components/ui/textarea';
@@ -60,7 +60,7 @@ function MessageBubble({ message, onTranslate }: { message: Message, onTranslate
     >
       {!isUser && (
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
-          <Bot className="h-5 w-5" />
+          <AhsanAiHubLogo className="h-5 w-5" />
         </div>
       )}
       <div
@@ -161,8 +161,8 @@ function MessageBubble({ message, onTranslate }: { message: Message, onTranslate
 function TypingIndicator() {
   return (
     <div className="flex items-start gap-3">
-       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
-          <Bot className="h-5 w-5" />
+       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/20 p-1.5 text-primary">
+          <AhsanAiHubLogo />
         </div>
       <div className="flex items-center space-x-1 rounded-lg border bg-card p-3">
         <span className="h-2 w-2 animate-pulse rounded-full bg-muted-foreground [animation-delay:-0.3s]" />
