@@ -1,5 +1,3 @@
-# Firebase Studio
+# AI Hub Express
 
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+This is a Next.js starter app for AI Hub Express, a curated hub for AI tools and resources.
