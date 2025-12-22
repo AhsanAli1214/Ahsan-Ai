@@ -86,13 +86,13 @@ function MessageBubble({
       )}
       <div
         className={cn(
-          'relative max-w-[80%] rounded-lg',
+          'relative max-w-[85%] sm:max-w-[80%] rounded-lg break-words',
           isUser
             ? 'rounded-br-none bg-primary text-primary-foreground'
             : 'rounded-bl-none border bg-card'
         )}
       >
-        <div className="prose prose-sm dark:prose-invert max-w-none p-3 break-words">
+        <div className="prose prose-sm dark:prose-invert max-w-none p-3">
              <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
