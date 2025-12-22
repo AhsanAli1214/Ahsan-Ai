@@ -2,14 +2,12 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   BookText,
   Code,
-  Cpu,
   HelpCircle,
   Lightbulb,
-  MessageCircle,
   Smile,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -103,41 +101,7 @@ export default function HomePage() {
             </div>
           </div>
           
-          {/* Stats & Mode Section */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            {/* Stats */}
-            <div className="grid grid-cols-2 gap-4 lg:col-span-2">
-                 <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                        Messages Sent
-                    </CardTitle>
-                    <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                    <div className="text-2xl font-bold">152</div>
-                    <p className="text-xs text-muted-foreground">
-                        21% more than last week
-                    </p>
-                    </CardContent>
-                </Card>
-                 <Card>
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">
-                        AI Responses
-                    </CardTitle>
-                    <Cpu className="h-4 w-4 text-muted-foreground" />
-                    </CardHeader>
-                    <CardContent>
-                    <div className="text-2xl font-bold">148</div>
-                    <p className="text-xs text-muted-foreground">
-                        19% more than last week
-                    </p>
-                    </CardContent>
-                </Card>
-            </div>
-            
-            {/* Mode */}
+          {/* Mode Section */}
             <Card className="flex items-center justify-between p-4 lg:col-span-1">
                 <div className='flex items-center'>
                     <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 text-accent">
@@ -152,8 +116,6 @@ export default function HomePage() {
                 <Link href="/settings">Change</Link>
               </Button>
             </Card>
-
-          </div>
 
 
           {/* Smart Prompts Section */}
