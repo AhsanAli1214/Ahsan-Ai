@@ -14,6 +14,8 @@ export default async function RecommendationsPage({
     initialPrompt?: string;
   };
 }) {
+  // This delay ensures Next.js treats the component as fully dynamic, resolving the searchParams access error.
+  await new Promise(resolve => setTimeout(resolve, 0));
   const initialPrompt = searchParams?.initialPrompt;
 
   return (
