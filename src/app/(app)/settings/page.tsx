@@ -21,12 +21,23 @@ import {
   Moon,
   Smile,
   Sun,
+  Trash2,
   Zap,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-
-type PersonalityMode = 'friendly' | 'professional' | 'creative' | 'teacher';
+import { useAppContext, type PersonalityMode } from '@/context/AppContext';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 const PERSONALITY_MODES = [
   {
@@ -63,51 +74,38 @@ const THEME_MODES = [
 
 export default function SettingsPage() {
   const { toast } = useToast();
-  const [personalityMode, setPersonalityMode] =
-    useState<PersonalityMode>('creative');
-  const [enableAnimations, setEnableAnimations] = useState(true);
-  const [enableTypingIndicator, setEnableTypingIndicator] = useState(true);
+  const {
+    personalityMode,
+    setPersonalityMode,
+    enableAnimations,
+    setEnableAnimations,
+    enableTypingIndicator,
+    setEnableTypingIndicator,
+  } = useAppContext();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    try {
-      const storedPersonality = localStorage.getItem(
-        'personalityMode'
-      ) as PersonalityMode;
-      const storedAnimations = localStorage.getItem('enableAnimations');
-      const storedTyping = localStorage.getItem('enableTypingIndicator');
-
-      if (storedPersonality) setPersonalityMode(storedPersonality);
-      if (storedAnimations)
-        setEnableAnimations(JSON.parse(storedAnimations));
-      if (storedTyping)
-        setEnableTypingIndicator(JSON.parse(storedTyping));
-    } catch (e) {
-      console.error('Could not load settings from localStorage', e);
-    }
   }, []);
 
-  const handlePersonalityChange = (mode: PersonalityMode) => {
-    setPersonalityMode(mode);
-    localStorage.setItem('personalityMode', mode);
-    toast({
-      title: 'Personality Updated',
-      description: `AI personality set to ${mode}.`,
-    });
+  const handleClearHistory = () => {
+    try {
+      localStorage.removeItem('chatHistory');
+      toast({
+        title: 'Chat History Cleared',
+        description: 'Your conversation history has been successfully deleted.',
+      });
+    } catch (e) {
+      console.error('Could not clear chat history from localStorage', e);
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'Could not clear chat history.',
+      });
+    }
   };
 
-  const handleAnimationChange = (value: boolean) => {
-    setEnableAnimations(value);
-    localStorage.setItem('enableAnimations', JSON.stringify(value));
-  };
-
-  const handleTypingIndicatorChange = (value: boolean) => {
-    setEnableTypingIndicator(value);
-    localStorage.setItem('enableTypingIndicator', JSON.stringify(value));
-  };
-  
   if (!mounted) {
     return (
       <div className="flex h-full flex-col">
@@ -167,7 +165,7 @@ export default function SettingsPage() {
                   <Card
                     key={mode.id}
                     onClick={() =>
-                      handlePersonalityChange(mode.id as PersonalityMode)
+                      setPersonalityMode(mode.id as PersonalityMode)
                     }
                     className={cn(
                       'cursor-pointer transition-all hover:shadow-md',
@@ -229,7 +227,7 @@ export default function SettingsPage() {
                 <Switch
                   id="animations-switch"
                   checked={enableAnimations}
-                  onCheckedChange={handleAnimationChange}
+                  onCheckedChange={setEnableAnimations}
                 />
               </div>
               <div className="flex items-center justify-between rounded-lg border p-4">
@@ -244,9 +242,41 @@ export default function SettingsPage() {
                 <Switch
                   id="typing-switch"
                   checked={enableTypingIndicator}
-                  onCheckedChange={handleTypingIndicatorChange}
+                  onCheckedChange={setEnableTypingIndicator}
                 />
               </div>
+            </CardContent>
+          </Card>
+          
+          {/* Data Management */}
+          <Card>
+             <CardHeader>
+              <CardTitle>Data Management</CardTitle>
+              <CardDescription>
+                Manage your local application data.
+              </CardDescription>
+            </CardHeader>
+             <CardContent>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="w-full sm:w-auto">
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Clear Chat History
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your chat history from this browser.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleClearHistory}>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
             </CardContent>
           </Card>
 

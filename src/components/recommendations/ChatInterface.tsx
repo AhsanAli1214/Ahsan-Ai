@@ -23,6 +23,7 @@ type Message = {
   content: string;
   originalContent?: string;
   translatedTo?: Language;
+  timestamp: number;
 };
 
 function MessageBubble({ 
@@ -227,7 +228,7 @@ export function ChatInterface({
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
-  const { personalityMode } = useAppContext();
+  const { personalityMode, enableAnimations, enableTypingIndicator } = useAppContext();
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
   const [isAudioBuffering, setIsAudioBuffering] = useState(false);
@@ -240,10 +241,35 @@ export function ChatInterface({
   }, [initialPrompt]);
   
   useEffect(() => {
-    if (scrollAreaRef.current) {
-        scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
+    try {
+      const savedHistory = localStorage.getItem('chatHistory');
+      if (savedHistory) {
+        const history = JSON.parse(savedHistory) as Message[];
+        const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        const recentHistory = history.filter(msg => msg.timestamp > sevenDaysAgo);
+        setMessages(recentHistory);
+      }
+    } catch (e) {
+        console.error('Could not load chat history from localStorage', e);
     }
-  }, [messages, isLoading]);
+  }, []);
+
+  useEffect(() => {
+    try {
+        if(messages.length > 0) {
+            localStorage.setItem('chatHistory', JSON.stringify(messages));
+        }
+    } catch(e) {
+        console.error('Could not save chat history to localStorage', e);
+    }
+  }, [messages]);
+  
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+        const behavior = enableAnimations ? 'smooth' : 'auto';
+        scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior });
+    }
+  }, [messages, isLoading, enableAnimations]);
 
   useEffect(() => {
     if (audio) {
@@ -317,6 +343,7 @@ export function ChatInterface({
       id: Date.now().toString(),
       role: 'user',
       content: input,
+      timestamp: Date.now(),
     };
     setMessages((prev) => [...prev, newUserMessage]);
     setIsLoading(true);
@@ -334,6 +361,7 @@ export function ChatInterface({
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: result.data.recommendations,
+        timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, newAiMessage]);
     } else {
@@ -347,6 +375,7 @@ export function ChatInterface({
         id: (Date.now() + 1).toString(),
         role: 'assistant',
         content: result.error || "Sorry, I couldn't process that. Please try again.",
+        timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, newErrorMessage]);
     }
@@ -420,7 +449,7 @@ export function ChatInterface({
                 />
             ))
           )}
-          {isLoading && <TypingIndicator />}
+          {isLoading && enableTypingIndicator && <TypingIndicator />}
         </div>
       </ScrollArea>
       <div className="border-t bg-background/95 p-4">

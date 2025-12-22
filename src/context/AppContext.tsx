@@ -18,6 +18,10 @@ interface AppContextType {
   setPersonalityMode: (mode: PersonalityMode) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
+  enableAnimations: boolean;
+  setEnableAnimations: (enabled: boolean) => void;
+  enableTypingIndicator: boolean;
+  setEnableTypingIndicator: (enabled: boolean) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -26,6 +30,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [geminiApiKey, setGeminiApiKeyValue] = useState<string | null>(null);
   const [personalityMode, setPersonalityModeValue] = useState<PersonalityMode>('creative');
   const [language, setLanguageValue] = useState<Language>('en');
+  const [enableAnimations, setEnableAnimationsValue] = useState(true);
+  const [enableTypingIndicator, setEnableTypingIndicatorValue] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -34,10 +40,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const storedApiKey = localStorage.getItem('geminiApiKey');
       const storedPersonality = localStorage.getItem('personalityMode') as PersonalityMode;
       const storedLanguage = localStorage.getItem('language') as Language;
+      const storedAnimations = localStorage.getItem('enableAnimations');
+      const storedTyping = localStorage.getItem('enableTypingIndicator');
 
       if (storedApiKey) setGeminiApiKeyValue(storedApiKey);
       if (storedPersonality) setPersonalityModeValue(storedPersonality);
       if (storedLanguage) setLanguageValue(storedLanguage);
+      if (storedAnimations) setEnableAnimationsValue(JSON.parse(storedAnimations));
+      if (storedTyping) setEnableTypingIndicatorValue(JSON.parse(storedTyping));
     } catch (e) {
       console.error('Could not load settings from localStorage', e);
     }
@@ -67,13 +77,33 @@ export function AppProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('language', lang);
     }
   };
+  
+  const setEnableAnimations = (enabled: boolean) => {
+    setEnableAnimationsValue(enabled);
+    if (isMounted) {
+      localStorage.setItem('enableAnimations', JSON.stringify(enabled));
+    }
+  };
+  
+  const setEnableTypingIndicator = (enabled: boolean) => {
+    setEnableTypingIndicatorValue(enabled);
+    if (isMounted) {
+      localStorage.setItem('enableTypingIndicator', JSON.stringify(enabled));
+    }
+  };
 
   if (!isMounted) {
     return null; // Or a loading spinner
   }
 
   return (
-    <AppContext.Provider value={{ geminiApiKey, setGeminiApiKey, personalityMode, setPersonalityMode, language, setLanguage }}>
+    <AppContext.Provider value={{ 
+        geminiApiKey, setGeminiApiKey, 
+        personalityMode, setPersonalityMode, 
+        language, setLanguage,
+        enableAnimations, setEnableAnimations,
+        enableTypingIndicator, setEnableTypingIndicator
+    }}>
       {children}
     </AppContext.Provider>
   );
