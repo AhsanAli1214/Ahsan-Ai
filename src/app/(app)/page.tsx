@@ -9,9 +9,14 @@ import {
   HelpCircle,
   Lightbulb,
   Smile,
+  Briefcase,
+  Zap,
+  BookOpen,
 } from 'lucide-react';
 import Link from 'next/link';
 import { AhsanAiHubLogo } from '@/components/icons';
+import { useAppContext, type PersonalityMode } from '@/context/AppContext';
+import { useMemo } from 'react';
 
 const QUICK_ACTIONS = [
   {
@@ -49,8 +54,24 @@ const SMART_PROMPTS = [
     { label: 'Create a recipe for...', prompt: 'Create a recipe for a vegan chocolate cake.' },
 ];
 
+const PERSONALITY_MODES_CONFIG: Record<
+  PersonalityMode,
+  { label: string; icon: React.ElementType }
+> = {
+  friendly: { label: 'Friendly', icon: Smile },
+  professional: { label: 'Professional', icon: Briefcase },
+  creative: { label: 'Creative', icon: Zap },
+  teacher: { label: 'Teacher', icon: BookOpen },
+};
+
 
 export default function HomePage() {
+  const { personalityMode } = useAppContext();
+
+  const currentMode = useMemo(() => {
+    return PERSONALITY_MODES_CONFIG[personalityMode] || PERSONALITY_MODES_CONFIG.creative;
+  }, [personalityMode]);
+  
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="Home" />
@@ -105,11 +126,11 @@ export default function HomePage() {
           <Card className="flex items-center justify-between p-4">
               <div className='flex items-center'>
                   <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/20 text-accent">
-                      <Smile className="h-5 w-5" />
+                      <currentMode.icon className="h-5 w-5" />
                   </div>
                   <div>
                       <p className="text-xs text-muted-foreground">Current Mode</p>
-                      <p className="font-semibold">Creative</p>
+                      <p className="font-semibold">{currentMode.label}</p>
                   </div>
               </div>
             <Button variant="ghost" size="sm" asChild>
