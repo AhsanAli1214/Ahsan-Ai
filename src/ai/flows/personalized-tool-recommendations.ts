@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import type { PersonalityMode } from '@/context/AppContext';
 
 const PersonalizedToolRecommendationsInputSchema = z.object({
   interests: z
@@ -18,6 +19,7 @@ const PersonalizedToolRecommendationsInputSchema = z.object({
   previousActivity: z
     .string()
     .describe('A description of the users recent activity.'),
+  personality: z.string().optional().describe('The personality mode for the AI assistant.'),
 });
 export type PersonalizedToolRecommendationsInput = z.infer<typeof PersonalizedToolRecommendationsInputSchema>;
 
@@ -49,22 +51,37 @@ Skills & Interest:
 - Problem solving & knowledge sharing
 `;
 
+const personalityPrompts = {
+  friendly: `Your persona is friendly, warm, and encouraging. Use a conversational and approachable tone. Feel free to use emojis where appropriate to make the interaction feel more personal.`,
+  professional: `Your persona is professional, precise, and efficient. Provide direct, formal, and well-structured answers. Focus on clarity and accuracy.`,
+  creative: `Your persona is creative, imaginative, and unconventional. Offer unique perspectives and think outside the box. Use vivid language and be inspiring.`,
+  teacher: `Your persona is that of a helpful teacher. Provide clear, educational explanations with examples. Break down complex topics into smaller, easy-to-understand parts. Be patient and supportive.`,
+};
+
 const prompt = ai.definePrompt({
   name: 'personalizedToolRecommendationsPrompt',
   input: {schema: PersonalizedToolRecommendationsInputSchema},
   output: {schema: PersonalizedToolRecommendationsOutputSchema},
-  prompt: `You are a powerful and friendly AI assistant for Ahsan AI Hub, an intelligent platform created by Ahsan Ali. Your purpose is to provide expert-level assistance in a natural, conversational manner.
+  prompt: `You are a powerful, intelligent, and friendly AI assistant for Ahsan AI Hub, a platform created by Ahsan Ali. Your primary purpose is to provide expert-level assistance in a comprehensive, clear, and conversational manner.
+
+**Current Persona**:
+{{#if personality}}
+{{{personality}}}
+{{else}}
+Act as a generally helpful and knowledgeable assistant.
+{{/if}}
 
 Your capabilities include:
 - Engaging in natural, helpful conversation.
-- Answering questions on a wide range of topics.
-- Assisting with complex tasks like writing, coding, brainstorming, and problem-solving.
+- Answering questions on a wide range of topics with depth and explanation.
+- Assisting with complex tasks like writing, coding, brainstorming, and problem-solving by providing complete, well-reasoned answers.
 - Recommending AI tools from within the Ahsan AI Hub platform when relevant.
 
 Guiding Principles:
-- Strive for accuracy, clarity, and conciseness in your responses.
-- Adapt your tone and style to the user's needs, but maintain a helpful and positive demeanor.
-- Structure longer responses with Markdown for readability (headings, lists, bolding).
+- **Be Comprehensive**: Always provide complete and thorough answers. Don't just give a short response; explain the 'why' and the 'how'.
+- **Be Accurate**: Strive for accuracy and clarity. Double-check your information.
+- **Structure Your Responses**: Use Markdown for readability (headings, lists, bolding) to make complex information easy to digest.
+- **Maintain Your Persona**: Consistently reflect the personality mode selected by the user.
 
 Creator Information:
 - When asked about your creator, developer, or "who made you", you MUST state that you were created by Ahsan Ali.
@@ -76,7 +93,7 @@ ${DEVELOPER_INFO}
 User's current message: {{{interests}}}
 User's previous activity (for context, do not mention it directly): {{{previousActivity}}}
 
-Your expert response:
+Your expert and comprehensive response:
   `,
 });
 
@@ -87,7 +104,9 @@ const personalizedToolRecommendationsFlow = ai.defineFlow(
     outputSchema: PersonalizedToolRecommendationsOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const personalityPrompt = personalityPrompts[input.personality as keyof typeof personalityPrompts] || '';
+
+    const {output} = await prompt({...input, personality: personalityPrompt});
     return output!;
   }
 );

@@ -111,7 +111,7 @@ export async function solveMathAction(input: SolveMathInput): Promise<ContentToo
   }
 }
 
-export async function translateTextAction(input: {text: string; targetLanguage: string;}): Promise<{ success: true, data: string } | { success: false, error: string }> {
+export async function translateTextAction(input: TranslateTextInput): Promise<{ success: true, data: string } | { success: false, error: string }> {
   try {
     const { translatedText } = await translateText({text: input.text, targetLanguage: input.targetLanguage});
     return { success: true, data: translatedText };

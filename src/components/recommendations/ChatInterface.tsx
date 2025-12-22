@@ -354,6 +354,7 @@ export function ChatInterface({
     const result = await getRecommendationsAction({
       interests: input,
       previousActivity,
+      personality: personalityMode,
     });
 
     if (result.success && result.data) {
