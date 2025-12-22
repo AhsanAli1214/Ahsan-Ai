@@ -1,3 +1,5 @@
+'use client';
+
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,18 +11,9 @@ import {
   Lightbulb,
   MessageCircle,
   Smile,
-  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { getToolImage, type AiTool } from '@/lib/data';
-import { AhsanAILogo } from '@/components/icons';
-import type { Metadata } from 'next';
-import { useAuth } from '@/contexts/auth-context';
-
-export const metadata: Metadata = {
-  title: 'AI Hub Express',
-};
+import { AIHubExpressLogo } from '@/components/icons';
 
 const QUICK_ACTIONS = [
   {
@@ -69,7 +62,7 @@ export default function HomePage() {
           <div className="rounded-lg bg-accent p-6 text-accent-foreground shadow-md md:p-8">
             <div className="flex items-center gap-4 md:gap-6">
               <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-accent/80">
-                <AhsanAILogo className="h-12 w-12 text-accent-foreground" />
+                <AIHubExpressLogo className="h-12 w-12 text-accent-foreground" />
               </div>
               <div>
                 <h1 className="font-headline text-3xl font-bold md:text-4xl">
@@ -156,7 +149,7 @@ export default function HomePage() {
                     </div>
                 </div>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/features">Change</Link>
+                <Link href="/settings">Change</Link>
               </Button>
             </Card>
 
