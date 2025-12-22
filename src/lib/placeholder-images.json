@@ -1,54 +1,6 @@
 {
   "placeholderImages": [
     {
-      "id": "tool-writer-ai",
-      "description": "An AI writing assistant",
-      "imageUrl": "https://images.unsplash.com/photo-1663662426323-7ba7aeb4f831?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3cml0aW5nJTIwcm9ib3R8ZW58MHx8fHwxNzY2MzA1NTkyfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "writing robot"
-    },
-    {
-      "id": "tool-artisan-ai",
-      "description": "An AI image generator",
-      "imageUrl": "https://images.unsplash.com/photo-1552250575-e508473b090f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhYnN0cmFjdCUyMGFydHxlbnwwfHx8fDE3NjYyOTQzMjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "abstract art"
-    },
-    {
-      "id": "tool-code-buddy",
-      "description": "An AI coding assistant",
-      "imageUrl": "https://images.unsplash.com/photo-1529429612779-c8e40ef2f36d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb2RlJTIwc2NyZWVufGVufDB8fHx8MTc2NjMzMjMwMXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "code screen"
-    },
-    {
-      "id": "tool-taskmaster",
-      "description": "An AI productivity tool",
-      "imageUrl": "https://images.unsplash.com/photo-1765867967050-30db3e7a3be8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2hlY2tsaXN0JTIwdGFza3xlbnwwfHx8fDE3NjYzODE0Mzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "checklist task"
-    },
-    {
-      "id": "tool-story-weaver",
-      "description": "An AI for creating stories",
-      "imageUrl": "https://images.unsplash.com/photo-1532153955177-f59af40d6472?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxib29rJTIwcGFnZXN8ZW58MHx8fHwxNzY2MzgxNDM5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "book pages"
-    },
-    {
-      "id": "tool-pixel-perfect",
-      "description": "An AI image upscaler",
-      "imageUrl": "https://images.unsplash.com/flagged/photo-1572392640988-ba48d1a74457?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwaXhlbCUyMGFydHxlbnwwfHx8fDE3NjYzNTA5NTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "pixel art"
-    },
-    {
-      "id": "tool-dev-deploy",
-      "description": "An AI for automated deployments",
-      "imageUrl": "https://images.unsplash.com/photo-1667264501379-c1537934c7ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxzZXJ2ZXIlMjBkZXBsb3ltZW50fGVufDB8fHx8MTc2NjM4MTQzOXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "server deployment"
-    },
-    {
-      "id": "tool-focus-flow",
-      "description": "An AI to optimize your workflow",
-      "imageUrl": "https://images.unsplash.com/photo-1743385779347-1549dabf1320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmbG93JTIwY2hhcnR8ZW58MHx8fHwxNzY2MjYyNDc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "flow chart"
-    },
-    {
       "id": "developer-avatar",
       "description": "A portrait of the developer",
       "imageUrl": "https://i.postimg.cc/tgnh55CZ/developer.jpg",
@@ -57,13 +9,13 @@
     {
       "id": "content-tool-enhance",
       "description": "Text Enhancer Tool",
-      "imageUrl": "https://images.unsplash.com/photo-1588725838521-ed1a6f059a5d?q=80&w=2070&auto=format&fit=crop",
+      "imageUrl": "https://images.unsplash.com/photo-1588725838521-ed1a6f059a5d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "editing text"
     },
     {
       "id": "content-tool-email",
       "description": "Email Writer Tool",
-      "imageUrl": "https://images.unsplash.com/photo-1557853123-3c42815f9b60?q=80&w=2070&auto=format&fit=crop",
+      "imageUrl": "https://images.unsplash.com/photo-1557853123-3c42815f9b60?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       "imageHint": "writing email"
     },
     {
