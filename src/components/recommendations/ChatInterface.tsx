@@ -218,9 +218,9 @@ const SMART_PROMPTS = [
 ];
 
 export function ChatInterface({
-  searchParams,
+  initialPrompt,
 }: {
-  searchParams?: { initialPrompt?: string };
+  initialPrompt?: string;
 }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -234,10 +234,10 @@ export function ChatInterface({
 
 
   useEffect(() => {
-    if (searchParams?.initialPrompt) {
-      setInput(searchParams.initialPrompt);
+    if (initialPrompt) {
+      setInput(initialPrompt);
     }
-  }, [searchParams]);
+  }, [initialPrompt]);
   
   useEffect(() => {
     if (scrollAreaRef.current) {

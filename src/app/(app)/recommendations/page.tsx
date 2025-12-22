@@ -14,11 +14,12 @@ export default function RecommendationsPage({
     initialPrompt?: string;
   };
 }) {
+  const initialPrompt = searchParams?.initialPrompt || '';
   return (
     <div className="flex h-full flex-col">
       <AppHeader title="AI Chat" />
       <div className="flex-1 overflow-hidden">
-        <ChatInterface searchParams={searchParams} />
+        <ChatInterface initialPrompt={initialPrompt} />
       </div>
     </div>
   );
