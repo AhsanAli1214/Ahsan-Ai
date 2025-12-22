@@ -80,8 +80,8 @@ export default function HomePage() {
           {/* Hero Section */}
           <div className="rounded-lg bg-accent p-6 text-accent-foreground shadow-md md:p-8">
             <div className="flex items-center gap-4 md:gap-6">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-accent/80">
-                <AhsanAiHubLogo className="h-12 w-12 text-accent-foreground" />
+              <div className="relative flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-accent/80">
+                <AhsanAiHubLogo fill className="text-accent-foreground" />
               </div>
               <div>
                 <h1 className="font-headline text-3xl font-bold md:text-4xl">
