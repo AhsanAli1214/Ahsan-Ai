@@ -77,7 +77,7 @@ function MessageBubble({
   return (
     <div
       className={cn(
-        'flex items-start gap-3',
+        'flex items-end gap-3',
         isUser ? 'justify-end' : 'justify-start'
       )}
     >
@@ -196,7 +196,7 @@ function MessageBubble({
 
 function TypingIndicator() {
   return (
-    <div className="flex items-start gap-3">
+    <div className="flex items-end gap-3">
        <AhsanAiHubLogo className="h-10 w-10 shrink-0" />
       <div className="flex items-center space-x-1 rounded-lg border bg-card p-3">
         <span className="h-2 w-2 animate-pulse rounded-full bg-muted-foreground [animation-delay:-0.3s]" />
