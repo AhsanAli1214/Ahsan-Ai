@@ -79,8 +79,8 @@ export default function AboutPage() {
           {/* Developer Hero Section */}
           <Card className="overflow-hidden shadow-lg">
             <CardContent className="p-0">
-              <div className="grid grid-cols-1 md:grid-cols-3">
-                <div className="relative aspect-[4/3] md:aspect-square">
+              <div className="grid grid-cols-1 items-center md:grid-cols-3">
+                <div className="relative h-full w-full min-h-[250px] md:col-span-1">
                   {developerImage && (
                     <Image
                       src={developerImage.imageUrl}
