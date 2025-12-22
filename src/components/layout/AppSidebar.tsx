@@ -15,7 +15,7 @@ import { AIHubExpressLogo } from '@/components/icons';
 import { categories } from '@/lib/data';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { LayoutGrid, Sparkles, Heart, Home } from 'lucide-react';
+import { LayoutGrid, Sparkles, Heart, Home, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSidebar } from '@/components/ui/sidebar';
@@ -25,6 +25,7 @@ const mainNav = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'Browse Tools', href: '/browse', icon: LayoutGrid },
   { name: 'Get Recommendations', href: '/recommendations', icon: Sparkles },
+  { name: 'About', href: '/about', icon: Info },
 ];
 
 export function AppSidebar() {

@@ -47,6 +47,12 @@
       "description": "An AI to optimize your workflow",
       "imageUrl": "https://images.unsplash.com/photo-1743385779347-1549dabf1320?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxmbG93JTIwY2hhcnR8ZW58MHx8fHwxNzY2MjYyNDc4fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "flow chart"
+    },
+    {
+      "id": "developer-avatar",
+      "description": "A portrait of the developer",
+      "imageUrl": "https://images.unsplash.com/photo-1737575655055-e3967cbefd03?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZGV2ZWxvcGVyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY2MzAwNDk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "developer portrait"
     }
   ]
 }
