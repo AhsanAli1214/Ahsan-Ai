@@ -310,7 +310,7 @@ export default function ContentToolsPage() {
 
     return (
       <div className="p-4 lg:p-6">
-        <div className="mx-auto max-w-4xl space-y-8">
+        <div className="space-y-8">
             <Button variant="ghost" onClick={() => { setSelectedTool(null); setInput(''); setOutput(''); setOptions({})}} className="mb-2">
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to All Tools
