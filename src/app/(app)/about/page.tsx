@@ -220,6 +220,7 @@ export default function AboutPage() {
           <footer className="py-8 text-center text-muted-foreground">
             <AhsanAiHubLogo className="mx-auto mb-4 h-10 w-10 opacity-60" />
             <p className="text-sm">Crafted with passion by Ahsan Ali</p>
+            <p className="text-sm">A❤️N</p>
             <p className="mt-2 text-xs">
               © {new Date().getFullYear()} Ahsan Ai Hub. All rights reserved.
             </p>
