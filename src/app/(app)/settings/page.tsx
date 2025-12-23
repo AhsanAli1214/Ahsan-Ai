@@ -2,7 +2,6 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
-import { AWSAppInstall } from '@/components/AWSSAppInstall';
 import {
   Card,
   CardContent,
@@ -387,19 +386,6 @@ export default function SettingsPage() {
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
-            </CardContent>
-          </Card>
-
-          {/* AWS & App Installation */}
-          <Card>
-            <CardHeader>
-              <CardTitle>AWS & Mobile/Desktop Apps</CardTitle>
-              <CardDescription>
-                Download and set up Ahsan AI Hub for Android, Desktop, and AWS backend.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <AWSAppInstall />
             </CardContent>
           </Card>
 
