@@ -78,7 +78,7 @@ function MessageBubble({
     <div className="group relative flex flex-col">
        <div
         className={cn(
-          'flex items-start gap-3 w-full',
+          'flex items-start gap-2 sm:gap-3 w-full',
           isUser ? 'justify-end' : 'justify-start'
         )}
       >
@@ -87,7 +87,7 @@ function MessageBubble({
         )}
         <div
           className={cn(
-            'relative max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-2xl p-4 break-words overflow-hidden',
+            'relative max-w-[85%] xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-2xl p-3 sm:p-4 break-words overflow-hidden',
             isUser
               ? 'rounded-br-lg bg-primary text-primary-foreground'
               : 'rounded-bl-lg border bg-card'
@@ -425,23 +425,23 @@ export function ChatInterface({
 
   return (
     <div className="relative flex h-full flex-col bg-background w-full">
-      <ScrollArea className="flex-1 w-full" ref={scrollAreaRef} onScroll={handleScroll}>
-        <div className="mx-auto w-full max-w-4xl space-y-4 px-4 py-6">
+      <ScrollArea className="flex-1 w-full overflow-hidden" ref={scrollAreaRef} onScroll={handleScroll}>
+        <div className="mx-auto w-full max-w-4xl space-y-3 sm:space-y-4 px-3 sm:px-4 py-4 sm:py-6">
           {messages.length === 0 && !isLoading ? (
-            <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
-                <AhsanAiHubLogo className="h-24 w-24" />
+            <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 sm:gap-6 text-center px-4">
+                <AhsanAiHubLogo className="h-16 w-16 sm:h-24 sm:w-24" />
                 <div>
-                    <h2 className="text-2xl font-semibold">How can I help you today?</h2>
-                    <p className="mt-1 text-muted-foreground">Start a conversation or try one of these prompts.</p>
+                    <h2 className="text-xl sm:text-2xl font-semibold">How can I help you today?</h2>
+                    <p className="mt-1 text-sm sm:text-base text-muted-foreground">Start a conversation or try one of these prompts.</p>
                 </div>
-                 <div className="w-full max-w-md space-y-3">
+                 <div className="w-full max-w-sm space-y-2 sm:space-y-3">
                     {SMART_PROMPTS.map((prompt) => (
-                        <Card key={prompt.label} className="cursor-pointer p-4 text-left transition-all hover:bg-accent/10" onClick={() => handlePromptClick(prompt.prompt)}>
-                            <div className="flex items-center gap-3">
-                                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary">
-                                    <Lightbulb className="h-5 w-5 text-secondary-foreground" />
+                        <Card key={prompt.label} className="cursor-pointer p-3 sm:p-4 text-left transition-all hover:bg-accent/10 active:bg-accent/20" onClick={() => handlePromptClick(prompt.prompt)}>
+                            <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="flex h-8 w-8 items-center justify-center shrink-0 rounded-lg bg-secondary">
+                                    <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-secondary-foreground" />
                                 </div>
-                                <span className="flex-1 font-medium">{prompt.label}</span>
+                                <span className="flex-1 font-medium text-sm sm:text-base line-clamp-2">{prompt.label}</span>
                             </div>
                         </Card>
                     ))}
@@ -464,15 +464,15 @@ export function ChatInterface({
         </div>
       </ScrollArea>
        {showScrollButton && (
-        <div className="absolute bottom-24 right-4 z-10 md:bottom-20">
-            <Button size="icon" className="rounded-full shadow-lg" onClick={() => scrollToBottom('smooth')}>
+        <div className="absolute bottom-20 sm:bottom-24 right-3 sm:right-4 z-10">
+            <Button size="icon" className="rounded-full shadow-lg h-10 w-10 sm:h-11 sm:w-11" onClick={() => scrollToBottom('smooth')}>
                 <ChevronDown className="h-5 w-5" />
             </Button>
         </div>
       )}
-      <div className="border-t bg-background/95 px-4 py-3 sticky bottom-0">
-        <div className="mx-auto max-w-3xl">
-           <div className="flex items-end gap-3 rounded-lg border bg-card p-2 shadow-sm">
+      <div className="border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 w-full">
+        <div className="mx-auto w-full max-w-4xl">
+           <div className="flex items-end gap-2 sm:gap-3 rounded-lg border bg-card p-2 sm:p-3 shadow-sm">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -483,11 +483,11 @@ export function ChatInterface({
                 }
                 }}
                 placeholder="Ask me anything..."
-                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 text-sm sm:text-base"
                 rows={1}
                 disabled={isLoading}
             />
-            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-9 w-9 shrink-0">
+            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-8 w-8 sm:h-9 sm:w-9 shrink-0">
                 <Send className="h-4 w-4" />
                 <span className="sr-only">Send</span>
             </Button>
