@@ -80,11 +80,12 @@ export default function HomePage() {
 
   // Function to trigger app installation
   const handleInstallApp = async () => {
+    // Check if the beforeinstallprompt event is available
     const event = (window as any).lastBeforeInstallPromptEvent;
     
     if (event) {
       try {
-        event.prompt();
+        await event.prompt();
         const { outcome } = await event.userChoice;
         if (outcome === 'accepted') {
           console.log('App installed');
@@ -92,6 +93,9 @@ export default function HomePage() {
       } catch (error) {
         console.error('Installation failed:', error);
       }
+    } else {
+      // If no event available, show a message to the user
+      alert('Installation is not available on your browser. Try using the install button in the address bar or menu.');
     }
   };
 

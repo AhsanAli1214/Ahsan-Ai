@@ -77,16 +77,22 @@ export default function RootLayout({
         <VercelAnalytics />
         <Script id="onesignal-init" strategy="afterInteractive">
           {`
-            window.OneSignalDeferred = window.OneSignalDeferred || [];
-            OneSignalDeferred.push(async function(OneSignal) {
-              await OneSignal.init({
-                appId: "8a693786-f992-42d3-adfb-56a230adcea5",
-                safari_web_id: "web.onesignal.auto.1592f4e8-7629-48b3-b916-fa35b5011e11",
-                notifyButton: {
-                  enable: true,
-                },
+            if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1')) {
+              window.OneSignalDeferred = window.OneSignalDeferred || [];
+              OneSignalDeferred.push(async function(OneSignal) {
+                try {
+                  await OneSignal.init({
+                    appId: "8a693786-f992-42d3-adfb-56a230adcea5",
+                    safari_web_id: "web.onesignal.auto.1592f4e8-7629-48b3-b916-fa35b5011e11",
+                    notifyButton: {
+                      enable: true,
+                    },
+                  });
+                } catch (error) {
+                  console.log('OneSignal initialization skipped for development environment');
+                }
               });
-            });
+            }
           `}
         </Script>
       </body>
