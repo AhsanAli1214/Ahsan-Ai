@@ -481,7 +481,7 @@ export default function ContentToolsPage() {
                                           ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4" {...props} />,
                                           ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4" {...props} />,
                                           li: ({node, ...props}) => <li className="mb-2" {...props} />,
-                                          code: ({node, inline, className, children, ...props}) => {
+                                          code: ({node, inline, className, children, ...props}: any) => {
                                             const match = /language-(\w+)/.exec(className || '')
                                             return !inline ? (
                                               <div className="my-4 rounded-md bg-card p-4 overflow-x-auto">

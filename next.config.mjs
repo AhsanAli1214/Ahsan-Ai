@@ -25,6 +25,12 @@ const config = {
       },
     ],
   },
+  webpack: (config, { isServer }) => {
+    config.ignoreWarnings = [
+      { module: /require-in-the-middle/ },
+    ];
+    return config;
+  },
 };
 
 export default config;
