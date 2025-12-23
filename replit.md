@@ -38,3 +38,10 @@ The application uses Google AI through Genkit. Ensure the following environment 
 Configured for Replit Autoscale deployment:
 - Build: `pnpm run build`
 - Start: `pnpm run start`
+
+## Configuration Files
+- `.npmrc` - npm configuration to suppress peer dependency warnings
+- `vercel.json` - Vercel deployment configuration for pnpm support
+- `next.config.mjs` - Next.js configuration with image optimization
+- `tailwind.config.ts` - Tailwind CSS configuration with custom theme
+- `tsconfig.json` - TypeScript compiler options
