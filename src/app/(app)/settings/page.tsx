@@ -23,10 +23,13 @@ import {
   Sun,
   Trash2,
   Zap,
+  MessageCircle,
+  MessageSquare,
+  MessageSquareMore,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
-import { useAppContext, type PersonalityMode } from '@/context/AppContext';
+import { useAppContext, type PersonalityMode, type ResponseLength } from '@/context/AppContext';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -72,11 +75,34 @@ const THEME_MODES = [
   { id: 'system', label: 'System', icon: Computer },
 ];
 
+const RESPONSE_LENGTH_MODES = [
+  {
+    id: 'short',
+    label: 'Short',
+    description: 'Quick, concise answers',
+    icon: MessageCircle,
+  },
+  {
+    id: 'medium',
+    label: 'Medium',
+    description: 'Balanced, detailed responses',
+    icon: MessageSquare,
+  },
+  {
+    id: 'explained',
+    label: 'Explained',
+    description: 'In-depth explanations',
+    icon: MessageSquareMore,
+  },
+];
+
 export default function SettingsPage() {
   const { toast } = useToast();
   const {
     personalityMode,
     setPersonalityMode,
+    responseLength,
+    setResponseLength,
     enableAnimations,
     setEnableAnimations,
     enableTypingIndicator,
@@ -147,6 +173,57 @@ export default function SettingsPage() {
                   );
                 })}
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Response Length */}
+          <Card>
+            <CardHeader>
+              <CardTitle>AI Response Length</CardTitle>
+              <CardDescription>
+                Choose how detailed the AI responses should be
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {RESPONSE_LENGTH_MODES.map((mode) => {
+                const isActive = responseLength === mode.id;
+                return (
+                  <Card
+                    key={mode.id}
+                    onClick={() =>
+                      setResponseLength(mode.id as ResponseLength)
+                    }
+                    className={cn(
+                      'cursor-pointer transition-all hover:shadow-md',
+                      isActive
+                        ? 'border-accent ring-2 ring-accent'
+                        : 'border'
+                    )}
+                  >
+                    <CardContent className="flex flex-col items-center gap-2 p-4">
+                      <div
+                        className={cn(
+                          'flex h-10 w-10 items-center justify-center rounded-lg',
+                          isActive
+                            ? 'bg-accent text-accent-foreground'
+                            : 'bg-secondary text-secondary-foreground'
+                        )}
+                      >
+                        <mode.icon className="h-5 w-5" />
+                      </div>
+                      <h3 className="font-semibold">{mode.label}</h3>
+                      <p className="text-xs text-muted-foreground text-center">
+                        {mode.description}
+                      </p>
+                      {isActive && (
+                        <div className="mt-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-accent-foreground">
+                          <Check className="h-4 w-4" />
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </CardContent>
           </Card>
 

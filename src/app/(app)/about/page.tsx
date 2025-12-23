@@ -152,16 +152,49 @@ export default function AboutPage() {
           </div>
 
           {/* Bio Section */}
-          <Card>
+          <Card className="border-accent/30">
             <CardHeader>
-              <h2 className="font-headline text-xl font-semibold">About Me</h2>
+              <h2 className="font-headline text-2xl font-semibold">About Me</h2>
             </CardHeader>
-            <CardContent className="space-y-4 text-muted-foreground">
-              <p>
-                I'm a CIT student and passionate developer with a deep interest
-                in AI, automation, and building modern applications that solve
-                real problems.
+            <CardContent className="space-y-6 text-muted-foreground">
+              <p className="leading-relaxed">
+                I'm <span className="font-semibold text-foreground">Ahsan Ali</span>, a Computer & Information Technology (CIT) student, AI enthusiast, and passionate software developer focused on building intelligent tools that solve real-world problems.
               </p>
+              
+              <div className="rounded-lg bg-accent/10 p-6 border border-accent/20">
+                <h3 className="font-semibold text-foreground mb-3">Core Expertise</h3>
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <span className="text-accent">▪</span> Artificial Intelligence & Automation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-accent">▪</span> Mobile App Development
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-accent">▪</span> Full-stack Web Systems
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-accent">▪</span> Natural Language Processing
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-accent">▪</span> UI/UX Chatbot Design
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="font-semibold text-foreground mb-3">Mission & Vision</h3>
+                <p className="leading-relaxed">
+                  My mission is to make advanced AI technology accessible, useful, and simple for everyone—whether for productivity, creativity, education, or business use. I believe technology should help people, not complicate their lives.
+                </p>
+              </div>
+
+              <div className="rounded-lg bg-accent/10 p-6 border border-accent/20">
+                <h3 className="font-semibold text-foreground mb-3">Why Ahsan AI Hub?</h3>
+                <p className="text-sm leading-relaxed">
+                  Ahsan AI Hub is my personal AI project designed to assist with everyday tasks, boost productivity, and support students, freelancers, and professionals. It provides creative and technical assistance while being fast, reliable, easy to use, and multi-functional—bringing advanced AI features to everyone.
+                </p>
+              </div>
             </CardContent>
           </Card>
 

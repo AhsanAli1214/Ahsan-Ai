@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type PersonalityMode = 'friendly' | 'professional' | 'creative' | 'teacher';
+export type ResponseLength = 'short' | 'medium' | 'explained';
 export type Language = 'en' | 'es' | 'fr' | 'de' | 'ja' | 'zh' | 'ar' | 'pt' | 'ko' | 'it' | 'hi' | 'tr' | 'ru' | 'nl' | 'sv' | 'pl' | 'id' | 'th' | 'vi' | 'tl' | 'el' | 'he' | 'ur';
 
 export type Message = {
@@ -16,6 +17,8 @@ interface AppContextType {
   setGeminiApiKey: (key: string | null) => void;
   personalityMode: PersonalityMode;
   setPersonalityMode: (mode: PersonalityMode) => void;
+  responseLength: ResponseLength;
+  setResponseLength: (length: ResponseLength) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
   enableAnimations: boolean;
@@ -30,6 +33,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export function AppProvider({ children }: { children: ReactNode }) {
   const [geminiApiKey, setGeminiApiKeyValue] = useState<string | null>(null);
   const [personalityMode, setPersonalityModeValue] = useState<PersonalityMode>('creative');
+  const [responseLength, setResponseLengthValue] = useState<ResponseLength>('medium');
   const [language, setLanguageValue] = useState<Language>('en');
   const [enableAnimations, setEnableAnimationsValue] = useState(true);
   const [enableTypingIndicator, setEnableTypingIndicatorValue] = useState(true);
@@ -40,12 +44,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try {
       const storedApiKey = localStorage.getItem('geminiApiKey');
       const storedPersonality = localStorage.getItem('personalityMode') as PersonalityMode;
+      const storedResponseLength = localStorage.getItem('responseLength') as ResponseLength;
       const storedLanguage = localStorage.getItem('language') as Language;
       const storedAnimations = localStorage.getItem('enableAnimations');
       const storedTyping = localStorage.getItem('enableTypingIndicator');
 
       if (storedApiKey) setGeminiApiKeyValue(storedApiKey);
       if (storedPersonality) setPersonalityModeValue(storedPersonality);
+      if (storedResponseLength) setResponseLengthValue(storedResponseLength);
       if (storedLanguage) setLanguageValue(storedLanguage);
       if (storedAnimations) setEnableAnimationsValue(JSON.parse(storedAnimations));
       if (storedTyping) setEnableTypingIndicatorValue(JSON.parse(storedTyping));
@@ -69,6 +75,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setPersonalityModeValue(mode);
     if (isMounted) {
       localStorage.setItem('personalityMode', mode);
+    }
+  };
+
+  const setResponseLength = (length: ResponseLength) => {
+    setResponseLengthValue(length);
+    if (isMounted) {
+      localStorage.setItem('responseLength', length);
     }
   };
 
@@ -107,6 +120,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     <AppContext.Provider value={{ 
         geminiApiKey, setGeminiApiKey, 
         personalityMode, setPersonalityMode, 
+        responseLength, setResponseLength,
         language, setLanguage,
         enableAnimations, setEnableAnimations,
         enableTypingIndicator, setEnableTypingIndicator,

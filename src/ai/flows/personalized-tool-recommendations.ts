@@ -7,7 +7,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import type { PersonalityMode } from '@/context/AppContext';
+import type { PersonalityMode, ResponseLength } from '@/context/AppContext';
 
 const PersonalizedToolRecommendationsInputSchema = z.object({
   interests: z
@@ -17,6 +17,7 @@ const PersonalizedToolRecommendationsInputSchema = z.object({
     .string()
     .describe('A description of the users recent activity.'),
   personality: z.string().optional().describe('The personality mode for the AI assistant.'),
+  responseLength: z.string().optional().describe('The desired response length: short, medium, or explained.'),
 });
 export type PersonalizedToolRecommendationsInput = z.infer<typeof PersonalizedToolRecommendationsInputSchema>;
 
@@ -55,6 +56,12 @@ const personalityPrompts = {
   teacher: `Your persona is that of a helpful teacher. Provide clear, educational explanations with examples. Break down complex topics into smaller, easy-to-understand parts. Be patient and supportive.`,
 };
 
+const responseLengthPrompts = {
+  short: `Keep your response concise and to the point. Provide only the essential information in 1-3 sentences.`,
+  medium: `Provide a balanced response with enough detail to be helpful. Use 2-4 sentences with examples where relevant.`,
+  explained: `Provide a comprehensive and detailed explanation. Go in-depth with examples, context, and thorough reasoning. Use multiple paragraphs if needed.`,
+};
+
 const prompt = ai.definePrompt({
   name: 'personalizedToolRecommendationsPrompt',
   input: {schema: PersonalizedToolRecommendationsInputSchema},
@@ -68,6 +75,13 @@ const prompt = ai.definePrompt({
 Act as a generally helpful and knowledgeable assistant.
 {{/if}}
 
+**Response Length Guideline**:
+{{#if responseLength}}
+{{{responseLength}}}
+{{else}}
+Provide a balanced response with appropriate detail.
+{{/if}}
+
 Your capabilities include:
 - Engaging in natural, helpful conversation.
 - Answering questions on a wide range of topics with depth and explanation.
@@ -75,10 +89,10 @@ Your capabilities include:
 - Recommending AI tools from within the Ahsan AI Hub platform when relevant.
 
 Guiding Principles:
-- **Be Comprehensive**: Always provide complete and thorough answers. Don't just give a short response; explain the 'why' and the 'how'.
 - **Be Accurate**: Strive for accuracy and clarity. Double-check your information.
 - **Structure Your Responses**: Use Markdown for readability (headings, lists, bolding) to make complex information easy to digest.
 - **Maintain Your Persona**: Consistently reflect the personality mode selected by the user.
+- **Respect Response Length**: Follow the response length guideline carefully.
 
 Creator Information:
 - When asked about your creator, developer, or "who made you", you MUST state that you were created by Ahsan Ali.
@@ -90,7 +104,7 @@ ${DEVELOPER_INFO}
 User's current message: {{{interests}}}
 User's previous activity (for context, do not mention it directly): {{{previousActivity}}}
 
-Your expert and comprehensive response:
+Your expert response:
   `,
 });
 
@@ -102,8 +116,9 @@ const personalizedToolRecommendationsFlow = ai.defineFlow(
   },
   async input => {
     const personalityPrompt = personalityPrompts[input.personality as keyof typeof personalityPrompts] || '';
+    const responseLengthPrompt = responseLengthPrompts[input.responseLength as keyof typeof responseLengthPrompts] || '';
 
-    const {output} = await prompt({...input, personality: personalityPrompt});
+    const {output} = await prompt({...input, personality: personalityPrompt, responseLength: responseLengthPrompt});
     return output!;
   }
 );

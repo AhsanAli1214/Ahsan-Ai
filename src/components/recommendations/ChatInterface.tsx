@@ -234,7 +234,7 @@ export function ChatInterface({
   const { toast } = useToast();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const scrollViewportRef = useRef<HTMLDivElement>(null);
-  const { personalityMode, enableAnimations, enableTypingIndicator } = useAppContext();
+  const { personalityMode, responseLength, enableAnimations, enableTypingIndicator } = useAppContext();
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
   const [isAudioBuffering, setIsAudioBuffering] = useState(false);
@@ -367,6 +367,7 @@ export function ChatInterface({
       interests: input,
       previousActivity,
       personality: personalityMode,
+      responseLength: responseLength,
     });
 
     if (result.success && result.data) {
