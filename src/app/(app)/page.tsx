@@ -99,7 +99,7 @@ export default function HomePage() {
               </Button>
             </div>
             {/* Mobile Start Chatting Button */}
-            <Button asChild size="lg" className="mt-6 w-full md:hidden">
+            <Button asChild size="lg" variant="secondary" className="mt-6 w-full md:hidden">
               <Link href="/recommendations" className="justify-center">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 Start Chatting
