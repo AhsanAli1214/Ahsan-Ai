@@ -471,9 +471,9 @@ export function ChatInterface({
             </Button>
         </div>
       )}
-      <div className="border-t bg-background/95 p-4 sticky bottom-0">
-        <div className="mx-auto max-w-3xl rounded-lg border bg-card p-2 shadow-sm">
-           <div className="flex items-end gap-3">
+      <div className="border-t bg-background/95 px-4 py-3 sticky bottom-0">
+        <div className="mx-auto max-w-3xl">
+           <div className="flex items-end gap-3 rounded-lg border bg-card p-2 shadow-sm">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

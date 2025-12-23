@@ -1,12 +1,20 @@
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 
-// Ensure API key is configured from environment
-if (!process.env.GOOGLE_GENAI_API_KEY && !process.env.GEMINI_API_KEY) {
-  console.warn('Warning: GOOGLE_GENAI_API_KEY or GEMINI_API_KEY not configured');
+// Use Replit AI Integrations for Gemini API access
+const apiKey = process.env.AI_INTEGRATIONS_GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
+const baseUrl = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL;
+
+if (!apiKey) {
+  console.warn('Warning: Gemini API key not configured. Please ensure AI_INTEGRATIONS_GEMINI_API_KEY is set.');
 }
 
 export const ai = genkit({
-  plugins: [googleAI()],
+  plugins: [
+    googleAI({
+      apiKey,
+      ...(baseUrl && { baseUrl })
+    })
+  ],
   model: 'googleai/gemini-2.5-flash',
 });

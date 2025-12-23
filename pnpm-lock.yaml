@@ -14,6 +14,9 @@ importers:
       '@genkit-ai/next':
         specifier: ^1.0.0
         version: 1.27.0(genkit@1.27.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.6.0)(firebase@11.10.0))(next@14.2.3(@opentelemetry/api@1.9.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(zod@3.25.76)
+      '@google/genai':
+        specifier: ^1.34.0
+        version: 1.34.0
       '@hookform/resolvers':
         specifier: ^4.1.3
         version: 4.1.3(react-hook-form@7.69.0(react@18.2.0))
@@ -95,6 +98,9 @@ importers:
       dotenv:
         specifier: ^16.5.0
         version: 16.6.1
+      drizzle-zod:
+        specifier: ^0.8.3
+        version: 0.8.3(drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.6.1))(zod@3.25.76)
       embla-carousel-react:
         specifier: ^8.6.0
         version: 8.6.0(react@18.2.0)
@@ -113,6 +119,12 @@ importers:
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      p-limit:
+        specifier: ^7.2.0
+        version: 7.2.0
+      p-retry:
+        specifier: ^7.1.1
+        version: 7.1.1
       patch-package:
         specifier: ^8.0.0
         version: 8.0.1
@@ -161,6 +173,9 @@ importers:
       zod:
         specifier: ^3.24.2
         version: 3.25.76
+      zod-validation-error:
+        specifier: ^5.0.0
+        version: 5.0.0(zod@3.25.76)
     devDependencies:
       '@tailwindcss/typography':
         specifier: ^0.5.14
@@ -548,6 +563,15 @@ packages:
   '@google-cloud/storage@7.18.0':
     resolution: {integrity: sha512-r3ZwDMiz4nwW6R922Z1pwpePxyRwE5GdevYX63hRmAQUkUQJcBH/79EnQPDv5cOv1mFBgevdNWQfi3tie3dHrQ==}
     engines: {node: '>=14'}
+
+  '@google/genai@1.34.0':
+    resolution: {integrity: sha512-vu53UMPvjmb7PGzlYu6Tzxso8Dfhn+a7eQFaS2uNemVtDZKwzSpJ5+ikqBbXplF7RGB1STcVDqCkPvquiwb2sw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@modelcontextprotocol/sdk': ^1.24.0
+    peerDependenciesMeta:
+      '@modelcontextprotocol/sdk':
+        optional: true
 
   '@google/generative-ai@0.24.1':
     resolution: {integrity: sha512-MqO+MLfM6kjxcKoy0p1wRzG3b4ZZXtPI+z2IE26UogS2Cm/XHO+7gGRBh6gcJsOiIVoH93UwKvW4HdgiOZCy9Q==}
@@ -2317,6 +2341,104 @@ packages:
   dotprompt@1.1.2:
     resolution: {integrity: sha512-24EU+eORQbPywBicIP44BiqykzEXFwZq1ZQKO5TEr9KrrENyDA7I1NzqhtmmEdQVfAXka0DEbSLPN5nerCqJ8A==}
 
+  drizzle-orm@0.45.1:
+    resolution: {integrity: sha512-Te0FOdKIistGNPMq2jscdqngBRfBpC8uMFVwqjf6gtTVJHIQ/dosgV/CLBU2N4ZJBsXL5savCba9b0YJskKdcA==}
+    peerDependencies:
+      '@aws-sdk/client-rds-data': '>=3'
+      '@cloudflare/workers-types': '>=4'
+      '@electric-sql/pglite': '>=0.2.0'
+      '@libsql/client': '>=0.10.0'
+      '@libsql/client-wasm': '>=0.10.0'
+      '@neondatabase/serverless': '>=0.10.0'
+      '@op-engineering/op-sqlite': '>=2'
+      '@opentelemetry/api': ^1.4.1
+      '@planetscale/database': '>=1.13'
+      '@prisma/client': '*'
+      '@tidbcloud/serverless': '*'
+      '@types/better-sqlite3': '*'
+      '@types/pg': '*'
+      '@types/sql.js': '*'
+      '@upstash/redis': '>=1.34.7'
+      '@vercel/postgres': '>=0.8.0'
+      '@xata.io/client': '*'
+      better-sqlite3: '>=7'
+      bun-types: '*'
+      expo-sqlite: '>=14.0.0'
+      gel: '>=2'
+      knex: '*'
+      kysely: '*'
+      mysql2: '>=2'
+      pg: '>=8'
+      postgres: '>=3'
+      prisma: '*'
+      sql.js: '>=1'
+      sqlite3: '>=5'
+    peerDependenciesMeta:
+      '@aws-sdk/client-rds-data':
+        optional: true
+      '@cloudflare/workers-types':
+        optional: true
+      '@electric-sql/pglite':
+        optional: true
+      '@libsql/client':
+        optional: true
+      '@libsql/client-wasm':
+        optional: true
+      '@neondatabase/serverless':
+        optional: true
+      '@op-engineering/op-sqlite':
+        optional: true
+      '@opentelemetry/api':
+        optional: true
+      '@planetscale/database':
+        optional: true
+      '@prisma/client':
+        optional: true
+      '@tidbcloud/serverless':
+        optional: true
+      '@types/better-sqlite3':
+        optional: true
+      '@types/pg':
+        optional: true
+      '@types/sql.js':
+        optional: true
+      '@upstash/redis':
+        optional: true
+      '@vercel/postgres':
+        optional: true
+      '@xata.io/client':
+        optional: true
+      better-sqlite3:
+        optional: true
+      bun-types:
+        optional: true
+      expo-sqlite:
+        optional: true
+      gel:
+        optional: true
+      knex:
+        optional: true
+      kysely:
+        optional: true
+      mysql2:
+        optional: true
+      pg:
+        optional: true
+      postgres:
+        optional: true
+      prisma:
+        optional: true
+      sql.js:
+        optional: true
+      sqlite3:
+        optional: true
+
+  drizzle-zod@0.8.3:
+    resolution: {integrity: sha512-66yVOuvGhKJnTdiqj1/Xaaz9/qzOdRJADpDa68enqS6g3t0kpNkwNYjUuaeXgZfO/UWuIM9HIhSlJ6C5ZraMww==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.0'
+      zod: ^3.25.0 || ^4.0.0
+
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -2764,6 +2886,10 @@ packages:
 
   is-hexadecimal@2.0.1:
     resolution: {integrity: sha512-DgZQp241c8oO6cA1SbTEWiXeoxV42vlcJxgH+B3hi1AiqqKruZR3ZGF8In3fj4+/y/7rHvlOZLZtgJ/4ttYGZg==}
+
+  is-network-error@1.3.0:
+    resolution: {integrity: sha512-6oIwpsgRfnDiyEDLMay/GqCl3HoAtH5+RUKW29gYkL0QA+ipzpDLA16yQs7/RHCSu+BwgbJaOUqa4A99qNVQVw==}
+    engines: {node: '>=16'}
 
   is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
@@ -3236,6 +3362,14 @@ packages:
   p-limit@3.1.0:
     resolution: {integrity: sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==}
     engines: {node: '>=10'}
+
+  p-limit@7.2.0:
+    resolution: {integrity: sha512-ATHLtwoTNDloHRFFxFJdHnG6n2WUeFjaR8XQMFdKIv0xkXjrER8/iG9iu265jOM95zXHAfv9oTkqhrfbIzosrQ==}
+    engines: {node: '>=20'}
+
+  p-retry@7.1.1:
+    resolution: {integrity: sha512-J5ApzjyRkkf601HpEeykoiCvzHQjWxPAHhyjFcEUP2SWq0+35NKh8TLhpLw+Dkq5TZBFvUM6UigdE9hIVYTl5w==}
+    engines: {node: '>=20'}
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
@@ -3992,6 +4126,18 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  ws@8.18.3:
+    resolution: {integrity: sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   xorshift@1.2.0:
     resolution: {integrity: sha512-iYgNnGyeeJ4t6U11NpA/QiKy+PXn5Aa3Azg5qkwIFz1tBLllQrjjsk9yzD7IAK0naNU4JxdeDgqW9ov4u/hc4g==}
 
@@ -4023,10 +4169,20 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  yocto-queue@1.2.2:
+    resolution: {integrity: sha512-4LCcse/U2MHZ63HAJVE+v71o7yOdIe4cZ70Wpf8D/IyjDKYQLV5GD46B+hSTjJsvV5PztjvHoU580EftxjDZFQ==}
+    engines: {node: '>=12.20'}
+
   zod-to-json-schema@3.25.0:
     resolution: {integrity: sha512-HvWtU2UG41LALjajJrML6uQejQhNJx+JBO9IflpSja4R03iNWfKXrj6W2h7ljuLyc1nKS+9yDyL/9tD1U/yBnQ==}
     peerDependencies:
       zod: ^3.25 || ^4
+
+  zod-validation-error@5.0.0:
+    resolution: {integrity: sha512-hmk+pkyKq7Q71PiWVSDUc3VfpzpvcRHZ3QPw9yEMVvmtCekaMeOHnbr3WbxfrgEnQTv6haGP4cmv0Ojmihzsxw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      zod: ^3.25.0 || ^4.0.0
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
@@ -4686,6 +4842,15 @@ snapshots:
       - supports-color
     optional: true
 
+  '@google/genai@1.34.0':
+    dependencies:
+      google-auth-library: 10.5.0
+      ws: 8.18.3
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
   '@google/generative-ai@0.24.1': {}
 
   '@grpc/grpc-js@1.14.3':
@@ -4725,7 +4890,6 @@ snapshots:
       strip-ansi-cjs: strip-ansi@6.0.1
       wrap-ansi: 8.1.0
       wrap-ansi-cjs: wrap-ansi@7.0.0
-    optional: true
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
@@ -6360,15 +6524,13 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.2.2:
-    optional: true
+  ansi-regex@6.2.2: {}
 
   ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
 
-  ansi-styles@6.2.3:
-    optional: true
+  ansi-styles@6.2.3: {}
 
   any-promise@1.3.0: {}
 
@@ -6414,8 +6576,7 @@ snapshots:
 
   bail@2.0.2: {}
 
-  balanced-match@1.0.2:
-    optional: true
+  balanced-match@1.0.2: {}
 
   base64-js@1.5.1: {}
 
@@ -6445,7 +6606,6 @@ snapshots:
   brace-expansion@2.0.2:
     dependencies:
       balanced-match: 1.0.2
-    optional: true
 
   braces@3.0.3:
     dependencies:
@@ -6716,6 +6876,16 @@ snapshots:
       handlebars: 4.7.8
       yaml: 2.8.2
 
+  drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.6.1):
+    optionalDependencies:
+      '@opentelemetry/api': 1.9.0
+      '@types/pg': 8.6.1
+
+  drizzle-zod@0.8.3(drizzle-orm@0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.6.1))(zod@3.25.76):
+    dependencies:
+      drizzle-orm: 0.45.1(@opentelemetry/api@1.9.0)(@types/pg@8.6.1)
+      zod: 3.25.76
+
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -6730,8 +6900,7 @@ snapshots:
       stream-shift: 1.0.3
     optional: true
 
-  eastasianwidth@0.2.0:
-    optional: true
+  eastasianwidth@0.2.0: {}
 
   ecdsa-sig-formatter@1.0.11:
     dependencies:
@@ -6755,8 +6924,7 @@ snapshots:
 
   emoji-regex@8.0.0: {}
 
-  emoji-regex@9.2.2:
-    optional: true
+  emoji-regex@9.2.2: {}
 
   enabled@2.0.0:
     optional: true
@@ -6972,7 +7140,6 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
-    optional: true
 
   form-data@2.5.5:
     dependencies:
@@ -7027,7 +7194,6 @@ snapshots:
       rimraf: 5.0.10
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   gcp-metadata@6.1.1:
     dependencies:
@@ -7045,7 +7211,6 @@ snapshots:
       json-bigint: 1.0.0
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   genkit@1.27.0(@google-cloud/firestore@7.11.6)(firebase-admin@13.6.0)(firebase@11.10.0):
     dependencies:
@@ -7099,7 +7264,6 @@ snapshots:
       minipass: 7.1.2
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
-    optional: true
 
   google-auth-library@10.5.0:
     dependencies:
@@ -7112,7 +7276,6 @@ snapshots:
       jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   google-auth-library@9.15.1:
     dependencies:
@@ -7164,8 +7327,7 @@ snapshots:
 
   google-logging-utils@0.0.2: {}
 
-  google-logging-utils@1.1.3:
-    optional: true
+  google-logging-utils@1.1.3: {}
 
   googleapis-common@7.2.0:
     dependencies:
@@ -7207,7 +7369,6 @@ snapshots:
       jws: 4.0.1
     transitivePeerDependencies:
       - supports-color
-    optional: true
 
   handlebars@4.7.8:
     dependencies:
@@ -7406,6 +7567,8 @@ snapshots:
 
   is-hexadecimal@2.0.1: {}
 
+  is-network-error@1.3.0: {}
+
   is-number@7.0.0: {}
 
   is-obj@2.0.0:
@@ -7430,7 +7593,6 @@ snapshots:
       '@isaacs/cliui': 8.0.2
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
-    optional: true
 
   jaeger-client@3.19.0:
     dependencies:
@@ -7577,8 +7739,7 @@ snapshots:
     dependencies:
       js-tokens: 4.0.0
 
-  lru-cache@10.4.3:
-    optional: true
+  lru-cache@10.4.3: {}
 
   lru-cache@6.0.0:
     dependencies:
@@ -7970,12 +8131,10 @@ snapshots:
   minimatch@9.0.5:
     dependencies:
       brace-expansion: 2.0.2
-    optional: true
 
   minimist@1.2.8: {}
 
-  minipass@7.1.2:
-    optional: true
+  minipass@7.1.2: {}
 
   module-details-from-path@1.0.4: {}
 
@@ -8081,8 +8240,15 @@ snapshots:
       yocto-queue: 0.1.0
     optional: true
 
-  package-json-from-dist@1.0.1:
-    optional: true
+  p-limit@7.2.0:
+    dependencies:
+      yocto-queue: 1.2.2
+
+  p-retry@7.1.1:
+    dependencies:
+      is-network-error: 1.3.0
+
+  package-json-from-dist@1.0.1: {}
 
   parse-entities@4.0.2:
     dependencies:
@@ -8127,7 +8293,6 @@ snapshots:
     dependencies:
       lru-cache: 10.4.3
       minipass: 7.1.2
-    optional: true
 
   path-to-regexp@0.1.12: {}
 
@@ -8497,7 +8662,6 @@ snapshots:
   rimraf@5.0.10:
     dependencies:
       glob: 10.5.0
-    optional: true
 
   run-parallel@1.2.0:
     dependencies:
@@ -8590,8 +8754,7 @@ snapshots:
       side-channel-map: 1.0.1
       side-channel-weakmap: 1.0.2
 
-  signal-exit@4.1.0:
-    optional: true
+  signal-exit@4.1.0: {}
 
   slash@2.0.0: {}
 
@@ -8635,7 +8798,6 @@ snapshots:
       eastasianwidth: 0.2.0
       emoji-regex: 9.2.2
       strip-ansi: 7.1.2
-    optional: true
 
   string_decoder@0.10.31: {}
 
@@ -8656,7 +8818,6 @@ snapshots:
   strip-ansi@7.1.2:
     dependencies:
       ansi-regex: 6.2.2
-    optional: true
 
   strnum@1.1.2:
     optional: true
@@ -8994,10 +9155,11 @@ snapshots:
       ansi-styles: 6.2.3
       string-width: 5.1.2
       strip-ansi: 7.1.2
-    optional: true
 
   wrappy@1.0.2:
     optional: true
+
+  ws@8.18.3: {}
 
   xorshift@1.2.0: {}
 
@@ -9025,7 +9187,13 @@ snapshots:
   yocto-queue@0.1.0:
     optional: true
 
+  yocto-queue@1.2.2: {}
+
   zod-to-json-schema@3.25.0(zod@3.25.76):
+    dependencies:
+      zod: 3.25.76
+
+  zod-validation-error@5.0.0(zod@3.25.76):
     dependencies:
       zod: 3.25.76
 
