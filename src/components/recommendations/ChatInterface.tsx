@@ -373,17 +373,16 @@ export function ChatInterface({
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, newAiMessage]);
-    } else {
+    } else if (!result.success) {
       toast({
         variant: 'destructive',
         title: 'An error occurred',
-        description:
-          result.error || 'Unable to get recommendations. Please try again.',
+        description: result.error,
       });
        const newErrorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: result.error || "Sorry, I couldn't process that. Please try again.",
+        content: result.error,
         timestamp: Date.now(),
       };
       setMessages((prev) => [...prev, newErrorMessage]);
