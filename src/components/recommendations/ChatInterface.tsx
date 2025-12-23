@@ -78,16 +78,16 @@ function MessageBubble({
     <div className="group relative flex flex-col">
        <div
         className={cn(
-          'flex items-start gap-3',
+          'flex items-start gap-3 w-full',
           isUser ? 'justify-end' : 'justify-start'
         )}
       >
         {!isUser && (
-           <AhsanAiHubLogo className="h-8 w-8 shrink-0 rounded-full" />
+           <AhsanAiHubLogo className="h-8 w-8 shrink-0 rounded-full mt-1" />
         )}
         <div
           className={cn(
-            'relative max-w-[85%] sm:max-w-[80%] rounded-2xl p-3 break-words',
+            'relative max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg rounded-2xl p-4 break-words overflow-hidden',
             isUser
               ? 'rounded-br-lg bg-primary text-primary-foreground'
               : 'rounded-bl-lg border bg-card'
@@ -149,7 +149,7 @@ function MessageBubble({
           </div>
         )}
       </div>
-      <div className={cn("mt-1 flex items-center gap-1", isUser ? 'self-end mr-12' : 'self-start ml-12' )}>
+      <div className={cn("mt-1 flex items-center gap-1 flex-wrap", isUser ? 'self-end' : 'self-start' )}>
         <Button
           variant="ghost"
           size="icon"
@@ -425,9 +425,9 @@ export function ChatInterface({
   }
 
   return (
-    <div className="relative flex h-full flex-col bg-background">
-      <ScrollArea className="flex-1" ref={scrollAreaRef} onScroll={handleScroll}>
-        <div className="mx-auto max-w-3xl space-y-6 p-4">
+    <div className="relative flex h-full flex-col bg-background w-full">
+      <ScrollArea className="flex-1 w-full" ref={scrollAreaRef} onScroll={handleScroll}>
+        <div className="mx-auto w-full max-w-4xl space-y-4 px-4 py-6">
           {messages.length === 0 && !isLoading ? (
             <div className="flex h-full flex-col items-center justify-center gap-6 pt-10 text-center">
                 <AhsanAiHubLogo className="h-24 w-24" />

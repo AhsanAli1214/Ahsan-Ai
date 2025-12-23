@@ -297,7 +297,7 @@ export default function ContentToolsPage() {
                 professional quality.
               </p>
             </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {toolsList.map((tool) => (
                     <ToolCard key={tool.id} tool={tool} onSelect={() => setSelectedTool(tool.id)} />
                 ))}
@@ -330,15 +330,15 @@ export default function ContentToolsPage() {
               </div>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-6 max-w-4xl">
               {/* Input Card */}
               <Card>
                   <CardHeader>
                       <CardTitle>Your Input</CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="space-y-4">
                       {/* Options */}
-                      <div className="mb-4 space-y-4">
+                      <div className="space-y-3">
                           {selectedTool === 'enhance' && (
                               <div className="flex flex-wrap gap-2">
                                   {(['grammar', 'improve', 'rewrite'] as EnhanceTextInput['mode'][]).map(opt => (
@@ -467,8 +467,8 @@ export default function ContentToolsPage() {
                         </div>
                       )}
                       {output && !loading &&(
-                          <ScrollArea className="h-full max-h-[60vh] rounded-lg border bg-secondary/30 p-4">
-                              <div className="prose prose-sm dark:prose-invert max-w-none">
+                          <div className="rounded-lg border bg-secondary/30 p-4">
+                              <div className="prose prose-sm dark:prose-invert max-w-none overflow-x-auto">
                                   <ReactMarkdown
                                       remarkPlugins={[remarkGfm]}
                                       rehypePlugins={[rehypeRaw]}
@@ -500,7 +500,7 @@ export default function ContentToolsPage() {
                                       {output}
                                   </ReactMarkdown>
                             </div>
-                          </ScrollArea>
+                          </div>
                       )}
                   </CardContent>
               </Card>
