@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/contexts/theme-context';
 import { AppProvider } from '@/context/AppContext';
 import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
+import { VercelAnalytics } from '@/components/VercelAnalytics';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 const poppins = Poppins({
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Toaster />
           </AppProvider>
         </ThemeProvider>
+        <VercelAnalytics />
         <Script id="onesignal-init" strategy="afterInteractive">
           {`
             window.OneSignalDeferred = window.OneSignalDeferred || [];
