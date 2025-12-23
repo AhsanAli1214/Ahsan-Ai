@@ -116,23 +116,27 @@ export default function HomePage() {
 
   // Function to trigger app installation
   const handleInstallApp = async () => {
-    if (deferredPrompt) {
+    if (deferredPrompt && !isInstalled) {
       try {
+        // Try to trigger the native install prompt
         await deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
+        
         if (outcome === 'accepted') {
           setIsInstalled(true);
           setDeferredPrompt(null);
         } else {
-          // User dismissed the prompt, show manual instructions
+          // User dismissed the native prompt, show manual installation instructions
           setShowInstructions(true);
         }
       } catch (error) {
-        console.error('Installation failed:', error);
+        console.error('Installation error:', error);
+        // If native install fails, show manual instructions
         setShowInstructions(true);
       }
-    } else {
-      // No native install prompt available, show manual instructions
+    } else if (!isInstalled) {
+      // No native install prompt available, show manual installation instructions
+      // This will work for browsers that don't support the install prompt
       setShowInstructions(true);
     }
   };
@@ -221,9 +225,10 @@ export default function HomePage() {
                   onClick={handleInstallApp}
                   size="lg"
                   className="mt-4 md:mt-0"
+                  disabled={isInstalled}
                 >
                   <Cloud className="mr-2 h-5 w-5" />
-                  Install App
+                  {isInstalled ? 'App Installed ✓' : 'Install App'}
                 </Button>
               </div>
 
