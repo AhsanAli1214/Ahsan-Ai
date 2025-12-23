@@ -6,9 +6,11 @@
  */
 
 import { ai } from '@/ai/genkit';
-import { googleAI } from '@genkit-ai/google-genai';
 import { z } from 'genkit';
 import wav from 'wav';
+
+// Type for wav Writer
+type WavWriter = any;
 
 // Input schema for the TTS flow
 export const TextToSpeechInputSchema = z.object({
@@ -47,9 +49,9 @@ async function toWav(
       bitDepth: sampleWidth * 8,
     });
 
-    const bufs: any[] = [];
+    const bufs: Buffer[] = [];
     writer.on('error', reject);
-    writer.on('data', (d) => bufs.push(d));
+    writer.on('data', (d: Buffer) => bufs.push(d));
     writer.on('end', () => {
       resolve(Buffer.concat(bufs).toString('base64'));
     });
