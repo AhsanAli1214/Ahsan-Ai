@@ -330,7 +330,7 @@ export default function ContentToolsPage() {
               </div>
           </div>
           
-          <div className="space-y-6 max-w-5xl">
+          <div className="space-y-6 max-w-4xl">
               {/* Input Card */}
               <Card>
                   <CardHeader>
