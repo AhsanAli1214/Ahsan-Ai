@@ -23,6 +23,7 @@ import {
   Feather,
   PlusCircle,
   Grid,
+  Sparkles,
 } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -65,6 +66,7 @@ const toolsList: {
   icon: React.ElementType;
   desc: string;
   imageId: string;
+  gradient: string;
 }[] = [
   {
     id: 'enhance',
@@ -72,6 +74,7 @@ const toolsList: {
     icon: Edit3,
     desc: 'Improve grammar, style, and clarity',
     imageId: 'content-tool-enhance',
+    gradient: 'from-blue-500/10 to-cyan-500/10',
   },
   {
     id: 'email',
@@ -79,6 +82,7 @@ const toolsList: {
     icon: Mail,
     desc: 'Craft professional or casual emails',
     imageId: 'content-tool-email',
+    gradient: 'from-purple-500/10 to-pink-500/10',
   },
   {
     id: 'blog',
@@ -86,6 +90,7 @@ const toolsList: {
     icon: PenTool,
     desc: 'Create engaging, SEO-optimized articles',
     imageId: 'content-tool-blog',
+    gradient: 'from-orange-500/10 to-red-500/10',
   },
   {
     id: 'study',
@@ -93,6 +98,7 @@ const toolsList: {
     icon: BookOpen,
     desc: 'Generate notes and explanations',
     imageId: 'content-tool-study',
+    gradient: 'from-green-500/10 to-emerald-500/10',
   },
   {
     id: 'code',
@@ -100,6 +106,7 @@ const toolsList: {
     icon: Code,
     desc: 'Understand programming concepts',
     imageId: 'content-tool-code',
+    gradient: 'from-indigo-500/10 to-blue-500/10',
   },
   {
     id: 'math',
@@ -107,13 +114,15 @@ const toolsList: {
     icon: Grid,
     desc: 'Get step-by-step solutions',
     imageId: 'content-tool-math',
+    gradient: 'from-rose-500/10 to-pink-500/10',
   },
-    {
+  {
     id: 'translate',
     label: 'Translator',
     icon: Languages,
     desc: 'Translate text between languages',
     imageId: 'content-tool-translate',
+    gradient: 'from-cyan-500/10 to-blue-500/10',
   },
   {
     id: 'social',
@@ -121,6 +130,7 @@ const toolsList: {
     icon: Share2,
     desc: 'Generate posts for social platforms',
     imageId: 'content-tool-social',
+    gradient: 'from-yellow-500/10 to-orange-500/10',
   },
   {
     id: 'resume',
@@ -128,6 +138,7 @@ const toolsList: {
     icon: FileText,
     desc: 'Improve your resume sections',
     imageId: 'content-tool-resume',
+    gradient: 'from-slate-500/10 to-gray-500/10',
   },
   {
     id: 'story',
@@ -135,6 +146,7 @@ const toolsList: {
     icon: Feather,
     desc: 'Generate story ideas and plots',
     imageId: 'content-tool-story',
+    gradient: 'from-violet-500/10 to-purple-500/10',
   },
 ];
 
@@ -144,58 +156,67 @@ const getImageForTool = (tool: (typeof toolsList)[0]): ImagePlaceholder | undefi
 
 function ToolCard({ tool, onSelect }: { tool: (typeof toolsList)[0], onSelect: () => void }) {
   const image = getImageForTool(tool);
+  const IconComponent = tool.icon;
   return (
-    <Card onClick={onSelect} className="group flex cursor-pointer flex-col overflow-hidden transition-all hover:shadow-xl">
-      <CardHeader className="p-0">
-        <div className="relative h-48 w-full">
-          {image && (
-            <Image
-              src={image.imageUrl}
+    <Card onClick={onSelect} className={cn("group flex cursor-pointer flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-accent/20 bg-gradient-to-br from-card to-card/50 hover:border-accent/50")}>
+      <CardHeader className="p-0 relative">
+        <div className={cn("relative h-40 w-full bg-gradient-to-br flex items-center justify-center group-hover:scale-110 transition-transform", tool.gradient)}>
+          {image ? (
+            <Image 
+              src={image.src} 
               alt={tool.label}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              data-ai-hint={image.imageHint}
+              className="object-cover group-hover:scale-110 transition-transform duration-500"
             />
+          ) : (
+            <IconComponent className="h-16 w-16 text-muted-foreground/30" />
           )}
-           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-           <div className="absolute bottom-0 left-0 p-4">
-             <h3 className="font-headline text-2xl font-bold text-white">{tool.label}</h3>
-           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-1 flex-col p-4">
-        <p className="flex-1 text-muted-foreground">{tool.desc}</p>
-        <Button onClick={onSelect} className="mt-4 w-full">
-          Open Tool <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+      <CardContent className="flex-1 p-4">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <IconComponent className="h-5 w-5 text-primary" />
+            <h3 className="font-semibold text-lg text-foreground">{tool.label}</h3>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">{tool.desc}</p>
+        </div>
       </CardContent>
+      <div className="px-4 pb-4">
+        <div className="flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+          Use Tool <ArrowRight className="h-4 w-4" />
+        </div>
+      </div>
     </Card>
   );
 }
 
-
 export default function ContentToolsPage() {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
-  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [options, setOptions] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const [options, setOptions] = useState<Record<string, any>>({
+    enhanceMode: 'improve',
+    emailTone: 'professional',
+    blogLength: 'medium',
+    studyType: 'explanation',
+    codeLanguage: 'JavaScript',
+    socialPlatform: 'Twitter',
+    resumeSection: 'summary',
+    targetLanguage: 'Spanish',
+  });
 
   const handleProcess = async () => {
     if (!input.trim()) {
-      toast({
-        variant: 'destructive',
-        title: 'Input Required',
-        description: 'Please enter some text to process.',
-      });
+      toast({ title: 'Please enter some text', variant: 'destructive' });
       return;
     }
-    setLoading(true);
-    setOutput('');
 
-    let result;
+    setLoading(true);
     try {
+      let result;
       switch (selectedTool) {
         case 'enhance':
           result = await enhanceTextAction({
@@ -250,269 +271,253 @@ export default function ContentToolsPage() {
             });
             break;
         case 'story':
-            result = await generateStoryAction({
-                prompt: input,
-                genre: options.storyGenre,
-            });
+            result = await generateStoryAction({ prompt: input });
             break;
         default:
-          throw new Error('No tool selected');
+            return;
       }
 
-      if (result.success) {
-        setOutput(result.data);
+      if (result.success && result.data) {
+        setOutput(result.data.output);
       } else {
-        throw new Error(result.error);
+        toast({ title: 'Failed to generate content', variant: 'destructive' });
       }
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'An error occurred',
-        description:
-          error instanceof Error ? error.message : 'Processing failed. Please try again.',
-      });
+      console.error('Error:', error);
+      toast({ title: 'An error occurred', variant: 'destructive' });
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(output);
-    toast({ title: 'Copied to clipboard' });
-  };
-  
-  const handleOptionChange = (key: string, value: string) => {
-    setOptions(prev => ({...prev, [key]: value}));
-  }
-
   const renderToolUI = () => {
     if (!selectedTool) {
       return (
-        <div className="p-4 lg:p-6">
-          <div className="mx-auto max-w-6xl space-y-8">
-            <div className="mb-8 text-center">
-              <h1 className="font-headline text-4xl font-bold">Content Tools</h1>
-              <p className="mx-auto mt-2 max-w-2xl text-muted-foreground">
-                Powerful AI-driven utilities to create, enhance, and solve with
-                professional quality.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {toolsList.map((tool) => (
-                    <ToolCard key={tool.id} tool={tool} onSelect={() => setSelectedTool(tool.id)} />
-                ))}
-            </div>
+        <div className="space-y-8 p-4 lg:p-6">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold text-foreground">Professional Content Tools</h2>
+            <p className="text-muted-foreground text-lg">Select a tool to get started with AI-powered content creation</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {toolsList.map(tool => (
+              <ToolCard key={tool.id} tool={tool} onSelect={() => setSelectedTool(tool.id)} />
+            ))}
           </div>
         </div>
       );
     }
 
-    const currentTool = toolsList.find(t => t.id === selectedTool);
+    const tool = toolsList.find(t => t.id === selectedTool);
+    if (!tool) return null;
 
     return (
-      <div className="w-full space-y-6 p-4 lg:p-6">
-          {/* Header */}
-          <div className="space-y-4">
-              <Button variant="ghost" onClick={() => { setSelectedTool(null); setInput(''); setOutput(''); setOptions({})}} className="">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to All Tools
-              </Button>
-              <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                      {currentTool && <currentTool.icon className="h-6 w-6" />}
-                  </div>
-                  <div>
-                      <h2 className="font-headline text-3xl font-bold">{currentTool?.label}</h2>
-                      <p className="text-muted-foreground">
-                          {currentTool?.desc}
-                      </p>
-                  </div>
+      <div className="p-4 lg:p-6 space-y-6">
+        <div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setSelectedTool(null);
+              setInput('');
+              setOutput('');
+            }}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+          >
+            <ArrowLeft className="h-4 w-4" /> Back to Tools
+          </Button>
+        </div>
+
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Tool Header */}
+          <div className={cn("rounded-lg bg-gradient-to-r p-6 text-white", 
+            tool.gradient.replace('/10', '').replace('from-', 'from-').replace('to-', 'to-')
+          )}>
+            <div className="flex items-center gap-3">
+              <div className="bg-white/20 p-3 rounded-lg">
+                <tool.icon className="h-6 w-6" />
               </div>
+              <div>
+                <h1 className="text-2xl font-bold">{tool.label}</h1>
+                <p className="text-white/80">{tool.desc}</p>
+              </div>
+            </div>
           </div>
-          
-          <div className="w-full space-y-6 max-w-4xl">
-              {/* Input Card */}
-              <Card>
-                  <CardHeader>
-                      <CardTitle>Your Input</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                      {/* Options */}
-                      <div className="space-y-3">
-                          {selectedTool === 'enhance' && (
-                              <div className="flex flex-wrap gap-2">
-                                  {(['grammar', 'improve', 'rewrite'] as EnhanceTextInput['mode'][]).map(opt => (
-                                      <Button key={opt} variant={(options.enhanceMode || 'improve') === opt ? 'default' : 'outline'} onClick={() => handleOptionChange('enhanceMode', opt)}>{opt.charAt(0).toUpperCase() + opt.slice(1)}</Button>
-                                  ))}
-                              </div>
-                          )}
-                          {selectedTool === 'email' && (
-                              <div className="space-y-4">
-                                  <div className="flex flex-wrap gap-2">
-                                      {(['professional', 'casual', 'formal'] as GenerateEmailInput['tone'][]).map(tone => (
-                                          <Button key={tone} variant={(options.emailTone || 'professional') === tone ? 'default' : 'outline'} onClick={() => handleOptionChange('emailTone', tone)}>{tone.charAt(0).toUpperCase() + tone.slice(1)}</Button>
-                                      ))}
-                                  </div>
-                                  <Input placeholder="Additional details (optional)..." value={options.emailDetails || ''} onChange={e => handleOptionChange('emailDetails', e.target.value)} />
-                              </div>
-                          )}
-                          {selectedTool === 'blog' && (
-                              <div className="flex flex-wrap gap-2">
-                                  {(['short', 'medium', 'long'] as GenerateBlogPostInput['length'][]).map(len => (
-                                      <Button key={len} variant={(options.blogLength || 'medium') === len ? 'default' : 'outline'} onClick={() => handleOptionChange('blogLength', len)}>{len.charAt(0).toUpperCase() + len.slice(1)}</Button>
-                                  ))}
-                              </div>
-                          )}
-                          {selectedTool === 'study' && (
-                              <div className="flex flex-wrap gap-2">
-                                  {(['explanation', 'notes', 'flashcards'] as GenerateStudyMaterialInput['type'][]).map(type => (
-                                      <Button key={type} variant={(options.studyType || 'explanation') === type ? 'default' : 'outline'} onClick={() => handleOptionChange('studyType', type)}>{type.charAt(0).toUpperCase() + type.slice(1)}</Button>
-                                  ))}
-                              </div>
-                          )}
-                          {selectedTool === 'code' && (
-                              <Input placeholder="Language (e.g., JavaScript, Python)" value={options.codeLanguage || ''} onChange={e => handleOptionChange('codeLanguage', e.target.value)} />
-                          )}
-                          {selectedTool === 'translate' && (
-                              <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                      <Button variant="outline">
-                                          {options.targetLanguage || 'Select Language'}
-                                          <ChevronDown className="ml-2 h-4 w-4" />
-                                      </Button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent>
-                                      <ScrollArea className="h-64">
-                                          {LANGUAGES.map(lang => (
-                                              <DropdownMenuItem key={lang.code} onSelect={() => handleOptionChange('targetLanguage', lang.name)}>
-                                                  {lang.name}
-                                              </DropdownMenuItem>
-                                          ))}
-                                      </ScrollArea>
-                                  </DropdownMenuContent>
-                              </DropdownMenu>
-                          )}
-                          {selectedTool === 'social' && (
-                              <div className="flex flex-wrap gap-2">
-                                  {(['Twitter', 'Instagram', 'LinkedIn'] as GenerateSocialMediaPostInput['platform'][]).map(platform => (
-                                      <Button key={platform} variant={(options.socialPlatform || 'Twitter') === platform ? 'default' : 'outline'} onClick={() => handleOptionChange('socialPlatform', platform)}>{platform}</Button>
-                                  ))}
-                              </div>
-                          )}
-                          {selectedTool === 'resume' && (
-                              <div className="flex flex-wrap gap-2">
-                                  {(['summary', 'experience', 'skills'] as AssistResumeInput['section'][]).map(section => (
-                                      <Button key={section} variant={(options.resumeSection || 'summary') === section ? 'default' : 'outline'} onClick={() => handleOptionChange('resumeSection', section)}>{section.charAt(0).toUpperCase() + section.slice(1)}</Button>
-                                  ))}
-                              </div>
-                          )}
-                          {selectedTool === 'story' && (
-                              <Input placeholder="Genre (e.g., Fantasy, Sci-Fi) (optional)" value={options.storyGenre || ''} onChange={e => handleOptionChange('storyGenre', e.target.value)} />
-                          )}
-                      </div>
 
-                      {/* Input Textarea */}
-                      <Textarea 
-                          placeholder={
-                              selectedTool === 'enhance' ? 'Enter text to enhance...' :
-                              selectedTool === 'email' ? 'Enter the purpose or main points of your email...' :
-                              selectedTool === 'blog' ? 'Enter the topic for your blog post...' :
-                              selectedTool === 'study' ? 'Enter the topic you want to study...' :
-                              selectedTool === 'code' ? 'Paste your code snippet here...' :
-                              selectedTool === 'translate' ? 'Enter text to translate...' :
-                              selectedTool === 'social' ? 'Enter the topic for your social media post...' :
-                              selectedTool === 'resume' ? 'Paste your current resume section details...' :
-                              selectedTool === 'story' ? 'Enter your story idea or prompt...' :
-                              'Enter your math problem here...'
-                          }
-                          value={input}
-                          onChange={e => setInput(e.target.value)}
-                          className="min-h-[250px] text-base"
-                      />
+          {/* Input Section */}
+          <Card className="border-accent/30 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                Input
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {selectedTool === 'enhance' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2">Enhancement Mode</label>
+                  <select
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                    value={options.enhanceMode}
+                    onChange={(e) => setOptions({ ...options, enhanceMode: e.target.value })}
+                  >
+                    <option>improve</option>
+                    <option>academic</option>
+                    <option>casual</option>
+                    <option>formal</option>
+                  </select>
+                </div>
+              )}
 
-                      <Button onClick={handleProcess} disabled={loading} size="lg" className="mt-4 w-full">
-                          {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                          {loading ? 'Generating...' : 'Generate'}
-                      </Button>
-                  </CardContent>
-              </Card>
+              {selectedTool === 'email' && (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Tone</label>
+                    <select
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                      value={options.emailTone}
+                      onChange={(e) => setOptions({ ...options, emailTone: e.target.value })}
+                    >
+                      <option>professional</option>
+                      <option>casual</option>
+                      <option>formal</option>
+                    </select>
+                  </div>
+                </>
+              )}
 
-              {/* Output Card */}
-              <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                      <CardTitle>Result</CardTitle>
-                      {output && !loading && (
-                          <Button variant="ghost" size="sm" onClick={handleCopy}>
-                              <Copy className="mr-2 h-4 w-4" />
-                              Copy
-                          </Button>
-                      )}
-                  </CardHeader>
-                  <CardContent>
-                      {loading && (
-                        <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed bg-card">
-                          <div className="text-center text-muted-foreground">
-                            <Loader2 className="mx-auto mb-4 h-10 w-10 animate-spin text-primary" />
-                            <p>Generating content...</p>
-                          </div>
-                        </div>
-                      )}
-                      {!loading && !output && (
-                         <div className="flex h-full min-h-[300px] items-center justify-center rounded-lg border-2 border-dashed bg-card">
-                            <div className="text-center text-muted-foreground">
-                                <PlusCircle className="mx-auto mb-4 h-10 w-10" />
-                                <p className="text-lg font-medium">Your generated content will appear here.</p>
-                                <p className="text-sm">Enter your input and click "Generate".</p>
+              {selectedTool === 'blog' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2">Article Length</label>
+                  <select
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                    value={options.blogLength}
+                    onChange={(e) => setOptions({ ...options, blogLength: e.target.value })}
+                  >
+                    <option>short</option>
+                    <option>medium</option>
+                    <option>long</option>
+                  </select>
+                </div>
+              )}
+
+              {selectedTool === 'translate' && (
+                <div>
+                  <label className="block text-sm font-medium mb-2">Target Language</label>
+                  <select
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                    value={options.targetLanguage}
+                    onChange={(e) => setOptions({ ...options, targetLanguage: e.target.value })}
+                  >
+                    {LANGUAGES.map((lang) => (
+                      <option key={lang.code} value={lang.code}>
+                        {lang.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  {selectedTool === 'code' ? 'Code' : selectedTool === 'math' ? 'Problem' : 'Text'}
+                </label>
+                <Textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={`Enter your ${selectedTool === 'code' ? 'code' : selectedTool === 'math' ? 'math problem' : 'text'} here...`}
+                  className="min-h-32 resize-none"
+                />
+              </div>
+
+              <Button 
+                onClick={handleProcess} 
+                disabled={loading}
+                className="w-full gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> Processing...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="h-4 w-4" /> Generate
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Output Section */}
+          {output && !loading && (
+            <Card className="border-primary/30 shadow-xl bg-gradient-to-br from-card to-card/50">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-primary" />
+                    Result
+                  </CardTitle>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      navigator.clipboard.writeText(output);
+                      toast({ title: 'Copied to clipboard!' });
+                    }}
+                    className="gap-2"
+                  >
+                    <Copy className="h-4 w-4" /> Copy
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ScrollArea className="h-96 rounded-lg border bg-background p-4">
+                  <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        p: ({ node, ...props }) => <p className="mb-4 last:mb-0 leading-relaxed" {...props} />,
+                        a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium" />,
+                        h1: ({ node, ...props }) => <h1 className="font-bold text-2xl mb-4 mt-6 first:mt-0 text-foreground" {...props} />,
+                        h2: ({ node, ...props }) => <h2 className="font-bold text-xl mb-3 mt-5 first:mt-0 text-foreground" {...props} />,
+                        h3: ({ node, ...props }) => <h3 className="font-bold text-lg mb-2 mt-4 first:mt-0 text-foreground" {...props} />,
+                        ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 space-y-1" {...props} />,
+                        ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4 space-y-1" {...props} />,
+                        li: ({ node, ...props }) => <li className="mb-2" {...props} />,
+                        code: ({ node, inline, className, children, ...props }: any) => {
+                          return !inline ? (
+                            <div className="my-4 rounded-lg bg-muted p-4 overflow-x-auto border border-border">
+                              <code className="text-sm font-mono text-foreground" {...props}>
+                                {children}
+                              </code>
                             </div>
-                        </div>
-                      )}
-                      {output && !loading &&(
-                          <div className="rounded-lg border bg-secondary/30 p-4">
-                              <div className="prose prose-sm dark:prose-invert max-w-none overflow-x-auto">
-                                  <ReactMarkdown
-                                      remarkPlugins={[remarkGfm]}
-                                      rehypePlugins={[rehypeRaw]}
-                                      components={{
-                                          p: ({ node, ...props }) => <p className="mb-4 last:mb-0" {...props} />,
-                                          a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
-                                          h1: ({node, ...props}) => <h1 className="font-headline text-2xl mb-4" {...props} />,
-                                          h2: ({node, ...props}) => <h2 className="font-headline text-xl mb-3" {...props} />,
-                                          h3: ({node, ...props}) => <h3 className="font-headline text-lg mb-2" {...props} />,
-                                          ul: ({node, ...props}) => <ul className="list-disc pl-5 mb-4" {...props} />,
-                                          ol: ({node, ...props}) => <ol className="list-decimal pl-5 mb-4" {...props} />,
-                                          li: ({node, ...props}) => <li className="mb-2" {...props} />,
-                                          code: ({node, inline, className, children, ...props}: any) => {
-                                            const match = /language-(\w+)/.exec(className || '')
-                                            return !inline ? (
-                                              <div className="my-4 rounded-md bg-card p-4 overflow-x-auto">
-                                                <code className={cn("text-sm", className)} {...props}>
-                                                  {children}
-                                                </code>
-                                              </div>
-                                            ) : (
-                                              <code className="px-1 py-0.5 bg-card rounded-sm" {...props}>
-                                                {children}
-                                              </code>
-                                            )
-                                          }
-                                      }}
-                                  >
-                                      {output}
-                                  </ReactMarkdown>
-                            </div>
-                          </div>
-                      )}
-                  </CardContent>
-              </Card>
-          </div>
+                          ) : (
+                            <code className="px-2 py-1 bg-muted rounded-md text-primary font-mono text-sm" {...props}>
+                              {children}
+                            </code>
+                          );
+                        },
+                        blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground" {...props} />,
+                      }}
+                    >
+                      {output}
+                    </ReactMarkdown>
+                  </div>
+                </ScrollArea>
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
     );
   };
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col bg-background">
       <AppHeader title="Content Tools" />
-      <div className="flex-1 overflow-y-auto">{renderToolUI()}</div>
+      <div className="flex-1 overflow-y-auto">
+        {renderToolUI()}
+      </div>
     </div>
   );
 }
