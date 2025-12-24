@@ -60,8 +60,31 @@ const SOCIAL_LINKS = [
 export default function ContactPage() {
   const SUPPORT_EMAIL = "tickets@ahsan-ai-hub.p.tawk.email";
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Ahsan AI Hub",
+    "url": "https://ahsan-ai-hub.replit.dev",
+    "description": "An intelligent AI-powered platform offering chat, content tools, and AI integration",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Support",
+      "email": SUPPORT_EMAIL
+    },
+    "sameAs": [
+      "https://www.instagram.com/ahsan.ali.wadani",
+      "https://x.com/Ahsan_Ali_12",
+      "https://www.facebook.com/profile.php?id=100091175299202",
+      "https://ahsan-tech-hub.blogspot.com/"
+    ]
+  };
+
   return (
     <div className="flex h-full flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
       <AppHeader title="Get in Touch" />
       <div className="flex-1 overflow-y-auto p-4 lg:p-6">
         <div className="mx-auto max-w-3xl space-y-8">

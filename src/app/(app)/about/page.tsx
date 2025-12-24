@@ -70,8 +70,33 @@ const developerImage = PlaceHolderImages.find(
 export default function AboutPage() {
   const SUPPORT_EMAIL = "tickets@ahsan-ai-hub.p.tawk.email";
 
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ahsan Ali",
+    "url": "https://ahsan-ai-hub.replit.dev",
+    "image": "https://ahsan-ai-hub.replit.dev/api/og",
+    "description": "CIT Student & Passionate Developer - Creator of Ahsan AI Hub",
+    "jobTitle": "Developer",
+    "sameAs": [
+      "https://www.instagram.com/ahsan.ali.wadani",
+      "https://x.com/Ahsan_Ali_12",
+      "https://www.facebook.com/profile.php?id=100091175299202",
+      "https://ahsan-tech-hub.blogspot.com/"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Support",
+      "email": SUPPORT_EMAIL
+    }
+  };
+
   return (
     <div className="flex h-full flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutSchema) }}
+      />
       <AppHeader title="About Me" />
       <div className="flex-1 overflow-y-auto p-4 lg:p-6">
         <div className="mx-auto max-w-3xl space-y-8">
