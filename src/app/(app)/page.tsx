@@ -24,6 +24,7 @@ import { useAppContext, type PersonalityMode } from '@/context/AppContext';
 import { InstallInstructions } from '@/components/InstallInstructions';
 import { InstallGuide } from '@/components/InstallGuide';
 import { CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { OneSignalButton } from '@/components/OneSignalButton';
 
 const QUICK_ACTIONS = [
   {
@@ -309,23 +310,21 @@ export default function HomePage() {
 
 
           {/* Push Notifications Section */}
-          <Card>
+          <Card className="bg-gradient-to-br from-card to-card/50 border-primary/20">
             <CardHeader className="flex flex-row items-center justify-between space-y-0">
               <div>
-                <CardTitle>Enable Push Notifications</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-foreground">Enable Push Notifications</CardTitle>
+                <CardDescription className="text-muted-foreground">
                   Get notified about new features and important updates
                 </CardDescription>
               </div>
               <Smartphone className="h-6 w-6 text-primary" />
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Subscribe to receive push notifications directly on your device. Stay updated with the latest features and announcements.
               </p>
-              <div className="flex items-center justify-center p-4 rounded-lg bg-accent/5 border border-accent/20">
-                <div className='onesignal-customlink-container'></div>
-              </div>
+              <OneSignalButton />
             </CardContent>
           </Card>
 

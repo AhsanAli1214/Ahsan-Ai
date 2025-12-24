@@ -84,14 +84,18 @@ export default function RootLayout({
         `}} />
         <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
         <script id="onesignal-init" dangerouslySetInnerHTML={{__html: `
-          window.OneSignalDeferred = window.OneSignalDeferred || [];
-          OneSignalDeferred.push(async function(OneSignal) {
-            await OneSignal.init({
-              appId: "8a693786-f992-42d3-adfb-56a230adcea5",
-              allowLocalhostAsSecureOrigin: true,
+          if (window.location.hostname.includes('vercel.app')) {
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function(OneSignal) {
+              try {
+                await OneSignal.init({
+                  appId: "8a693786-f992-42d3-adfb-56a230adcea5",
+                });
+              } catch (e) {
+                console.log('OneSignal init error:', e);
+              }
             });
-            await OneSignal.showSlidedownPrompt();
-          });
+          }
         `}} />
       </head>
       <body className={cn('font-body antialiased', inter.variable, poppins.variable)}>

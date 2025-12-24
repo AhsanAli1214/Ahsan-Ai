@@ -41,6 +41,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { OneSignalButton } from '@/components/OneSignalButton';
 
 const PERSONALITY_MODES = [
   {
@@ -364,20 +365,18 @@ export default function SettingsPage() {
           </Card>
           
           {/* Push Notifications */}
-          <Card>
+          <Card className="bg-gradient-to-br from-card to-card/50 border-primary/20">
             <CardHeader>
-              <CardTitle>Push Notifications</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-foreground">Push Notifications</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 Get notified about updates and new features
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 Enable push notifications to receive alerts about new features, updates, and important announcements directly on your device.
               </p>
-              <div className="flex items-center justify-center p-4 rounded-lg bg-accent/5 border border-accent/20">
-                <div className='onesignal-customlink-container'></div>
-              </div>
+              <OneSignalButton />
             </CardContent>
           </Card>
 
