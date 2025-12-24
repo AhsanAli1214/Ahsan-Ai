@@ -1,9 +1,6 @@
-# *
 User-agent: *
 Allow: /
-
-# Host
-Host: https://ahsan-ai-hub.vercel.app
+Disallow: /api/
 
 # Sitemaps
-Sitemap: https://ahsan-ai-hub.vercel.app/sitemap.xml
+Sitemap: https://ahsan-ai-hub.replit.dev/sitemap.xml

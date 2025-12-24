@@ -4,6 +4,18 @@ const config = {
   compress: true,
   productionBrowserSourceMaps: false,
   
+  // Sitemap configuration
+  async rewrites() {
+    return {
+      afterFiles: [
+        {
+          source: '/sitemap.xml',
+          destination: '/api/sitemap',
+        },
+      ],
+    };
+  },
+  
   // Optimized images configuration
   images: {
     formats: ['image/avif', 'image/webp'],
