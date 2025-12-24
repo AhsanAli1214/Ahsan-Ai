@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/contexts/theme-context';
 import { AppProvider } from '@/context/AppContext';
 import { PWAInstall } from '@/components/PWAInstall';
-import { ColorThemeInitializer } from '@/components/ColorThemeInitializer';
 import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
 
@@ -46,10 +45,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="google-site-verification" content="C3kD33pr8zGcgloDD-hhPTHJVKhicxKot5N39asPcX4" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Ahsan AI Hub" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('selectedColorTheme') || 'default';
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `,
+          }}
+        />
         <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer />
         <Script id="pwa-register" strategy="afterInteractive">
           {`
@@ -68,7 +78,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ColorThemeInitializer />
           <AppProvider>
             {children}
             <Toaster />

@@ -188,21 +188,27 @@ export default function SettingsPage() {
               <div>
                 <p className="text-sm font-medium mb-4">Color Scheme</p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                  {COLOR_THEMES.map((colorTheme) => (
-                    <button
-                      key={colorTheme.id}
-                      onClick={() => {
-                        const html = document.documentElement;
-                        html.setAttribute('data-theme', colorTheme.id);
-                        localStorage.setItem('selectedColorTheme', colorTheme.id);
-                      }}
-                      title={colorTheme.label}
-                      className="flex flex-col items-center gap-2 p-2 rounded-lg hover:bg-muted transition-colors"
-                    >
-                      <div className={`h-10 w-10 rounded-lg ${colorTheme.color}`} />
-                      <span className="text-xs text-center">{colorTheme.label}</span>
-                    </button>
-                  ))}
+                  {COLOR_THEMES.map((colorTheme) => {
+                    const isSelected = typeof window !== 'undefined' && document.documentElement.getAttribute('data-theme') === colorTheme.id;
+                    return (
+                      <button
+                        key={colorTheme.id}
+                        onClick={() => {
+                          document.documentElement.setAttribute('data-theme', colorTheme.id);
+                          localStorage.setItem('selectedColorTheme', colorTheme.id);
+                          window.dispatchEvent(new Event('themechange'));
+                        }}
+                        title={colorTheme.label}
+                        className={cn(
+                          "flex flex-col items-center gap-2 p-2 rounded-lg transition-all border-2",
+                          isSelected ? 'border-primary bg-primary/10' : 'border-transparent hover:bg-muted'
+                        )}
+                      >
+                        <div className={`h-10 w-10 rounded-lg ${colorTheme.color}`} />
+                        <span className="text-xs text-center font-medium">{colorTheme.label}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </CardContent>
