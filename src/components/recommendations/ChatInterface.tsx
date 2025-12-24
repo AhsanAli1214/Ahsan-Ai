@@ -462,7 +462,7 @@ export function ChatInterface({
       <div className="flex-1 overflow-hidden" ref={scrollAreaRef}>
         <div 
           ref={scrollViewportRef}
-          className="h-full w-full overflow-y-auto pb-24"
+          className="h-full w-full overflow-y-auto pb-44"
           onScroll={handleScroll}
         >
           <div className="mx-auto w-full max-w-4xl space-y-3 sm:space-y-4 px-3 sm:px-4 py-4 sm:py-6">
@@ -504,13 +504,13 @@ export function ChatInterface({
         </div>
       </div>
        {showScrollButton && (
-        <div className="absolute bottom-20 sm:bottom-24 right-3 sm:right-4 z-10">
+        <div className="absolute bottom-40 sm:bottom-44 right-3 sm:right-4 z-10">
             <Button size="icon" className="rounded-full shadow-lg h-10 w-10 sm:h-11 sm:w-11" onClick={() => scrollToBottom('smooth')}>
                 <ChevronDown className="h-5 w-5" />
             </Button>
         </div>
       )}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 w-full pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-20 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 w-full pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
         <div className="mx-auto w-full max-w-4xl">
            <div className="flex items-end gap-2 sm:gap-3 rounded-lg border bg-card p-2 sm:p-3 shadow-sm">
             <Textarea
