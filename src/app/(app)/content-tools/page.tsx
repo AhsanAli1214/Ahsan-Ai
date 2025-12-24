@@ -278,7 +278,7 @@ export default function ContentToolsPage() {
       }
 
       if (result.success && result.data) {
-        setOutput(result.data.output);
+        setOutput(result.data);
       } else {
         toast({ title: 'Failed to generate content', variant: 'destructive' });
       }
