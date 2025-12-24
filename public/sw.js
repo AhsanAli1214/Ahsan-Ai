@@ -34,6 +34,42 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Handle push notifications from OneSignal
+self.addEventListener('push', (event) => {
+  if (!event.data) {
+    return;
+  }
+
+  const notificationData = event.data.json();
+  const options = {
+    body: notificationData.body || 'New notification',
+    icon: '/icon-192x192.png',
+    badge: '/badge-72x72.png',
+    data: notificationData.data || {},
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(notificationData.title || 'Ahsan AI Hub', options)
+  );
+});
+
+// Handle notification click
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window' }).then((clientList) => {
+      for (let client of clientList) {
+        if (client.url === '/' && 'focus' in client) {
+          return client.focus();
+        }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow('/');
+      }
+    })
+  );
+});
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') {
     return;

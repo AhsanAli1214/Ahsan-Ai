@@ -82,13 +82,14 @@ export default function RootLayout({
             });
           }
         `}} />
-        <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer />
-        <Script id="onesignal-sdk-init" dangerouslySetInnerHTML={{__html: `
+        <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></Script>
+        <Script id="onesignal-sdk-init" defer dangerouslySetInnerHTML={{__html: `
           window.OneSignalDeferred = window.OneSignalDeferred || [];
           OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
               appId: "8a693786-f992-42d3-adfb-56a230adcea5",
             });
+            await OneSignal.Slidedown.promptPush();
           });
         `}} />
       </head>
