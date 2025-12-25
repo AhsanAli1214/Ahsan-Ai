@@ -2,7 +2,7 @@ import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/googleai';
 
 // Use Replit AI Integrations for Gemini API access
-const apiKey = process.env.AI_INTEGRATIONS_GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
+const apiKey = process.env.GEMINI_API_KEY_1 || process.env.AI_INTEGRATIONS_GEMINI_API_KEY || process.env.GOOGLE_GENAI_API_KEY || process.env.GEMINI_API_KEY;
 const baseUrl = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL;
 
 if (!apiKey) {

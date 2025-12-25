@@ -101,6 +101,8 @@ export async function runWithRotation(prompt: string, personality: string = "fri
       return text;
 
     } catch (error: any) {
+      console.error(`Gemini Key ${currentKeyIndex + 1} failed:`, error.message);
+      
       const status = error?.status || error?.response?.status;
       const message = error?.message?.toLowerCase() || "";
 
@@ -114,8 +116,14 @@ export async function runWithRotation(prompt: string, personality: string = "fri
         continue; // Retry with next key
       }
 
-      // For other errors, log and try next key just in case it's a key-specific issue
-      console.error(`Gemini Key ${currentKeyIndex + 1} failed:`, error.message);
+      // If it's a "Failed Precondition" error (like missing API key), try next key too
+      if (message.includes("precondition") || message.includes("api key") || message.includes("not found")) {
+        currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+        attempts++;
+        continue;
+      }
+
+      // For other critical errors, don't just fail, try next key
       currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
       attempts++;
     }

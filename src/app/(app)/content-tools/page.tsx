@@ -302,7 +302,7 @@ export default function ContentToolsPage() {
       if (result.success && result.data) {
         setOutput(result.data);
       } else {
-        toast({ title: 'Failed to generate content', variant: 'destructive' });
+        toast({ title: 'Failed to generate content', description: result.error || 'AI is busy right now. Please try again later.', variant: 'destructive' });
       }
     } catch (error) {
       console.error('Error:', error);
