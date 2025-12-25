@@ -449,12 +449,11 @@ export default function ContentToolsPage() {
 
           {/* Output Section */}
           {output && !loading && (
-            <Card className="border-primary/30 shadow-xl bg-gradient-to-br from-card to-card/50">
+            <Card className="border-border shadow-md">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <Sparkles className="h-5 w-5 text-primary" />
-                    Result
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    Output
                   </CardTitle>
                   <Button
                     variant="ghost"
@@ -470,20 +469,20 @@ export default function ContentToolsPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <ScrollArea className="h-96 rounded-lg border bg-background p-4">
-                  <div className="prose prose-sm dark:prose-invert max-w-none">
+                <ScrollArea className="h-96 rounded-md border border-border bg-background/50 p-4">
+                  <div className="space-y-4 max-w-none text-sm leading-relaxed">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       rehypePlugins={[rehypeRaw]}
                       components={{
-                        p: ({ node, ...props }) => <p className="mb-4 last:mb-0 leading-relaxed" {...props} />,
-                        a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-medium" />,
-                        h1: ({ node, ...props }) => <h1 className="font-bold text-2xl mb-4 mt-6 first:mt-0 text-foreground" {...props} />,
-                        h2: ({ node, ...props }) => <h2 className="font-bold text-xl mb-3 mt-5 first:mt-0 text-foreground" {...props} />,
-                        h3: ({ node, ...props }) => <h3 className="font-bold text-lg mb-2 mt-4 first:mt-0 text-foreground" {...props} />,
-                        ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-4 space-y-1" {...props} />,
-                        ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4 space-y-1" {...props} />,
-                        li: ({ node, ...props }) => <li className="mb-2" {...props} />,
+                        p: ({ node, ...props }) => <p className="mb-3 last:mb-0 text-foreground" {...props} />,
+                        a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
+                        h1: ({ node, ...props }) => <h1 className="font-semibold text-xl mb-3 mt-4 first:mt-0 text-foreground" {...props} />,
+                        h2: ({ node, ...props }) => <h2 className="font-semibold text-lg mb-2 mt-3 first:mt-0 text-foreground" {...props} />,
+                        h3: ({ node, ...props }) => <h3 className="font-semibold text-base mb-2 mt-2 first:mt-0 text-foreground" {...props} />,
+                        ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-3 space-y-1" {...props} />,
+                        ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-3 space-y-1" {...props} />,
+                        li: ({ node, ...props }) => <li className="text-foreground" {...props} />,
                         code: ({ node, inline, className, children, ...props }: any) => {
                           return !inline ? (
                             <div className="my-4 rounded-lg bg-muted p-4 overflow-x-auto border border-border">

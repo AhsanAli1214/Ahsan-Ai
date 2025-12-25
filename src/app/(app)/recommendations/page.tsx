@@ -16,7 +16,7 @@ export default async function RecommendationsPage({
   const initialPrompt = params?.initialPrompt || '';
 
   return (
-    <div className="flex h-full flex-col bg-gradient-to-b from-background via-background to-background/95">
+    <div className="flex h-full flex-col bg-background">
       <AppHeader title="AI Chat" />
       <div className="flex-1 overflow-hidden">
         <ChatInterface

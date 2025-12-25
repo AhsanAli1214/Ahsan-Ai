@@ -51,15 +51,14 @@ export function Toaster() {
   return (
     <ToastProvider>
       {toasts.map(function ({ id, title, description, action, ...props }) {
-        playNotificationSound()
         return (
-          <Toast key={id} {...props}>
+          <Toast key={id} {...props} className="border-border shadow-md">
             <div className="flex items-start gap-3 flex-1">
               {getToastIcon(title)}
-              <div className="grid gap-1.5 flex-1">
-                {title && <ToastTitle>{title}</ToastTitle>}
+              <div className="grid gap-1 flex-1">
+                {title && <ToastTitle className="text-sm font-semibold">{title}</ToastTitle>}
                 {description && (
-                  <ToastDescription>{description}</ToastDescription>
+                  <ToastDescription className="text-xs text-muted-foreground">{description}</ToastDescription>
                 )}
               </div>
             </div>
