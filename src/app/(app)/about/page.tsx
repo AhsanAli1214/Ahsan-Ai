@@ -56,8 +56,8 @@ const SOCIAL_LINKS = [
     id: "website",
     icon: Globe,
     label: "Personal Website",
-    handle: "a121472.website2.me",
-    url: "http://a121472.website2.me/",
+    handle: "ahsan-tech-hub.blogspot.com",
+    url: "https://ahsan-tech-hub.blogspot.com/",
     color: "text-[#0F4C75]",
     bgColor: "bg-[#0F4C75]/15",
   },
@@ -73,22 +73,22 @@ export default function AboutPage() {
   const aboutSchema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Ahsan Ali",
-    "url": "https://ahsan-ai-hub.replit.dev",
-    "image": "https://ahsan-ai-hub.replit.dev/api/og",
-    "description": "CIT Student & Passionate Developer - Creator of Ahsan AI Hub",
-    "jobTitle": "Developer",
-    "sameAs": [
+    name: "Ahsan Ali",
+    url: "https://ahsan-ai-hub.vercel.app",
+    image: "https://replit.com/@AhsanWadani111/Ahsan-Ai#src/app/favicon.ico",
+    description: "CIT Student & Passionate Developer - Creator of Ahsan AI Hub",
+    jobTitle: "Developer",
+    sameAs: [
       "https://www.instagram.com/ahsan.ali.wadani",
       "https://x.com/Ahsan_Ali_12",
       "https://www.facebook.com/profile.php?id=100091175299202",
-      "http://a121472.website2.me/"
+      "https://ahsan-tech-hub.blogspot.com",
     ],
-    "contactPoint": {
+    contactPoint: {
       "@type": "ContactPoint",
-      "contactType": "Support",
-      "email": SUPPORT_EMAIL
-    }
+      contactType: "Support",
+      email: SUPPORT_EMAIL,
+    },
   };
 
   return (
