@@ -42,8 +42,8 @@ export async function getRecommendationsAction(
   try {
     const recommendations = await runWithRotation(
       input.interests,
-      input.personality,
-      input.responseLength
+      input.personality || 'friendly',
+      input.responseLength || 'medium'
     );
     return { success: true, data: { recommendations } };
   } catch (error: any) {

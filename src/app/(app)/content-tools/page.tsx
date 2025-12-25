@@ -158,9 +158,9 @@ function ToolCard({ tool, onSelect }: { tool: (typeof toolsList)[0], onSelect: (
   const image = getImageForTool(tool);
   const IconComponent = tool.icon;
   return (
-    <Card onClick={onSelect} className={cn("group flex cursor-pointer flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-accent/20 bg-gradient-to-br from-card to-card/50 hover:border-accent/50")}>
+    <Card onClick={onSelect} className={cn("group flex cursor-pointer flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-border bg-card hover:border-primary/50")}>
       <CardHeader className="p-0 relative">
-        <div className={cn("relative h-40 w-full bg-gradient-to-br flex items-center justify-center group-hover:scale-110 transition-transform", tool.gradient)}>
+        <div className={cn("relative h-40 w-full bg-muted flex items-center justify-center group-hover:scale-105 transition-transform")}>
           {image ? (
             <Image 
               src={image.imageUrl} 
@@ -351,16 +351,14 @@ export default function ContentToolsPage() {
 
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Tool Header */}
-          <div className={cn("rounded-lg bg-gradient-to-r p-6 text-white", 
-            tool.gradient.replace('/10', '').replace('from-', 'from-').replace('to-', 'to-')
-          )}>
+          <div className={cn("rounded-lg bg-primary p-6 text-primary-foreground shadow-md")}>
             <div className="flex items-center gap-3">
-              <div className="bg-white/20 p-3 rounded-lg">
+              <div className="bg-white/10 p-3 rounded-lg">
                 <tool.icon className="h-6 w-6" />
               </div>
               <div>
                 <h1 className="text-2xl font-bold">{tool.label}</h1>
-                <p className="text-white/80">{tool.desc}</p>
+                <p className="text-white/90">{tool.desc}</p>
               </div>
             </div>
           </div>
@@ -496,7 +494,7 @@ export default function ContentToolsPage() {
 
           {/* Output Section */}
           {output && !loading && (
-            <Card className="border-primary/30 shadow-xl bg-gradient-to-br from-card to-card/50">
+            <Card className="border-primary/30 shadow-xl bg-card">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
