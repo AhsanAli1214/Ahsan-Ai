@@ -42,6 +42,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { OneSignalButton } from '@/components/OneSignalButton';
+import { PWAInstall } from '@/components/PWAInstall';
 
 const PERSONALITY_MODES = [
   {
