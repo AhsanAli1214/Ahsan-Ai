@@ -237,7 +237,6 @@ export default function ContentToolsPage() {
         case 'email':
           result = await generateEmailAction({
             context: input,
-            tone: (options.emailTone as GenerateEmailInput['tone']) || 'professional',
             details: options.emailDetails,
             ...commonParams,
           });
