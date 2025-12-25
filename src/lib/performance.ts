@@ -1,6 +1,6 @@
 'use server';
 
-import { pLimit } from 'p-limit';
+import pLimit from 'p-limit';
 
 // Simple parallel execution utility for server actions or data fetching
 const limit = pLimit(10);
