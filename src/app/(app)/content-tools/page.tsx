@@ -206,6 +206,8 @@ export default function ContentToolsPage() {
     socialPlatform: 'Twitter',
     resumeSection: 'summary',
     targetLanguage: 'Spanish',
+    targetAudience: 'General',
+    outputFormat: 'Visual',
   });
 
   const handleProcess = async () => {
@@ -217,11 +219,19 @@ export default function ContentToolsPage() {
     setLoading(true);
     try {
       let result;
+      const commonParams = {
+        tone: options.emailTone || 'professional',
+        audience: options.targetAudience || 'General',
+        format: options.outputFormat || 'Visual',
+        language: options.targetLanguage || 'English',
+      };
+
       switch (selectedTool) {
         case 'enhance':
           result = await enhanceTextAction({
             text: input,
             mode: (options.enhanceMode as EnhanceTextInput['mode']) || 'improve',
+            ...commonParams,
           });
           break;
         case 'email':
@@ -229,49 +239,62 @@ export default function ContentToolsPage() {
             context: input,
             tone: (options.emailTone as GenerateEmailInput['tone']) || 'professional',
             details: options.emailDetails,
+            ...commonParams,
           });
           break;
         case 'blog':
             result = await generateBlogPostAction({
                 topic: input,
                 length: (options.blogLength as GenerateBlogPostInput['length']) || 'medium',
+                ...commonParams,
             });
             break;
         case 'study':
             result = await generateStudyMaterialAction({
                 topic: input,
                 type: (options.studyType as GenerateStudyMaterialInput['type']) || 'explanation',
+                ...commonParams,
             });
             break;
         case 'code':
             result = await explainProgrammingAction({
                 code: input,
                 language: options.codeLanguage,
+                ...commonParams,
             });
             break;
         case 'math':
-            result = await solveMathAction({ problem: input });
+            result = await solveMathAction({ 
+              problem: input,
+              ...commonParams,
+            });
             break;
         case 'translate':
             result = await translateTextAction({
                 text: input,
                 targetLanguage: options.targetLanguage || 'Spanish',
+                ...commonParams,
             });
             break;
         case 'social':
             result = await generateSocialMediaPostAction({
                 topic: input,
                 platform: (options.socialPlatform as GenerateSocialMediaPostInput['platform']) || 'Twitter',
+                ...commonParams,
             });
             break;
         case 'resume':
             result = await assistResumeAction({
                 section: (options.resumeSection as AssistResumeInput['section']) || 'summary',
                 details: input,
+                ...commonParams,
             });
             break;
         case 'story':
-            result = await generateStoryAction({ prompt: input });
+            result = await generateStoryAction({ 
+              prompt: input,
+              ...commonParams,
+            });
             break;
         default:
             return;

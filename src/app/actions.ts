@@ -58,9 +58,15 @@ export async function getRecommendationsAction(
 // Content Tools Actions
 type ContentToolResult = { success: true; data: string } | { success: false; error: string };
 
-export async function enhanceTextAction(input: EnhanceTextInput): Promise<ContentToolResult> {
+export async function enhanceTextAction(input: any): Promise<ContentToolResult> {
   try {
-    const result = await runWithRotation(`Enhance this text: ${input.text}`, "professional", "medium");
+    const prompt = `Tool: Text Enhancer
+Goal: Enhance text with mode ${input.mode}
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Content: ${input.text}`;
+    const result = await runWithRotation(prompt, input.tone, "medium");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error enhancing text:', error);
@@ -68,10 +74,16 @@ export async function enhanceTextAction(input: EnhanceTextInput): Promise<Conten
   }
 }
 
-export async function generateEmailAction(input: GenerateEmailInput): Promise<ContentToolResult> {
+export async function generateEmailAction(input: any): Promise<ContentToolResult> {
   try {
-    const prompt = `Generate a ${input.tone} email based on this context: ${input.context}. Additional details: ${input.details || 'None'}`;
-    const result = await runWithRotation(prompt, "professional", "medium");
+    const prompt = `Tool: Email Writer
+Goal: Generate email
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Context: ${input.context}
+Details: ${input.details || 'None'}`;
+    const result = await runWithRotation(prompt, input.tone, "medium");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error generating email:', error);
@@ -79,10 +91,15 @@ export async function generateEmailAction(input: GenerateEmailInput): Promise<Co
   }
 }
 
-export async function generateBlogPostAction(input: GenerateBlogPostInput): Promise<ContentToolResult> {
+export async function generateBlogPostAction(input: any): Promise<ContentToolResult> {
   try {
-    const prompt = `Generate a ${input.length} blog post about: ${input.topic}`;
-    const result = await runWithRotation(prompt, "creative", "explained");
+    const prompt = `Tool: Blog Generator
+Goal: Generate ${input.length} blog post
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Topic: ${input.topic}`;
+    const result = await runWithRotation(prompt, input.tone, "explained");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error generating blog post:', error);
@@ -90,10 +107,15 @@ export async function generateBlogPostAction(input: GenerateBlogPostInput): Prom
   }
 }
 
-export async function generateSocialMediaPostAction(input: GenerateSocialMediaPostInput): Promise<ContentToolResult> {
+export async function generateSocialMediaPostAction(input: any): Promise<ContentToolResult> {
     try {
-        const prompt = `Generate a ${input.platform} post about: ${input.topic}`;
-        const result = await runWithRotation(prompt, "creative", "short");
+        const prompt = `Tool: Social Media Post
+Goal: Generate ${input.platform} post
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Topic: ${input.topic}`;
+        const result = await runWithRotation(prompt, input.tone, "short");
         return { success: true, data: result };
     } catch (error) {
         console.error('Error generating social media post:', error);
@@ -101,25 +123,99 @@ export async function generateSocialMediaPostAction(input: GenerateSocialMediaPo
     }
 }
 
-export async function assistResumeAction(input: AssistResumeInput): Promise<ContentToolResult> {
+export async function assistResumeAction(input: any): Promise<ContentToolResult> {
     try {
-        const prompt = `Improve this resume ${input.section}: ${input.details}`;
-        const result = await runWithRotation(prompt, "professional", "medium");
+        const prompt = `Tool: Resume Assistant
+Goal: Improve ${input.section}
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Details: ${input.details}`;
+        const result = await runWithRotation(prompt, input.tone, "medium");
         return { success: true, data: result };
     } catch (error) {
         console.error('Error assisting with resume:', error);
         return { success: false, error: 'Failed to assist with resume.' };
     }
 }
-export async function generateStoryAction(input: GenerateStoryInput): Promise<ContentToolResult> {
+export async function generateStoryAction(input: any): Promise<ContentToolResult> {
     try {
-        const prompt = `Write a story about: ${input.prompt}`;
-        const result = await runWithRotation(prompt, "creative", "explained");
+        const prompt = `Tool: Creative Story Writer
+Goal: Generate story
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Prompt: ${input.prompt}`;
+        const result = await runWithRotation(prompt, input.tone, "explained");
         return { success: true, data: result };
     } catch (error) {
         console.error('Error generating story:', error);
         return { success: false, error: 'Failed to generate story.' };
     }
+}
+
+export async function generateStudyMaterialAction(input: any): Promise<ContentToolResult> {
+  try {
+    const prompt = `Tool: Study Assistant
+Goal: Generate ${input.type}
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Topic: ${input.topic}`;
+    const result = await runWithRotation(prompt, input.tone, "explained");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error generating study material:', error);
+    return { success: false, error: 'Failed to generate study material.' };
+  }
+}
+
+export async function explainProgrammingAction(input: any): Promise<ContentToolResult> {
+  try {
+    const prompt = `Tool: Code Explainer
+Goal: Explain ${input.language} code
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Code: ${input.code}`;
+    const result = await runWithRotation(prompt, input.tone, "explained");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error explaining code:', error);
+    return { success: false, error: 'Failed to explain code.' };
+  }
+}
+
+export async function solveMathAction(input: any): Promise<ContentToolResult> {
+  try {
+    const prompt = `Tool: Math Solver
+Goal: Solve math problem
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Problem: ${input.problem}`;
+    const result = await runWithRotation(prompt, input.tone, "explained");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error solving math:', error);
+    return { success: false, error: 'Failed to solve math problem.' };
+  }
+}
+
+export async function translateTextAction(input: any): Promise<ContentToolResult> {
+  try {
+    const prompt = `Tool: Translator
+Goal: Translate to ${input.targetLanguage}
+Tone: ${input.tone}
+Audience: ${input.audience}
+Language: ${input.language}
+Text: ${input.text}`;
+    const result = await runWithRotation(prompt, input.tone, "medium");
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error translating text:', error);
+    return { success: false, error: 'Failed to translate text.' };
+  }
 }
 
 // Text-to-Speech Action
