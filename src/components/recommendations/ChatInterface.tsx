@@ -510,9 +510,9 @@ export function ChatInterface({
             </Button>
         </div>
       )}
-      <div className="fixed bottom-20 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 w-full pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-20 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-3 sm:py-4 w-full pb-[calc(1rem+env(safe-area-inset-bottom))] lg:bottom-4 lg:left-1/2 lg:-translate-x-1/2 lg:max-w-3xl lg:rounded-2xl lg:border lg:shadow-2xl lg:bg-card/90">
         <div className="mx-auto w-full max-w-4xl">
-           <div className="flex items-end gap-2 sm:gap-3 rounded-lg border bg-card p-2 sm:p-3 shadow-sm">
+           <div className="flex items-end gap-2 sm:gap-3 rounded-xl border bg-card p-2 sm:p-3 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary/50 transition-all">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -522,13 +522,13 @@ export function ChatInterface({
                     handleSend();
                 }
                 }}
-                placeholder="Ask me anything..."
-                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 text-sm sm:text-base"
+                placeholder="Ask Ahsan AI anything..."
+                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 text-sm sm:text-base min-h-[44px]"
                 rows={1}
                 disabled={isLoading}
             />
-            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-8 w-8 sm:h-9 sm:w-9 shrink-0">
-                <Send className="h-4 w-4" />
+            <Button onClick={handleSend} disabled={isLoading || !input.trim()} size="icon" className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 rounded-xl bg-primary hover:bg-primary/90 transition-transform active:scale-95 shadow-lg">
+                <Send className="h-4.5 w-4.5" />
                 <span className="sr-only">Send</span>
             </Button>
            </div>
