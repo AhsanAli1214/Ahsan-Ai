@@ -31,6 +31,13 @@ export async function runWithRotation(prompt: string, personality: string = "fri
   while (attempts < maxAttempts) {
     const apiKey = API_KEYS[currentKeyIndex];
     
+    if (!apiKey) {
+      console.error(`Gemini Key ${currentKeyIndex + 1} is missing. Rotating...`);
+      currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
+      attempts++;
+      continue;
+    }
+
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -53,8 +60,13 @@ export async function runWithRotation(prompt: string, personality: string = "fri
         - Output must be finished, polished content.
         - If asked about your developer, talk about Ahsan Ali.`;
 
+      const promptContext = `
+      User's preferred tone: ${personality}
+      Preferred length: ${responseLength}
+      `;
+
       const result = await model.generateContent({
-        contents: [{ role: "user", parts: [{ text: `${systemInstruction}\n\nUser Question: ${prompt}` }] }],
+        contents: [{ role: "user", parts: [{ text: `${systemInstruction}\n\n${promptContext}\n\nUser Question: ${prompt}` }] }],
         generationConfig: {
           maxOutputTokens: responseLength === "short" ? 250 : responseLength === "medium" ? 800 : 2048,
           temperature: 0.7,
