@@ -16,5 +16,5 @@ export const ai = genkit({
       ...(baseUrl && { baseUrl })
     })
   ],
-  model: 'googleai/gemini-2.0-flash-exp',
+  model: 'googleai/gemini-2.0-flash',
 });
