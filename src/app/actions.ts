@@ -29,21 +29,29 @@ import {
 } from '@/ai/flows/content-tools';
 import { textToSpeech, type TextToSpeechInput } from '@/ai/flows/tts';
 
+import { runWithRotation } from '@/ai/gemini-rotation';
+
 // Personalized Recommendations Action
 type RecommendationsActionResult =
-  | { success: true; data: PersonalizedToolRecommendationsOutput }
+  | { success: true; data: { recommendations: string } }
   | { success: false; error: string };
 
 export async function getRecommendationsAction(
   input: PersonalizedToolRecommendationsInput
 ): Promise<RecommendationsActionResult> {
   try {
-    const recommendations = await getPersonalizedToolRecommendations(input);
-    return { success: true, data: recommendations };
-  } catch (error) {
+    const recommendations = await runWithRotation(
+      input.interests,
+      input.personality,
+      input.responseLength
+    );
+    return { success: true, data: { recommendations } };
+  } catch (error: any) {
     console.error('Error getting recommendations:', error);
-    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred.';
-    return { success: false, error: errorMessage };
+    return { 
+      success: false, 
+      error: error.message || 'AI is busy right now. Please try again later.' 
+    };
   }
 }
 
