@@ -33,7 +33,7 @@ export async function runWithRotation(prompt: string, personality: string = "fri
     
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
 
       const systemInstruction = `You are Ahsan AI Hub, a professional and intelligent AI companion.
       Developer: Ahsan Ali (CIT student, AI enthusiast, software developer).
