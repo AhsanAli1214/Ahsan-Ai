@@ -158,11 +158,11 @@ export async function generateStudyMaterialAction(input: any): Promise<ContentTo
   try {
     const prompt = `Tool: Study Assistant
 Goal: Generate ${input.type}
-Tone: ${input.tone}
-Audience: ${input.audience}
-Language: ${input.language}
+Tone: ${input.tone || 'professional'}
+Audience: ${input.audience || 'General'}
+Language: ${input.language || 'English'}
 Topic: ${input.topic}`;
-    const result = await runWithRotation(prompt, input.tone, "explained");
+    const result = await runWithRotation(prompt, input.tone || 'professional', "explained");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error generating study material:', error);
@@ -173,12 +173,12 @@ Topic: ${input.topic}`;
 export async function explainProgrammingAction(input: any): Promise<ContentToolResult> {
   try {
     const prompt = `Tool: Code Explainer
-Goal: Explain ${input.language} code
-Tone: ${input.tone}
-Audience: ${input.audience}
-Language: ${input.language}
+Goal: Explain ${input.language || ''} code
+Tone: ${input.tone || 'professional'}
+Audience: ${input.audience || 'General'}
+Language: ${input.language || 'English'}
 Code: ${input.code}`;
-    const result = await runWithRotation(prompt, input.tone, "explained");
+    const result = await runWithRotation(prompt, input.tone || 'professional', "explained");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error explaining code:', error);
@@ -190,11 +190,11 @@ export async function solveMathAction(input: any): Promise<ContentToolResult> {
   try {
     const prompt = `Tool: Math Solver
 Goal: Solve math problem
-Tone: ${input.tone}
-Audience: ${input.audience}
-Language: ${input.language}
+Tone: ${input.tone || 'professional'}
+Audience: ${input.audience || 'General'}
+Language: ${input.language || 'English'}
 Problem: ${input.problem}`;
-    const result = await runWithRotation(prompt, input.tone, "explained");
+    const result = await runWithRotation(prompt, input.tone || 'professional', "explained");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error solving math:', error);
@@ -206,11 +206,11 @@ export async function translateTextAction(input: any): Promise<ContentToolResult
   try {
     const prompt = `Tool: Translator
 Goal: Translate to ${input.targetLanguage}
-Tone: ${input.tone}
-Audience: ${input.audience}
-Language: ${input.language}
+Tone: ${input.tone || 'professional'}
+Audience: ${input.audience || 'General'}
+Language: ${input.language || 'English'}
 Text: ${input.text}`;
-    const result = await runWithRotation(prompt, input.tone, "medium");
+    const result = await runWithRotation(prompt, input.tone || 'professional', "medium");
     return { success: true, data: result };
   } catch (error) {
     console.error('Error translating text:', error);
