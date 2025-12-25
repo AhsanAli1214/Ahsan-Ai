@@ -299,10 +299,12 @@ export default function ContentToolsPage() {
             return;
       }
 
-      if (result.success && result.data) {
+      if (result && result.success && result.data) {
         setOutput(result.data);
-      } else {
+      } else if (result && !result.success) {
         toast({ title: 'Failed to generate content', description: result.error || 'AI is busy right now. Please try again later.', variant: 'destructive' });
+      } else {
+        toast({ title: 'An error occurred', description: 'Could not communicate with AI engine.', variant: 'destructive' });
       }
     } catch (error) {
       console.error('Error:', error);
