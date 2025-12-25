@@ -44,7 +44,7 @@ body {
     --sidebar-ring: var(--ring);
   }
 
-  :root[data-theme="aurora"] {
+  [data-theme="aurora"] {
     --primary: 270 70% 55%;
     --primary-foreground: 0 0% 100%;
     --accent: 280 80% 60%;
@@ -62,7 +62,7 @@ body {
     --ring: 270 70% 55%;
   }
 
-  :root[data-theme="ocean"] {
+  [data-theme="ocean"] {
     --primary: 180 80% 40%;
     --primary-foreground: 0 0% 100%;
     --accent: 190 90% 50%;
@@ -80,7 +80,7 @@ body {
     --ring: 180 80% 40%;
   }
 
-  :root[data-theme="sunset"] {
+  [data-theme="sunset"] {
     --primary: 15 90% 55%;
     --primary-foreground: 0 0% 100%;
     --accent: 340 85% 60%;
@@ -98,7 +98,7 @@ body {
     --ring: 15 90% 55%;
   }
 
-  :root[data-theme="forest"] {
+  [data-theme="forest"] {
     --primary: 120 75% 45%;
     --primary-foreground: 0 0% 100%;
     --accent: 140 85% 50%;
@@ -116,7 +116,7 @@ body {
     --ring: 120 75% 45%;
   }
 
-  :root[data-theme="midnight"] {
+  [data-theme="midnight"] {
     --primary: 240 80% 45%;
     --primary-foreground: 0 0% 100%;
     --accent: 260 90% 55%;
@@ -134,7 +134,7 @@ body {
     --ring: 240 80% 45%;
   }
 
-  :root[data-theme="candy"] {
+  [data-theme="candy"] {
     --primary: 320 90% 55%;
     --primary-foreground: 0 0% 100%;
     --accent: 340 100% 60%;
@@ -152,7 +152,7 @@ body {
     --ring: 320 90% 55%;
   }
 
-  :root[data-theme="tech"] {
+  [data-theme="tech"] {
     --primary: 200 100% 50%;
     --primary-foreground: 0 0% 100%;
     --accent: 280 100% 55%;
@@ -170,7 +170,7 @@ body {
     --ring: 200 100% 50%;
   }
 
-  :root[data-theme="warm"] {
+  [data-theme="warm"] {
     --primary: 30 100% 50%;
     --primary-foreground: 0 0% 100%;
     --accent: 45 100% 55%;

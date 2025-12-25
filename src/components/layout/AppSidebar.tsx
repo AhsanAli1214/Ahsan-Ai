@@ -15,6 +15,8 @@ import { Sparkles, Home, Info, Mail, PenTool, HelpCircle, Settings } from 'lucid
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useSidebar } from '@/components/ui/sidebar';
 
+import { ChatHistory } from '@/components/ChatHistory';
+
 const mainNav = [
   { name: 'Home', href: '/', icon: Home },
   { name: 'AI Chat', href: '/recommendations', icon: Sparkles },
@@ -39,7 +41,7 @@ export function AppSidebar() {
   return (
     <Sidebar side="left" collapsible="icon" className="hidden md:block">
       <SidebarHeader className="border-b">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 p-2">
           <AhsanAiHubLogo className="h-8 w-8" />
           <span className="font-headline text-lg font-semibold">Ahsan Ai Hub</span>
         </div>
@@ -62,6 +64,10 @@ export function AppSidebar() {
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
+        <div className="mt-4 px-4 py-2 border-t">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">History</h3>
+          <ChatHistory />
+        </div>
       </SidebarContent>
     </Sidebar>
   );
