@@ -16,13 +16,22 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
+import { useRouter } from 'next/navigation';
+
 export function ChatHistory() {
+  const router = useRouter();
   const { sessions, currentSessionId, createSession, switchSession, deleteSession, deleteAllSessions } = useChatHistory();
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [showDeleteAllWarning, setShowDeleteAllWarning] = useState(false);
 
   const handleNewChat = () => {
     createSession();
+    router.push('/recommendations');
+  };
+
+  const handleSessionClick = (id: string) => {
+    switchSession(id);
+    router.push('/recommendations');
   };
 
   const handleDeleteClick = (e: React.MouseEvent, id: string) => {
@@ -109,7 +118,7 @@ export function ChatHistory() {
                   'p-3 cursor-pointer transition-all hover:bg-accent/10 group',
                   currentSessionId === session.id ? 'bg-accent/20 border-accent/50' : ''
                 )}
-                onClick={() => switchSession(session.id)}
+                onClick={() => handleSessionClick(session.id)}
               >
                 <div className="flex items-start gap-2 min-w-0">
                   <MessageSquare className="h-4 w-4 shrink-0 mt-0.5 text-muted-foreground" />
