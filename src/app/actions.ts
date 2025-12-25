@@ -173,7 +173,7 @@ Topic: ${input.topic}`;
 export async function explainProgrammingAction(input: any): Promise<ContentToolResult> {
   try {
     const prompt = `Tool: Code Explainer
-Goal: Explain ${input.language || ''} code
+Goal: Explain ${input.programmingLanguage || ''} code
 Tone: ${input.tone || 'professional'}
 Audience: ${input.audience || 'General'}
 Language: ${input.language || 'English'}

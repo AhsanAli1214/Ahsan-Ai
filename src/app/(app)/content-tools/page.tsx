@@ -258,7 +258,7 @@ export default function ContentToolsPage() {
         case 'code':
             result = await explainProgrammingAction({
                 code: input,
-                language: options.codeLanguage,
+                programmingLanguage: options.codeLanguage,
                 ...commonParams,
             });
             break;
