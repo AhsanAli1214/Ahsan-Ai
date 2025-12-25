@@ -4,16 +4,6 @@ const config = {
   compress: true,
   productionBrowserSourceMaps: false,
   
-  serverExternalPackages: ['@google/generative-ai'],
-  experimental: {
-    allowedDevOrigins: [
-      '617b9b1f-777d-43ef-8255-b7620d9a18e4-00-3a0llemse4yib.spock.replit.dev',
-      '*.replit.dev',
-      '*.replit.com',
-      '*.spock.replit.dev'
-    ]
-  },
-  
   // Sitemap configuration
   async rewrites() {
     return {
