@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /**
  * GEMINI AI MULTI-KEY ROTATION SYSTEM
- * 
+ *
  * This service handles automatic rotation across 6 API keys
  * with real-time rate-limit (429) and quota error handling.
  */
@@ -18,7 +18,11 @@ const API_KEYS = [
 
 let currentKeyIndex = 0;
 
-export async function runWithRotation(prompt: string, personality: string = "friendly", responseLength: string = "medium") {
+export async function runWithRotation(
+  prompt: string,
+  personality: string = "friendly",
+  responseLength: string = "medium",
+) {
   if (API_KEYS.length === 0) {
     console.error("No Gemini API keys found in environment variables.");
     throw new Error("AI is busy right now. Please try again later.");
@@ -30,9 +34,11 @@ export async function runWithRotation(prompt: string, personality: string = "fri
 
   while (attempts < maxAttempts) {
     const apiKey = API_KEYS[currentKeyIndex];
-    
+
     if (!apiKey) {
-      console.error(`Gemini Key ${currentKeyIndex + 1} is missing. Rotating...`);
+      console.error(
+        `Gemini Key ${currentKeyIndex + 1} is missing. Rotating...`,
+      );
       currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
       attempts++;
       continue;
@@ -46,10 +52,21 @@ export async function runWithRotation(prompt: string, personality: string = "fri
       Developer: Ahsan Ali (CIT student, AI enthusiast, software developer).
       
       Developer Links:
-      - Website: http://a121472.website2.me/
+      - Website: https://ahsan-tech-hub.blogspot.com/
       - Instagram: https://www.instagram.com/ahsan.ali.wadani
       - Twitter/X: https://x.com/Ahsan_Ali_12
       - Facebook: https://www.facebook.com/profile.php?id=100091175299202
+      Developer Information – Ahsan AI Hub
+
+      Developer Name: Ahsan Ali
+      Role: Founder & Developer
+      Platform: Ahsan AI Hub
+
+      🧠 About the Developer
+
+      Ahsan Ali is a passionate Computer & Information Technology (CIT) student and AI               enthusiast, focused on building intelligent, user-friendly, and practical AI solutions.        He specializes in creating smart assistants, automation tools, and creative AI                 experiences that help people work smarter, learn faster, and create better content.
+
+      Ahsan AI Hub reflects his vision of making advanced AI simple, accessible, and useful          for everyone—across WhatsApp, Telegram, and web platforms.
 
       AI Engine Rules (MANDATORY):
       - You are the core AI engine for the Ahsan AI Hub platform.
@@ -66,9 +83,23 @@ export async function runWithRotation(prompt: string, personality: string = "fri
       `;
 
       const result = await model.generateContent({
-        contents: [{ role: "user", parts: [{ text: `${systemInstruction}\n\n${promptContext}\n\nUser Question: ${prompt}` }] }],
+        contents: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `${systemInstruction}\n\n${promptContext}\n\nUser Question: ${prompt}`,
+              },
+            ],
+          },
+        ],
         generationConfig: {
-          maxOutputTokens: responseLength === "short" ? 250 : responseLength === "medium" ? 800 : 2048,
+          maxOutputTokens:
+            responseLength === "short"
+              ? 250
+              : responseLength === "medium"
+                ? 800
+                : 2048,
           temperature: 0.7,
         },
       });
@@ -79,25 +110,35 @@ export async function runWithRotation(prompt: string, personality: string = "fri
       if (!text) throw new Error("Empty response from Gemini");
 
       return text;
-
     } catch (error: any) {
       console.error(`Gemini Key ${currentKeyIndex + 1} failed:`, error.message);
-      
+
       const status = error?.status || error?.response?.status;
       const message = error?.message?.toLowerCase() || "";
 
       // Check for rate limit (429) or quota errors
-      const isRateLimit = status === 429 || message.includes("429") || message.includes("rate limit") || message.includes("quota") || message.includes("exceeded");
+      const isRateLimit =
+        status === 429 ||
+        message.includes("429") ||
+        message.includes("rate limit") ||
+        message.includes("quota") ||
+        message.includes("exceeded");
 
       if (isRateLimit) {
-        console.warn(`Gemini Key ${currentKeyIndex + 1} rate limited or quota exceeded. Rotating to next key...`);
+        console.warn(
+          `Gemini Key ${currentKeyIndex + 1} rate limited or quota exceeded. Rotating to next key...`,
+        );
         currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
         attempts++;
         continue; // Retry with next key
       }
 
       // If it's a "Failed Precondition" error (like missing API key), try next key too
-      if (message.includes("precondition") || message.includes("api key") || message.includes("not found")) {
+      if (
+        message.includes("precondition") ||
+        message.includes("api key") ||
+        message.includes("not found")
+      ) {
         currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
         attempts++;
         continue;
