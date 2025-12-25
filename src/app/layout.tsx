@@ -24,8 +24,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Ahsan AI Hub - Smart AI Chat, Content Tools & Automation',
-  description: 'Ahsan AI Hub is an AI-powered platform offering smart chat, automation, and creative AI tools. Get instant help with writing, coding, brainstorming, and problem solving.',
+  metadataBase: new URL('https://ahsan-ai-hub.vercel.app'),
+  title: 'Ahsan AI Hub - AI Assistant',
+  description: 'Ahsan AI Hub is an AI-powered platform offering smart chat, automation, and creative AI tools.',
   keywords: 'AI chat, content tools, AI writing, code explanation, brainstorming, AI assistant',
   manifest: '/manifest.json',
   appleWebApp: {
