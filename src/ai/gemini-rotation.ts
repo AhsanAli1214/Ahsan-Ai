@@ -75,10 +75,10 @@ export async function runWithRotation(prompt: string, personality: string = "fri
       const message = error?.message?.toLowerCase() || "";
 
       // Check for rate limit (429) or quota errors
-      const isRateLimit = status === 429 || message.includes("429") || message.includes("rate limit") || message.includes("quota");
+      const isRateLimit = status === 429 || message.includes("429") || message.includes("rate limit") || message.includes("quota") || message.includes("exceeded");
 
       if (isRateLimit) {
-        console.warn(`Gemini Key ${currentKeyIndex + 1} rate limited. Rotating to next key...`);
+        console.warn(`Gemini Key ${currentKeyIndex + 1} rate limited or quota exceeded. Rotating to next key...`);
         currentKeyIndex = (currentKeyIndex + 1) % API_KEYS.length;
         attempts++;
         continue; // Retry with next key
