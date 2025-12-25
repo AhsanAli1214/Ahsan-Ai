@@ -193,21 +193,26 @@ function ToolCard({ tool, onSelect }: { tool: (typeof toolsList)[0]; onSelect: (
           <div className={cn('absolute inset-0', tool.color, 'opacity-0 group-hover:opacity-20 transition-opacity')} />
         </div>
       )}
-      <div className="relative p-6 flex flex-col h-full flex-1 space-y-3">
-        <div className="flex items-center gap-3">
-          <div className={cn('w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:scale-110 group-hover:shadow-xl shadow-md', tool.color)}>
-            <IconComponent className="h-7 w-7 text-white" />
+      <div className="relative p-7 flex flex-col h-full flex-1 space-y-5">
+        {/* Icon and Header */}
+        <div className="flex items-start gap-4 pb-2">
+          <div className={cn('w-16 h-16 rounded-2xl flex items-center justify-center transition-all group-hover:scale-115 group-hover:shadow-2xl shadow-lg flex-shrink-0', tool.color)}>
+            <IconComponent className="h-8 w-8 text-white" />
           </div>
-          <div className="flex-1">
-            <h3 className="font-black text-lg text-foreground group-hover:text-primary transition-colors leading-tight">{tool.label}</h3>
-            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider opacity-70">{tool.color === 'bg-blue-500' ? 'Writing' : tool.color === 'bg-purple-500' ? 'Email' : 'Creative'}</p>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-black text-lg text-foreground group-hover:text-primary transition-colors leading-tight tracking-tight">{tool.label}</h3>
+            <p className="text-xs font-bold text-primary uppercase tracking-widest opacity-90 mt-1">{tool.color === 'bg-blue-500' ? 'Writing' : tool.color === 'bg-purple-500' ? 'Email' : 'Creative'}</p>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1">{tool.desc}</p>
-        <div className="mt-auto pt-2">
-          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all rounded-xl py-6 font-bold text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]" variant="default">
+        
+        {/* Description */}
+        <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1 text-balance">{tool.desc}</p>
+        
+        {/* Button */}
+        <div className="mt-auto pt-3">
+          <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-all rounded-2xl py-7 font-black text-base shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]" variant="default">
             <span>Use Tool</span>
-            <span className="ml-auto group-hover:translate-x-1 transition-transform">→</span>
+            <span className="ml-auto group-hover:translate-x-1 transition-transform duration-200">→</span>
           </Button>
         </div>
       </div>
@@ -360,15 +365,15 @@ export default function ContentToolsPage() {
   const renderToolUI = () => {
     if (!selectedTool) {
       return (
-        <div className="space-y-16 p-8 lg:p-16 max-w-7xl mx-auto">
-          <div className="text-center space-y-6 max-w-4xl mx-auto">
-            <div className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/30 mb-4">
-              <span className="text-sm font-black text-primary uppercase tracking-[0.2em]">Professional Tools</span>
+        <div className="space-y-20 p-8 lg:p-20 max-w-7xl mx-auto">
+          <div className="text-center space-y-8 max-w-4xl mx-auto">
+            <div className="inline-block px-5 py-3 rounded-full bg-primary/10 border border-primary/30">
+              <span className="text-xs font-black text-primary uppercase tracking-[0.2em]">Professional Tools</span>
             </div>
-            <h2 className="text-6xl md:text-7xl font-black tracking-tight text-foreground">AI Studio</h2>
+            <h2 className="text-6xl md:text-7xl font-black tracking-tight text-foreground leading-tight">AI Studio</h2>
             <p className="text-muted-foreground text-xl font-medium leading-relaxed max-w-2xl mx-auto">Harness the power of advanced AI to accelerate your creative and professional workflow with precision-engineered tools.</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 auto-rows-max">
             {toolsList.map((tool) => (
               <ToolCard key={tool.id} tool={tool} onSelect={() => setSelectedTool(tool.id)} />
             ))}
