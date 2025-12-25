@@ -33,7 +33,7 @@ export async function runWithRotation(prompt: string, personality: string = "fri
     
     try {
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const systemInstruction = `You are an AI companion named Ahsan AI Hub. 
       Current Personality: ${personality}
