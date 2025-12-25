@@ -375,24 +375,24 @@ export default function ContentToolsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {selectedTool === 'enhance' && (
-                <div>
-                  <label className="block text-sm font-medium mb-2">Enhancement Mode</label>
-                  <select
-                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
-                    value={options.enhanceMode}
-                    onChange={(e) => setOptions({ ...options, enhanceMode: e.target.value })}
-                  >
-                    <option>improve</option>
-                    <option>academic</option>
-                    <option>casual</option>
-                    <option>formal</option>
-                  </select>
-                </div>
-              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {selectedTool === 'enhance' && (
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Enhancement Mode</label>
+                    <select
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                      value={options.enhanceMode}
+                      onChange={(e) => setOptions({ ...options, enhanceMode: e.target.value })}
+                    >
+                      <option value="improve">Improve Flow</option>
+                      <option value="academic">Academic Style</option>
+                      <option value="casual">Casual Style</option>
+                      <option value="formal">Formal Style</option>
+                    </select>
+                  </div>
+                )}
 
-              {selectedTool === 'email' && (
-                <>
+                {selectedTool === 'email' && (
                   <div>
                     <label className="block text-sm font-medium mb-2">Tone</label>
                     <select
@@ -400,45 +400,70 @@ export default function ContentToolsPage() {
                       value={options.emailTone}
                       onChange={(e) => setOptions({ ...options, emailTone: e.target.value })}
                     >
-                      <option>professional</option>
-                      <option>casual</option>
-                      <option>formal</option>
+                      <option value="professional">Professional</option>
+                      <option value="casual">Casual</option>
+                      <option value="formal">Formal</option>
                     </select>
                   </div>
-                </>
-              )}
+                )}
 
-              {selectedTool === 'blog' && (
+                {selectedTool === 'blog' && (
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Article Length</label>
+                    <select
+                      className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                      value={options.blogLength}
+                      onChange={(e) => setOptions({ ...options, blogLength: e.target.value })}
+                    >
+                      <option value="short">Short (~300 words)</option>
+                      <option value="medium">Medium (~700 words)</option>
+                      <option value="long">Long (~1200 words)</option>
+                    </select>
+                  </div>
+                )}
+
                 <div>
-                  <label className="block text-sm font-medium mb-2">Article Length</label>
+                  <label className="block text-sm font-medium mb-2">Target Audience</label>
                   <select
                     className="w-full px-3 py-2 rounded-lg border border-input bg-background"
-                    value={options.blogLength}
-                    onChange={(e) => setOptions({ ...options, blogLength: e.target.value })}
+                    value={options.targetAudience}
+                    onChange={(e) => setOptions({ ...options, targetAudience: e.target.value })}
                   >
-                    <option>short</option>
-                    <option>medium</option>
-                    <option>long</option>
+                    <option value="General">General Public</option>
+                    <option value="Professional">Professionals</option>
+                    <option value="Student">Students</option>
+                    <option value="Expert">Experts</option>
                   </select>
                 </div>
-              )}
 
-              {selectedTool === 'translate' && (
                 <div>
-                  <label className="block text-sm font-medium mb-2">Target Language</label>
+                  <label className="block text-sm font-medium mb-2">Output Language</label>
                   <select
                     className="w-full px-3 py-2 rounded-lg border border-input bg-background"
                     value={options.targetLanguage}
                     onChange={(e) => setOptions({ ...options, targetLanguage: e.target.value })}
                   >
                     {LANGUAGES.map((lang) => (
-                      <option key={lang.code} value={lang.code}>
+                      <option key={lang.code} value={lang.name}>
                         {lang.name}
                       </option>
                     ))}
                   </select>
                 </div>
-              )}
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Output Format</label>
+                  <select
+                    className="w-full px-3 py-2 rounded-lg border border-input bg-background"
+                    value={options.outputFormat}
+                    onChange={(e) => setOptions({ ...options, outputFormat: e.target.value })}
+                  >
+                    <option value="Visual">Visual / Clean</option>
+                    <option value="Markdown">Markdown</option>
+                    <option value="Plain">Plain Text</option>
+                  </select>
+                </div>
+              </div>
 
               <div>
                 <label className="block text-sm font-medium mb-2">
