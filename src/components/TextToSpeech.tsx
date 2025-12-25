@@ -14,6 +14,7 @@ export function TextToSpeech({ text, disabled = false }: TextToSpeechProps) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isSupported, setIsSupported] = useState(false);
   const [speed, setSpeed] = useState(2.2);
+  const { toast } = useToast();
 
   const handleSpeak = () => {
     if (!text.trim()) {
@@ -44,7 +45,8 @@ export function TextToSpeech({ text, disabled = false }: TextToSpeechProps) {
     }
 
     utterance.onend = () => setIsSpeaking(false);
-    utterance.onerror = () => {
+    utterance.onerror = (e) => {
+      console.error('SpeechSynthesis error:', e);
       setIsSpeaking(false);
       toast({ title: 'Speech failed', variant: 'destructive' });
     };
