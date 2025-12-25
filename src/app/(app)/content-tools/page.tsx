@@ -158,9 +158,9 @@ function ToolCard({ tool, onSelect }: { tool: (typeof toolsList)[0], onSelect: (
   const image = getImageForTool(tool);
   const IconComponent = tool.icon;
   return (
-    <Card onClick={onSelect} className={cn("group flex cursor-pointer flex-col overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border border-accent/20 bg-gradient-to-br from-card to-card/50 hover:border-accent/50")}>
+    <Card onClick={onSelect} className={cn("group flex cursor-pointer flex-col overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border border-border bg-card hover:border-accent/50")}>
       <CardHeader className="p-0 relative">
-        <div className={cn("relative h-40 w-full bg-gradient-to-br flex items-center justify-center group-hover:scale-110 transition-transform", tool.gradient)}>
+        <div className={cn("relative h-40 w-full bg-muted flex items-center justify-center group-hover:scale-105 transition-transform")}>
           {image ? (
             <Image 
               src={image.imageUrl} 
@@ -432,7 +432,7 @@ export default function ContentToolsPage() {
               <Button 
                 onClick={handleProcess} 
                 disabled={loading}
-                className="w-full gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+                className="w-full gap-2"
               >
                 {loading ? (
                   <>
@@ -452,15 +452,24 @@ export default function ContentToolsPage() {
             <Card className="border-border shadow-md">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    Output
+                  <CardTitle className="text-lg">
+                    {selectedTool === 'email' && 'Email Draft'}
+                    {selectedTool === 'blog' && 'Article'}
+                    {selectedTool === 'math' && 'Solution'}
+                    {selectedTool === 'code' && 'Explanation'}
+                    {selectedTool === 'social' && 'Post'}
+                    {selectedTool === 'resume' && 'Improved Content'}
+                    {selectedTool === 'story' && 'Story'}
+                    {selectedTool === 'study' && 'Study Material'}
+                    {selectedTool === 'enhance' && 'Enhanced Text'}
+                    {selectedTool === 'translate' && 'Translation'}
                   </CardTitle>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => {
                       navigator.clipboard.writeText(output);
-                      toast({ title: 'Copied to clipboard!' });
+                      toast({ title: 'Copied!' });
                     }}
                     className="gap-2"
                   >
@@ -470,37 +479,45 @@ export default function ContentToolsPage() {
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-96 rounded-md border border-border bg-background/50 p-4">
-                  <div className="space-y-4 max-w-none text-sm leading-relaxed">
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeRaw]}
-                      components={{
-                        p: ({ node, ...props }) => <p className="mb-3 last:mb-0 text-foreground" {...props} />,
-                        a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
-                        h1: ({ node, ...props }) => <h1 className="font-semibold text-xl mb-3 mt-4 first:mt-0 text-foreground" {...props} />,
-                        h2: ({ node, ...props }) => <h2 className="font-semibold text-lg mb-2 mt-3 first:mt-0 text-foreground" {...props} />,
-                        h3: ({ node, ...props }) => <h3 className="font-semibold text-base mb-2 mt-2 first:mt-0 text-foreground" {...props} />,
-                        ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-3 space-y-1" {...props} />,
-                        ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-3 space-y-1" {...props} />,
-                        li: ({ node, ...props }) => <li className="text-foreground" {...props} />,
-                        code: ({ node, inline, className, children, ...props }: any) => {
-                          return !inline ? (
-                            <div className="my-4 rounded-lg bg-muted p-4 overflow-x-auto border border-border">
-                              <code className="text-sm font-mono text-foreground" {...props}>
-                                {children}
-                              </code>
-                            </div>
-                          ) : (
-                            <code className="px-2 py-1 bg-muted rounded-md text-primary font-mono text-sm" {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                        blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground" {...props} />,
-                      }}
-                    >
-                      {output}
-                    </ReactMarkdown>
+                  <div className="space-y-3 max-w-none text-sm leading-relaxed text-foreground">
+                    {selectedTool === 'email' ? (
+                      <div className="space-y-3">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{output}</ReactMarkdown>
+                      </div>
+                    ) : selectedTool === 'math' ? (
+                      <div className="space-y-4">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]} 
+                          rehypePlugins={[rehypeRaw]}
+                          components={{
+                            p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                            strong: ({node, ...props}) => <strong className="font-semibold text-primary" {...props} />,
+                          }}
+                        >{output}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw]}
+                        components={{
+                          p: ({node, ...props}) => <p className="mb-3 last:mb-0" {...props} />,
+                          h1: ({node, ...props}) => <h1 className="font-semibold text-lg mb-2 mt-3 first:mt-0" {...props} />,
+                          h2: ({node, ...props}) => <h2 className="font-semibold text-base mb-2 mt-2 first:mt-0" {...props} />,
+                          h3: ({node, ...props}) => <h3 className="font-semibold mb-1 mt-2 first:mt-0" {...props} />,
+                          ul: ({node, ...props}) => <ul className="list-disc list-inside mb-3 space-y-1" {...props} />,
+                          ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-3 space-y-1" {...props} />,
+                          li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                          a: ({node, ...props}) => <a {...props} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" />,
+                          strong: ({node, ...props}) => <strong className="font-semibold" {...props} />,
+                          em: ({node, ...props}) => <em className="italic" {...props} />,
+                          code: ({node, inline, children, ...props}: any) => 
+                            inline ? (
+                              <code className="px-1.5 py-0.5 bg-muted rounded text-primary font-mono text-xs" {...props}>{children}</code>
+                            ) : null,
+                          blockquote: ({node, ...props}) => <blockquote className="border-l-2 border-primary pl-3 italic my-2 text-muted-foreground" {...props} />,
+                        }}
+                      >{output}</ReactMarkdown>
+                    )}
                   </div>
                 </ScrollArea>
               </CardContent>
