@@ -462,7 +462,7 @@ export function ChatInterface({
       <div className="flex-1 overflow-hidden" ref={scrollAreaRef}>
         <div 
           ref={scrollViewportRef}
-          className="h-full w-full overflow-y-auto pb-44"
+          className="h-full w-full overflow-y-auto pb-32 md:pb-24"
           onScroll={handleScroll}
         >
           <div className="mx-auto w-full max-w-4xl space-y-3 sm:space-y-4 px-3 sm:px-4 py-4 sm:py-6">
@@ -510,9 +510,9 @@ export function ChatInterface({
             </Button>
         </div>
       )}
-      <div className="fixed bottom-20 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-sm px-3 sm:px-4 py-2 sm:py-3 w-full pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background/98 backdrop-blur-md px-3 sm:px-4 py-3 sm:py-4 w-full pb-[calc(1rem+env(safe-area-inset-bottom))]">
         <div className="mx-auto w-full max-w-4xl">
-           <div className="flex items-end gap-2 sm:gap-3 rounded-lg border bg-card p-2 sm:p-3 shadow-sm">
+           <div className="flex items-end gap-2 sm:gap-3 rounded-xl border border-accent/30 bg-card/80 p-3 sm:p-4 shadow-lg hover:border-accent/50 transition-colors">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

@@ -311,7 +311,7 @@ export default function ContentToolsPage() {
     if (!tool) return null;
 
     return (
-      <div className="p-4 lg:p-6 space-y-6">
+      <div className="p-4 lg:p-6 space-y-6 pb-32 md:pb-24">
         <div>
           <Button
             variant="ghost"
@@ -321,7 +321,7 @@ export default function ContentToolsPage() {
               setInput('');
               setOutput('');
             }}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Tools
           </Button>
