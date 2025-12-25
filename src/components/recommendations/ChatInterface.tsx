@@ -510,9 +510,9 @@ export function ChatInterface({
             </Button>
         </div>
       )}
-      <div className="fixed bottom-0 left-0 right-0 z-30 border-t bg-background/95 backdrop-blur-md px-3 sm:px-4 py-3 sm:py-4 w-full pb-[calc(1rem+env(safe-area-inset-bottom))] mb-20 md:mb-0">
+      <div className="fixed bottom-0 left-0 right-0 z-30 px-3 sm:px-4 py-3 sm:py-4 w-full pb-[calc(1rem+env(safe-area-inset-bottom))] mb-20 md:mb-0">
         <div className="mx-auto w-full max-w-4xl">
-           <div className="flex items-end gap-2 sm:gap-3 rounded-2xl border border-border bg-card p-2 sm:p-3 shadow-lg hover:shadow-xl transition-shadow ring-1 ring-primary/5">
+           <div className="flex items-end gap-2 sm:gap-3">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -523,7 +523,7 @@ export function ChatInterface({
                 }
                 }}
                 placeholder="Ask me anything..."
-                className="flex-1 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 text-sm sm:text-base min-h-[44px] py-2.5 px-3"
+                className="flex-1 resize-none rounded-2xl border border-border bg-background shadow-none focus-visible:ring-1 focus-visible:ring-primary text-sm sm:text-base min-h-[44px] py-3 px-4"
                 rows={1}
                 disabled={isLoading}
             />
