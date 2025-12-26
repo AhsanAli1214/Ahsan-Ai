@@ -7,6 +7,7 @@ import { AppProvider } from '@/context/AppContext';
 import { ChatHistoryProvider } from '@/context/ChatHistoryContext';
 import { PWAInstall } from '@/components/PWAInstall';
 import { ConnectionStatus } from '@/components/network/ConnectionStatus';
+import { ReCaptchaScript } from '@/components/ReCaptcha';
 import Script from 'next/script';
 import { Inter, Poppins } from 'next/font/google';
 
@@ -179,6 +180,7 @@ export default function RootLayout({
         >
           <AppProvider>
             <ChatHistoryProvider>
+              <ReCaptchaScript />
               {children}
               <Toaster />
               <PWAInstall />

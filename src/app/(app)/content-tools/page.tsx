@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { executeReCaptcha, verifyReCaptcha } from '@/components/ReCaptcha';
 import {
   ArrowLeft,
   BookOpen,
@@ -256,6 +257,15 @@ export default function ContentToolsPage() {
 
     setLoading(true);
     try {
+      // Verify reCAPTCHA before processing
+      const token = await executeReCaptcha('content_tool_use');
+      const captchaVerification = await verifyReCaptcha(token);
+      if (!captchaVerification.success) {
+        toast({ title: 'Security verification failed. Please try again.', variant: 'destructive' });
+        setLoading(false);
+        return;
+      }
+
       let result;
       switch (selectedTool) {
         case 'enhance':

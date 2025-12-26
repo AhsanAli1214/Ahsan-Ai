@@ -154,9 +154,10 @@ export async function generateStoryAction(input: GenerateStoryInput): Promise<Co
     const { result } = await generateStory(input);
     return { success: true, data: result };
   } catch (error) {
-        console.error('Error generating story:', error);
-        return { success: false, error: 'Failed to generate story.' };
-    }
+    console.error('Error generating story:', error);
+    const errorMsg = error instanceof Error ? error.message : 'Failed to generate story. Please try again.';
+    return { success: false, error: errorMsg };
+  }
 }
 
 // Text-to-Speech Action

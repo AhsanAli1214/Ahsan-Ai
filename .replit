@@ -42,3 +42,8 @@ externalPort = 80
 deploymentTarget = "autoscale"
 run = ["pnpm", "run", "start"]
 build = ["pnpm", "run", "build"]
+
+[userenv]
+
+[userenv.shared]
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY = "6LesbDcsAAAAALuDdNtUQEhyOP8O7K9vd0VSpsew"
