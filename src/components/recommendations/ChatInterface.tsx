@@ -248,6 +248,7 @@ export function ChatInterface({
   const [activeMessageId, setActiveMessageId] = useState<string | null>(null);
   const [isAudioBuffering, setIsAudioBuffering] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [lastAudioRequestTime, setLastAudioRequestTime] = useState<number>(0);
 
   const messages = currentSession?.messages || [];
 
@@ -371,6 +372,20 @@ export function ChatInterface({
       audio.pause();
     }
     
+    // Rate limiting: prevent requests within 2 seconds of last request
+    const now = Date.now();
+    const timeSinceLastRequest = now - lastAudioRequestTime;
+    if (timeSinceLastRequest < 2000) {
+      const waitTime = Math.ceil((2000 - timeSinceLastRequest) / 1000);
+      toast({
+        title: 'Please wait',
+        description: `Please wait ${waitTime} second${waitTime !== 1 ? 's' : ''} before requesting audio again.`,
+        variant: 'default',
+      });
+      return;
+    }
+    
+    setLastAudioRequestTime(now);
     setActiveMessageId(messageId);
     setIsAudioBuffering(true);
     
@@ -382,14 +397,21 @@ export function ChatInterface({
       if (result.success && result.data) {
         playAudio(result.data);
       } else if (!result.success) {
-        throw new Error(result.error || 'Failed to generate audio');
+        const isQuotaError = (result as any).isQuotaError;
+        let errorMsg = result.error || 'Failed to generate audio';
+        if (isQuotaError) {
+          errorMsg = 'API quota exceeded. Your account has reached the limit for text-to-speech requests. Please try again after some time or upgrade your API plan.';
+        }
+        throw new Error(errorMsg);
       }
     } catch (error) {
       console.error('TTS Error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Could not play audio. Please try again.';
+      const isQuotaError = errorMsg.includes('quota');
+      
       toast({
         variant: 'destructive',
-        title: 'Audio Failed',
+        title: isQuotaError ? 'Quota Exceeded' : 'Audio Failed',
         description: errorMsg,
         action: <Button size="sm" variant="outline" onClick={() => handleReportError(errorMsg)}>Report Error</Button>,
       });

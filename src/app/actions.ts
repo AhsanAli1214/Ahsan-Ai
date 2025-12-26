@@ -149,17 +149,60 @@ export async function generateStoryAction(input: GenerateStoryInput): Promise<Co
   }
 }
 
-// Text-to-Speech Action
-type TextToSpeechResult = { success: true; data: string } | { success: false; error: string };
+// Text-to-Speech Action with Retry Logic
+type TextToSpeechResult = { success: true; data: string } | { success: false; error: string; isQuotaError?: boolean };
+
+const TTS_RETRY_CONFIG = {
+  maxRetries: 2,
+  initialDelay: 1000, // 1 second
+  maxDelay: 10000, // 10 seconds
+};
+
+function isQuotaError(error: any): boolean {
+  const errorStr = error?.message || '';
+  return errorStr.includes('quota') || 
+         errorStr.includes('RESOURCE_EXHAUSTED') ||
+         errorStr.includes('rate limit') ||
+         errorStr.includes('429');
+}
+
+function getRetryDelay(retryCount: number): number {
+  const exponentialDelay = TTS_RETRY_CONFIG.initialDelay * Math.pow(2, retryCount);
+  return Math.min(exponentialDelay, TTS_RETRY_CONFIG.maxDelay);
+}
 
 export async function textToSpeechAction(input: TextToSpeechInput): Promise<TextToSpeechResult> {
-  try {
-    const { audio } = await textToSpeech(input);
-    return { success: true, data: audio };
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred during text-to-speech conversion.';
-    return { success: false, error: errorMessage };
+  let lastError: any;
+  
+  for (let attempt = 0; attempt <= TTS_RETRY_CONFIG.maxRetries; attempt++) {
+    try {
+      const { audio } = await textToSpeech(input);
+      return { success: true, data: audio };
+    } catch (error) {
+      lastError = error;
+      const quotaError = isQuotaError(error);
+      
+      // If it's a quota error, don't retry and return immediately
+      if (quotaError) {
+        const errorMessage = 'API quota exceeded. Please try again later or upgrade your plan.';
+        return { success: false, error: errorMessage, isQuotaError: true };
+      }
+      
+      // If this is the last attempt, return the error
+      if (attempt === TTS_RETRY_CONFIG.maxRetries) {
+        break;
+      }
+      
+      // Wait before retrying
+      const delayMs = getRetryDelay(attempt);
+      await new Promise(resolve => setTimeout(resolve, delayMs));
+    }
   }
+  
+  const errorMessage = lastError instanceof Error 
+    ? lastError.message 
+    : 'An unknown error occurred during text-to-speech conversion. Please try again.';
+  return { success: false, error: errorMessage };
 }
 
 // Error Reporting Action
