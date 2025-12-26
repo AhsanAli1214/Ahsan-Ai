@@ -77,7 +77,7 @@ export function PWAInstall() {
   if (!showInstallPrompt) {
     return (
       <Button disabled variant="ghost" size="sm">
-        Shortcut Not Available
+        Install Not Available
       </Button>
     );
   }
@@ -86,10 +86,10 @@ export function PWAInstall() {
     <Button
       onClick={handleInstallClick}
       size="sm"
-      className="flex items-center gap-2"
+      className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md animate-pulse"
     >
       <Cloud className="h-4 w-4" />
-      Add Shortcut
+      Install App
     </Button>
   );
 }
