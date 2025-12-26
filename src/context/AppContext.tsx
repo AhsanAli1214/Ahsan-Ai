@@ -56,7 +56,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
       if (storedAnimations) setEnableAnimationsValue(JSON.parse(storedAnimations));
       if (storedTyping) setEnableTypingIndicatorValue(JSON.parse(storedTyping));
     } catch (e) {
-      console.error('Could not load settings from localStorage', e);
     }
   }, []);
 

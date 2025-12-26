@@ -41,7 +41,6 @@ export async function getRecommendationsAction(
     const recommendations = await getPersonalizedToolRecommendations(input);
     return { success: true, data: recommendations };
   } catch (error) {
-    console.error('Error getting recommendations:', error);
     const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred.';
     return { success: false, error: errorMessage };
   }
@@ -55,7 +54,6 @@ export async function enhanceTextAction(input: EnhanceTextInput): Promise<Conten
     const { result } = await enhanceText(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error enhancing text:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to enhance text. Please check your input and try again.';
     return { success: false, error: errorMsg };
   }
@@ -66,7 +64,6 @@ export async function generateEmailAction(input: GenerateEmailInput): Promise<Co
     const { result } = await generateEmail(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error generating email:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to generate email. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -77,7 +74,6 @@ export async function generateBlogPostAction(input: GenerateBlogPostInput): Prom
     const { result } = await generateBlogPost(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error generating blog post:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to generate blog post. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -88,7 +84,6 @@ export async function generateStudyMaterialAction(input: GenerateStudyMaterialIn
     const { result } = await generateStudyMaterial(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error generating study material:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to generate study material. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -99,7 +94,6 @@ export async function explainProgrammingAction(input: ExplainProgrammingInput): 
     const { result } = await explainProgramming(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error explaining code:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to explain code. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -110,7 +104,6 @@ export async function solveMathAction(input: SolveMathInput): Promise<ContentToo
     const { result } = await solveMath(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error solving math problem:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to solve math problem. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -121,7 +114,6 @@ export async function translateTextAction(input: TranslateTextInput): Promise<{ 
     const { translatedText } = await translateText(input);
     return { success: true, data: translatedText };
   } catch (error) {
-    console.error('Error translating text:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to translate text. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -132,7 +124,6 @@ export async function generateSocialMediaPostAction(input: GenerateSocialMediaPo
     const { result } = await generateSocialMediaPost(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error generating social media post:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to generate social media post. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -143,7 +134,6 @@ export async function assistResumeAction(input: AssistResumeInput): Promise<Cont
     const { result } = await assistResume(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error assisting with resume:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to assist with resume. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -154,7 +144,6 @@ export async function generateStoryAction(input: GenerateStoryInput): Promise<Co
     const { result } = await generateStory(input);
     return { success: true, data: result };
   } catch (error) {
-    console.error('Error generating story:', error);
     const errorMsg = error instanceof Error ? error.message : 'Failed to generate story. Please try again.';
     return { success: false, error: errorMsg };
   }
@@ -168,7 +157,6 @@ export async function textToSpeechAction(input: TextToSpeechInput): Promise<Text
     const { audio } = await textToSpeech(input);
     return { success: true, data: audio };
   } catch (error) {
-    console.error('Error in textToSpeechAction:', error);
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred during text-to-speech conversion.';
     return { success: false, error: errorMessage };
   }

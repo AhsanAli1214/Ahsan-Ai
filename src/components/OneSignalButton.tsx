@@ -24,7 +24,6 @@ export function OneSignalButton() {
         const isOptedIn = await window.OneSignal.User.PushSubscription.optedIn;
         setIsSubscribed(isOptedIn);
       } catch (err) {
-        console.error('Error getting notification status:', err);
       } finally {
         setIsLoading(false);
       }
@@ -76,7 +75,6 @@ export function OneSignalButton() {
       }
       await updateStatus();
     } catch (err) {
-      console.error('Error toggling notifications:', err);
       toast({
         variant: "destructive",
         title: "Error",

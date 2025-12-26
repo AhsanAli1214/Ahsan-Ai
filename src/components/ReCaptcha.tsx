@@ -40,7 +40,6 @@ export async function verifyReCaptcha(token: string): Promise<{ success: boolean
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
     return {
       success: false,
       error: 'Failed to verify reCAPTCHA. Please try again.',
@@ -52,7 +51,6 @@ export function executeReCaptcha(action: string): Promise<string> {
   return new Promise((resolve, reject) => {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
     if (!siteKey) {
-      console.error('reCAPTCHA site key not configured');
       reject(new Error('reCAPTCHA site key is not configured'));
       return;
     }
@@ -79,18 +77,15 @@ export function executeReCaptcha(action: string): Promise<string> {
             })
             .catch((error: any) => {
               clearTimeout(executionTimeout);
-              console.error('reCAPTCHA execute error:', error);
               reject(error);
             });
         } catch (error) {
           clearTimeout(executionTimeout);
-          console.error('reCAPTCHA ready callback error:', error);
           reject(error);
         }
       });
     } catch (error) {
       clearTimeout(executionTimeout);
-      console.error('reCAPTCHA execution error:', error);
       reject(error);
     }
   });

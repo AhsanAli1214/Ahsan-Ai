@@ -97,3 +97,16 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+// Additional cache configuration
+module.exports = {
+  ...nextConfig,
+  rewrites: async () => {
+    return [
+      {
+        source: '/:path*',
+        destination: '/:path*',
+      },
+    ];
+  },
+};

@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     if (!secretKey) {
-      console.error('RECAPTCHA_SECRET_KEY is not configured');
       return NextResponse.json(
         { success: false, error: 'reCAPTCHA is not properly configured' },
         { status: 500 }
@@ -42,7 +41,6 @@ export async function POST(request: NextRequest) {
       score: data.score,
     });
   } catch (error) {
-    console.error('reCAPTCHA verification error:', error);
     return NextResponse.json(
       { success: false, error: 'An error occurred during verification' },
       { status: 500 }

@@ -134,7 +134,6 @@ export default function SettingsPage() {
         description: 'Your conversation history has been successfully deleted.',
       });
     } catch (e) {
-      console.error('Could not clear chat history from localStorage', e);
       toast({
         variant: 'destructive',
         title: 'Error',

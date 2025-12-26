@@ -138,7 +138,6 @@ export default function RootLayout({
         <Script id="pwa-register" strategy="afterInteractive" dangerouslySetInnerHTML={{__html: `
           if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js').catch(err => {
-              console.error('Service Worker registration failed:', err);
             });
           }
         `}} />
@@ -152,7 +151,6 @@ export default function RootLayout({
                   appId: "8a693786-f992-42d3-adfb-56a230adcea5",
                 });
               } catch (e) {
-                console.log('OneSignal init error:', e);
               }
             });
           }

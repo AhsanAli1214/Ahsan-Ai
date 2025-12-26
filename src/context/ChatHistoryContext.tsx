@@ -64,7 +64,6 @@ export function ChatHistoryProvider({ children }: { children: ReactNode }) {
         }
       }
     } catch (e) {
-      console.error('Could not load chat sessions from localStorage', e);
     }
   };
 
@@ -74,7 +73,6 @@ export function ChatHistoryProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(updatedSessions));
       }
     } catch (e) {
-      console.error('Could not save chat sessions to localStorage', e);
     }
   };
 
@@ -86,7 +84,6 @@ export function ChatHistoryProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem(CURRENT_SESSION_KEY);
       }
     } catch (e) {
-      console.error('Could not save current session ID to localStorage', e);
     }
   };
 

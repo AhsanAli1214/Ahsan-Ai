@@ -46,7 +46,6 @@ export function TextToSpeech({ text, disabled = false }: TextToSpeechProps) {
 
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = (e) => {
-      console.error('SpeechSynthesis error:', e);
       setIsSpeaking(false);
       toast({ title: 'Speech failed', variant: 'destructive' });
     };

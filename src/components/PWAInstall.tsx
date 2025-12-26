@@ -60,7 +60,6 @@ export function PWAInstall() {
           await OneSignal.Notifications.requestPermission();
           setNotificationsEnabled(Notification.permission === 'granted');
         } catch (e) {
-          console.error('Notification error:', e);
         }
       });
     }
@@ -81,7 +80,6 @@ export function PWAInstall() {
       
       setDeferredPrompt(null);
     } catch (error) {
-      console.error('Installation failed:', error);
     }
   };
 

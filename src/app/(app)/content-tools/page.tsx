@@ -369,7 +369,6 @@ export default function ContentToolsPage() {
         toast({ title: 'Failed to generate content', variant: 'destructive' });
       }
     } catch (error) {
-      console.error('Error:', error);
       toast({ title: 'An error occurred', variant: 'destructive' });
     } finally {
       setLoading(false);
