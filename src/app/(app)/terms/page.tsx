@@ -15,12 +15,12 @@ export default function TermsPage() {
       title: '1. Agreement to Terms',
       content: `By accessing and using Ahsan AI Hub ("Services"), you agree to be bound by these Terms of Service. If you do not agree to abide by the above, please do not use this Service.
 
-**Eligibility:**
+Eligibility:
 - You must be at least 18 years old (or legal age in your jurisdiction)
 - You have full legal authority to enter into this agreement
 - Your use of the Services is not prohibited by applicable laws
 
-**Changes to Terms:**
+Changes to Terms:
 - We reserve the right to modify these terms at any time
 - Changes will be posted with an updated "Last Updated" date
 - Your continued use constitutes acceptance of modified terms`
@@ -30,7 +30,7 @@ export default function TermsPage() {
       title: '2. Acceptable Use Policy',
       content: `You agree not to use our Services for:
 
-**Prohibited Activities:**
+Prohibited Activities:
 - Illegal, fraudulent, or deceptive purposes
 - Violating any applicable laws or regulations
 - Infringing on intellectual property rights
@@ -40,33 +40,33 @@ export default function TermsPage() {
 - Impersonation or misrepresentation
 - Creating multiple accounts to circumvent restrictions
 
-**Content Restrictions:**
+Content Restrictions:
 - Do not upload illegal, obscene, or defamatory content
 - Respect copyright and intellectual property
 - Do not distribute malware or harmful code
 - Do not engage in phishing or social engineering
 - Do not scrape or reverse-engineer our Services
 
-**Consequences:**
+Consequences:
 - Violation may result in account suspension or termination
 - We may report illegal activity to authorities`
     },
     {
       id: 'content',
       title: '3. User-Generated Content',
-      content: `**Your Responsibility:**
+      content: `Your Responsibility:
 - You are solely responsible for content you create and input
 - You must have rights to all content you provide
 - You grant us a license to use your content to provide Services
 - You agree not to upload harmful, illegal, or infringing content
 
-**Our Rights:**
+Our Rights:
 - We may remove content that violates these terms
 - We may use your content for service improvement (anonymized)
 - We may monitor content for security and compliance
 - We are not responsible for user-generated content
 
-**Copyright & Ownership:**
+Copyright & Ownership:
 - You retain ownership of your original content
 - Our Service, features, and materials remain our property
 - You may not reproduce, modify, or distribute our content without permission`
@@ -74,25 +74,25 @@ export default function TermsPage() {
     {
       id: 'ai',
       title: '4. AI Features & Limitations',
-      content: `**How Our AI Works:**
+      content: `How Our AI Works:
 - Our AI services are powered by advanced language models
 - Results are generated based on your input and parameters
 - AI-generated content is provided "as-is" for informational purposes
 
-**Limitations & Disclaimers:**
+Limitations & Disclaimers:
 - AI outputs may contain errors, biases, or inaccuracies
 - We do not guarantee accuracy, completeness, or relevance
 - You are responsible for verifying important information
 - Do not rely on AI outputs for critical decisions without verification
 - AI may occasionally produce harmful or inappropriate content
 
-**Usage Restrictions:**
+Usage Restrictions:
 - Do not use AI outputs for deceptive purposes
 - Do not misrepresent AI-generated content as human-created
 - Do not use outputs for illegal or unethical purposes
 - Do not attempt to bypass safety features
 
-**Your Obligations:**
+Your Obligations:
 - Review all AI-generated content before using it
 - Make independent judgments about content quality
 - Take responsibility for decisions based on AI outputs
@@ -101,19 +101,19 @@ export default function TermsPage() {
     {
       id: 'accounts',
       title: '5. Account Management',
-      content: `**Account Creation:**
+      content: `Account Creation:
 - You are responsible for maintaining login credentials
 - Do not share your password or account access
 - Notify us immediately of unauthorized access
 - You are liable for all activity on your account
 
-**Account Termination:**
+Account Termination:
 - You can delete your account anytime through Settings
 - We may terminate accounts that violate these terms
 - Termination may be immediate for severe violations
 - Some data may be retained for legal compliance
 
-**Account Responsibility:**
+Account Responsibility:
 - Provide accurate registration information
 - Update information promptly if it changes
 - Maintain confidentiality of authentication credentials
@@ -122,25 +122,25 @@ export default function TermsPage() {
     {
       id: 'payment',
       title: '6. Payment & Billing',
-      content: `**Subscription Plans:**
+      content: `Subscription Plans:
 - Pricing and features are subject to change with notice
 - Billing occurs automatically on your renewal date
 - You authorize recurring charges to your payment method
 - Receipts are sent via email automatically
 
-**Refund Policy:**
+Refund Policy:
 - Refunds for accidental duplicate charges: within 30 days
 - Refunds for cancelled subscriptions: no refund for services provided
 - Special circumstances reviewed case-by-case
 - Submit refund requests to billing@ahsan-ai-hub.com
 
-**Payment Methods:**
+Payment Methods:
 - We accept major credit/debit cards and digital wallets
 - Payment processing by secure third-party providers
 - Declined payments may result in service suspension
 - Update payment methods if cards expire or are lost
 
-**Taxes:**
+Taxes:
 - You are responsible for applicable taxes
 - We will collect/remit taxes as required by law
 - Pricing does not include taxes unless stated`
@@ -148,25 +148,25 @@ export default function TermsPage() {
     {
       id: 'intellectual',
       title: '7. Intellectual Property Rights',
-      content: `**Our Intellectual Property:**
+      content: `Our Intellectual Property:
 - Ahsan AI Hub and all features are our property
 - Design, code, graphics, and trademarks are protected
 - You may not reproduce, modify, or distribute without permission
 - Unauthorized use violates intellectual property laws
 
-**Permitted Use:**
+Permitted Use:
 - You may use Services for personal, non-commercial purposes
 - You may not resell or redistribute our Services
 - You may not create derivative works without permission
 - You may not use our branding without written consent
 
-**Your Content License:**
+Your Content License:
 - You retain ownership of your original content
 - You grant us a worldwide, royalty-free license
 - We may use your content to provide and improve Services
 - Content may be anonymized for analytics and improvement
 
-**Third-Party Content:**
+Third-Party Content:
 - We respect third-party intellectual property rights
 - We license or create content in compliance with law
 - Report infringement immediately: legal@ahsan-ai-hub.com`
@@ -174,48 +174,48 @@ export default function TermsPage() {
     {
       id: 'warranties',
       title: '8. Disclaimers & Limitations',
-      content: `**"AS-IS" Disclaimer:**
+      content: `"AS-IS" Disclaimer:
 Our Services are provided "AS-IS" and "AS AVAILABLE" without warranties of any kind.
 
-**Disclaimer of Warranties:**
+Disclaimer of Warranties:
 - We do not warrant that Services are error-free or uninterrupted
 - We do not warrant fitness for particular purposes
 - We do not guarantee results or outcomes
 - We do not guarantee accuracy of AI-generated content
 
-**Limitation of Liability:**
+Limitation of Liability:
 - To the maximum extent permitted by law, we are not liable for:
   - Indirect, incidental, or consequential damages
   - Loss of profits, data, or use
   - Damage to hardware or software
   - Any damages exceeding your paid subscription fees
 
-**Your Remedies:**
+Your Remedies:
 - Your sole remedy for service issues is termination
 - Refunds of fees paid are limited to terms specified
 
-**Indemnification:**
+Indemnification:
 - You agree to indemnify us against claims from your use
 - You assume all risk of loss or damage`
     },
     {
       id: 'security',
       title: '9. Your Obligations & Security',
-      content: `**Your Responsibilities:**
+      content: `Your Responsibilities:
 - Use Services only for lawful purposes
 - Do not interfere with service operation
 - Do not attempt unauthorized access
 - Maintain confidentiality of your account
 - Use strong passwords and security practices
 
-**Security Best Practices:**
+Security Best Practices:
 - Enable two-factor authentication if available
 - Log out after each session
 - Never share passwords with others
 - Use updated browsers and security software
 - Be cautious of phishing attempts
 
-**Reporting Issues:**
+Reporting Issues:
 - Report security vulnerabilities responsibly
 - Contact: security@ahsan-ai-hub.com
 - Do not publicly disclose vulnerabilities
@@ -224,19 +224,19 @@ Our Services are provided "AS-IS" and "AS AVAILABLE" without warranties of any k
     {
       id: 'availability',
       title: '10. Service Availability & Support',
-      content: `**Availability:**
+      content: `Availability:
 - We aim for 99.5% uptime but do not guarantee it
 - Maintenance windows may occur with notice
 - Emergencies may cause unscheduled downtime
 - We are not liable for downtime or service interruptions
 
-**Support:**
+Support:
 - Support is available via email: support@ahsan-ai-hub.com
 - Response time depends on your subscription plan
 - We provide "best effort" support without SLA guarantees
 - Some issues may not be resolvable
 
-**Service Changes:**
+Service Changes:
 - We may modify, suspend, or discontinue Services
 - Essential changes will include transition notice
 - Users will be notified via email`
@@ -244,20 +244,20 @@ Our Services are provided "AS-IS" and "AS AVAILABLE" without warranties of any k
     {
       id: 'termination',
       title: '11. Termination & Suspension',
-      content: `**Grounds for Termination:**
+      content: `Grounds for Termination:
 - Violation of these Terms of Service
 - Violation of acceptable use policy
 - Non-payment of fees
 - Illegal or harmful activity
 - Multiple violations after warnings
 
-**Suspension:**
+Suspension:
 - We may immediately suspend accounts for security threats
 - Violations may result in account termination
 - Terminated users may not create new accounts
 - Data may be deleted upon termination
 
-**Your Right to Terminate:**
+Your Right to Terminate:
 - You can terminate anytime through Settings
 - Termination is effective immediately
 - No refunds for unused subscription time
@@ -266,21 +266,21 @@ Our Services are provided "AS-IS" and "AS AVAILABLE" without warranties of any k
     {
       id: 'dispute',
       title: '12. Dispute Resolution',
-      content: `**Governing Law:**
+      content: `Governing Law:
 These Terms are governed by applicable laws in your jurisdiction.
 
-**Informal Resolution:**
+Informal Resolution:
 - Contact us first to resolve disputes: legal@ahsan-ai-hub.com
 - We will respond within 30 days
 - Most disputes can be resolved informally
 
-**Arbitration:**
+Arbitration:
 - For unresolved disputes, binding arbitration applies
 - Arbitration is conducted by independent arbitrators
 - Arbitration is faster and less costly than litigation
 - You may choose to pursue small claims court instead
 
-**Jurisdictional Issues:**
+Jurisdictional Issues:
 - By using our Services, you agree to these terms
 - You consent to jurisdiction of courts in our location
 - You waive right to jury trial (where applicable)`
@@ -288,36 +288,36 @@ These Terms are governed by applicable laws in your jurisdiction.
     {
       id: 'contact',
       title: '13. Contact & Support',
-      content: `**For Questions About These Terms:**
+      content: `For Questions About These Terms:
 - Email: legal@ahsan-ai-hub.com
 - Visit: /contact
 - Support: support@ahsan-ai-hub.com
 
-**Reporting Issues:**
+Reporting Issues:
 - Terms violations: legal@ahsan-ai-hub.com
 - Security concerns: security@ahsan-ai-hub.com
 - Billing questions: billing@ahsan-ai-hub.com
 - General support: support@ahsan-ai-hub.com
 
-**Response Times:**
+Response Times:
 - We aim to respond within 24-48 business hours
 - Complex issues may require additional time`
     },
     {
       id: 'entire',
       title: '14. Entire Agreement',
-      content: `**Complete Agreement:**
+      content: `Complete Agreement:
 These Terms, along with our Privacy Policy and other terms, constitute the entire agreement between you and Ahsan AI Hub regarding use of our Services.
 
-**Severability:**
+Severability:
 - If any part of these terms is invalid, the remainder remains in effect
 - We will replace invalid terms with valid ones
 
-**No Waiver:**
+No Waiver:
 - Failure to enforce any right does not constitute waiver
 - We may enforce our rights at any time
 
-**Relationship:**
+Relationship:
 - You and Ahsan AI Hub are independent parties
 - No partnership, agency, or joint venture is created
 - You have no authority to bind us contractually`

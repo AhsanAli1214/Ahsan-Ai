@@ -22,20 +22,20 @@ Please read this Privacy Policy carefully. If you do not agree with our policies
       title: '2. Information We Collect',
       content: `We collect information in various ways:
 
-**A. Information You Provide Directly:**
+A. Information You Provide Directly:
 - Account registration data (name, email, password)
 - Profile information (preferences, settings)
 - Content you create or input into our AI tools
 - Communication data (messages, support requests, feedback)
 - Payment information (processed securely through third-party providers)
 
-**B. Automatically Collected Information:**
+B. Automatically Collected Information:
 - Device information (browser type, IP address, device ID)
 - Usage data (pages visited, features used, time spent)
 - Analytics information (interactions, clicks, scroll behavior)
 - Cookies and similar tracking technologies
 
-**C. Information from Third Parties:**
+C. Information from Third Parties:
 - Social media platforms (if you connect your account)
 - Authentication providers
 - Analytics services
@@ -46,26 +46,26 @@ Please read this Privacy Policy carefully. If you do not agree with our policies
       title: '3. How We Use Your Information',
       content: `We use collected information for:
 
-**Service Delivery:**
+Service Delivery:
 - Providing and improving our Services
 - Personalizing your experience
 - Processing transactions
 - Sending transactional emails
 - Providing customer support
 
-**Business Operations:**
+Business Operations:
 - Analytics and performance monitoring
 - Security and fraud prevention
 - Compliance with legal obligations
 - Testing and troubleshooting
 
-**Marketing & Communication:**
+Marketing & Communication:
 - Sending promotional emails (with your consent)
 - Service announcements
 - Updates and improvements
 - Newsletter and content distribution
 
-**Research & Development:**
+Research & Development:
 - Improving AI models and features
 - Understanding user needs
 - Developing new features
@@ -76,24 +76,24 @@ Please read this Privacy Policy carefully. If you do not agree with our policies
       title: '4. How We Share Your Information',
       content: `We do not sell, trade, or rent your personal information. We may share information in these cases:
 
-**Service Providers:**
+Service Providers:
 - Cloud hosting providers
 - Payment processors
 - Analytics services
 - Email delivery services
 All service providers are contractually obligated to maintain confidentiality.
 
-**Legal Requirements:**
+Legal Requirements:
 - To comply with laws, regulations, and legal processes
 - To enforce our Terms of Service
 - To protect rights, privacy, safety, and property
 
-**Business Transfers:**
+Business Transfers:
 - In case of merger, acquisition, or bankruptcy
 - You will be notified of any such change
 - Applicable privacy protections will remain in effect
 
-**With Your Consent:**
+With Your Consent:
 - When you explicitly authorize us to share information
 - For integrations you choose to enable`
     },
@@ -102,19 +102,19 @@ All service providers are contractually obligated to maintain confidentiality.
       title: '5. Data Security',
       content: `We implement industry-leading security measures to protect your information:
 
-**Technical Safeguards:**
+Technical Safeguards:
 - SSL/TLS encryption for data in transit
 - AES-256 encryption for data at rest
 - Secure authentication mechanisms
 - Regular security audits and penetration testing
 
-**Administrative Safeguards:**
+Administrative Safeguards:
 - Limited access to personal information (need-to-know basis)
 - Employee confidentiality agreements
 - Data handling policies and procedures
 - Incident response plan
 
-**Limitations:**
+Limitations:
 - While we strive to protect your information, no security system is impenetrable
 - You are responsible for maintaining confidentiality of your account credentials
 - Report any security breaches immediately to security@ahsan-ai-hub.com`
@@ -128,13 +128,13 @@ All service providers are contractually obligated to maintain confidentiality.
 - Comply with legal obligations
 - Resolve disputes
 
-**Deletion Rights:**
+Deletion Rights:
 - You can request deletion of your account and personal data
 - Some information may be retained for legal, regulatory, or business purposes
 - Deletion requests are processed within 30 days
 - Deletion may impact your ability to use certain features
 
-**Archival Data:**
+Archival Data:
 - Backup copies may be retained for up to 90 days
 - Aggregated, anonymized data may be retained indefinitely`
     },
@@ -143,51 +143,51 @@ All service providers are contractually obligated to maintain confidentiality.
       title: '7. Your Privacy Rights',
       content: `Depending on your location, you may have the following rights:
 
-**Right to Access:**
+Right to Access:
 - Request a copy of personal data we hold about you
 - Understand what data is processed and why
 
-**Right to Correction:**
+Right to Correction:
 - Request correction of inaccurate or incomplete data
 - Update your profile information anytime in Settings
 
-**Right to Deletion:**
+Right to Deletion:
 - Request deletion of your personal data (subject to exceptions)
 - Known as "right to be forgotten"
 
-**Right to Data Portability:**
+Right to Data Portability:
 - Receive your data in a structured, machine-readable format
 - Transfer data to another service
 
-**Right to Restrict Processing:**
+Right to Restrict Processing:
 - Request limitations on how we use your data
 - Applicable in certain circumstances
 
-**Right to Object:**
+Right to Object:
 - Object to certain types of processing
 - Opt-out of marketing communications anytime
 
-**To Exercise Your Rights:**
+To Exercise Your Rights:
 Contact us at: privacy@ahsan-ai-hub.com`
     },
     {
       id: 'cookies',
       title: '8. Cookies and Tracking Technologies',
-      content: `**What Are Cookies?**
+      content: `What Are Cookies?
 Cookies are small files stored on your device that help us recognize you and improve your experience.
 
-**Types of Cookies We Use:**
-- **Essential Cookies:** Required for site functionality
-- **Analytics Cookies:** Help us understand how you use our Services
-- **Preference Cookies:** Remember your settings and preferences
-- **Marketing Cookies:** Track content relevance and ad performance
+Types of Cookies We Use:
+- Essential Cookies: Required for site functionality
+- Analytics Cookies: Help us understand how you use our Services
+- Preference Cookies: Remember your settings and preferences
+- Marketing Cookies: Track content relevance and ad performance
 
-**Cookie Management:**
+Cookie Management:
 - You can control cookies through browser settings
 - Disabling cookies may limit some functionality
 - We respect "Do Not Track" signals where applicable
 
-**Third-Party Services:**
+Third-Party Services:
 - Google Analytics and similar services may set cookies
 - Third-party providers have their own privacy policies`
     },
@@ -196,12 +196,12 @@ Cookies are small files stored on your device that help us recognize you and imp
       title: '9. Children\'s Privacy',
       content: `Ahsan AI Hub is not intended for children under 13 (or the applicable age in your jurisdiction).
 
-**Our Policy:**
+Our Policy:
 - We do not knowingly collect personal data from children under 13
 - If we discover we have collected data from a child, we delete it immediately
 - Parents/guardians can contact us to report unauthorized data collection
 
-**For Users 13-18:**
+For Users 13-18:
 - Additional protections may apply in your jurisdiction
 - Parental consent may be required for certain features`
     },
@@ -210,12 +210,12 @@ Cookies are small files stored on your device that help us recognize you and imp
       title: '10. International Data Transfers',
       content: `Your information may be transferred to, stored in, and processed in countries other than your country of residence. These countries may have data protection laws different from your home country.
 
-**Our Safeguards:**
+Our Safeguards:
 - Standard contractual clauses approved by relevant authorities
 - Adequate level of protection maintained
 - Your consent to this transfer by using our Services
 
-**EU Users:**
+EU Users:
 - We comply with GDPR and CCPA requirements
 - Your rights as described in this policy are protected`
     },
@@ -224,16 +224,16 @@ Cookies are small files stored on your device that help us recognize you and imp
       title: '11. Contact Us',
       content: `For privacy-related questions, concerns, or to exercise your rights:
 
-**Email:** privacy@ahsan-ai-hub.com
-**Mailing Address:** 
+Email: privacy@ahsan-ai-hub.com
+Mailing Address: 
 Ahsan AI Hub
 Privacy Department
 [Your Address]
 
-**Response Time:** 
+Response Time: 
 We aim to respond to all inquiries within 30 days.
 
-**Data Protection Officer:**
+Data Protection Officer:
 For GDPR-related matters: dpo@ahsan-ai-hub.com`
     },
     {
@@ -241,13 +241,13 @@ For GDPR-related matters: dpo@ahsan-ai-hub.com`
       title: '12. Changes to This Policy',
       content: `We may update this Privacy Policy periodically to reflect changes in our practices, technology, legal requirements, or other factors.
 
-**How We Notify You:**
+How We Notify You:
 - We will post the updated policy on our website
 - The "Last Updated" date will be changed
 - Significant changes will be communicated via email
 - Your continued use of our Services constitutes acceptance of changes
 
-**Review Periodically:**
+Review Periodically:
 We recommend reviewing this policy regularly to stay informed about how we protect your privacy.`
     }
   ];
