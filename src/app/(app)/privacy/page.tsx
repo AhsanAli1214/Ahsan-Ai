@@ -2,8 +2,9 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Lock } from 'lucide-react';
+import { Lock, ArrowLeft } from 'lucide-react';
 
 export default function PrivacyPage() {
   const sections = [
@@ -70,7 +71,7 @@ Each third party follows its own privacy practices.`
     {
       id: 'contact',
       title: '8. Contact Us',
-      content: `📧 tickets@ahsan-ai-hub.p.tawk.email`
+      content: `Questions? Reach out to us at:`
     }
   ];
 
@@ -78,7 +79,15 @@ Each third party follows its own privacy practices.`
     <div className="flex h-full w-full flex-col bg-background selection:bg-primary/20">
       <AppHeader title="Privacy Policy" />
       
-      <main className="flex-1 overflow-y-auto px-4 py-12 sm:px-6 lg:px-8">
+      <main className="flex-1 overflow-y-auto px-4 py-12 sm:px-6 lg:px-8 flex flex-col">
+        <div className="mb-8">
+          <Link href="/contact">
+            <Button variant="outline" className="gap-2 rounded-xl">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Contact
+            </Button>
+          </Link>
+        </div>
         <div className="mx-auto max-w-3xl">
           {/* Header */}
           <div className="mb-12 space-y-6">
@@ -110,9 +119,18 @@ Each third party follows its own privacy practices.`
               <Card key={section.id} className="border-border/50 bg-card/40 backdrop-blur-md rounded-2xl overflow-hidden">
                 <CardContent className="p-8 space-y-4">
                   <h2 className="text-xl font-black text-foreground">{section.title}</h2>
-                  <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-                    {section.content}
-                  </div>
+                  {section.id === 'contact' ? (
+                    <a 
+                      href="mailto:tickets@ahsan-ai-hub.p.tawk.email"
+                      className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors font-bold text-lg"
+                    >
+                      📧 tickets@ahsan-ai-hub.p.tawk.email
+                    </a>
+                  ) : (
+                    <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
+                      {section.content}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}

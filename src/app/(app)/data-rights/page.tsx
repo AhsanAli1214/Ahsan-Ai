@@ -2,15 +2,24 @@
 
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Shield, Check } from 'lucide-react';
+import { Shield, Check, ArrowLeft } from 'lucide-react';
 
 export default function DataRightsPage() {
   return (
     <div className="flex h-full w-full flex-col bg-background selection:bg-primary/20">
       <AppHeader title="Your Data Rights" />
       
-      <main className="flex-1 overflow-y-auto px-4 py-12 sm:px-6 lg:px-8">
+      <main className="flex-1 overflow-y-auto px-4 py-12 sm:px-6 lg:px-8 flex flex-col">
+        <div className="mb-8">
+          <Link href="/contact">
+            <Button variant="outline" className="gap-2 rounded-xl">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Contact
+            </Button>
+          </Link>
+        </div>
         <div className="mx-auto max-w-3xl">
           {/* Header */}
           <div className="mb-12 space-y-6">

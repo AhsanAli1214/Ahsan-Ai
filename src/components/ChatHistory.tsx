@@ -184,8 +184,9 @@ export function ChatHistory() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-8 w-8 rounded-lg p-0 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-destructive/10 hover:text-destructive"
+                      className="h-8 w-8 rounded-lg p-0 flex-shrink-0 opacity-60 hover:opacity-100 group-hover:opacity-100 transition-all duration-200 hover:bg-destructive/10 hover:text-destructive"
                       onClick={(e) => handleDeleteClick(e, session.id)}
+                      title="Delete conversation"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
