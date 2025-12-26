@@ -294,22 +294,33 @@ export function ChatInterface({
   
   const handleReportError = async (errorMsg: string) => {
     try {
-      await reportErrorAction({
+      const result = await reportErrorAction({
         errorMessage: errorMsg,
         feature: 'Text-to-Speech',
         userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown',
         timestamp: Date.now(),
       });
-      toast({
-        title: 'Error Reported',
-        description: 'Thanks for reporting! Our team will investigate this issue.',
-        variant: 'default',
-      });
+      
+      if (result.success) {
+        if (result.mailtoLink) {
+          toast({
+            title: 'Error Report Ready',
+            description: 'Click the link below to open your email client and send the error report.',
+            action: <Button size="sm" variant="outline" onClick={() => window.location.href = result.mailtoLink!}>Send Email</Button>,
+          });
+        } else {
+          toast({
+            title: 'Error Reported',
+            description: 'Thanks for reporting! Our team will investigate this issue.',
+            variant: 'default',
+          });
+        }
+      }
     } catch (error) {
       toast({
         variant: 'destructive',
         title: 'Report Failed',
-        description: 'Could not send error report. Please try again.',
+        description: 'Could not send error report. Please email tickets@ahsan-ai-hub.p.tawk.email directly.',
       });
     }
   };
@@ -402,19 +413,21 @@ export function ChatInterface({
         const isQuotaError = (result as any).isQuotaError;
         let errorMsg = result.error || 'Failed to generate audio';
         if (isQuotaError) {
-          errorMsg = 'API quota exceeded. Your account has reached the limit for text-to-speech requests. Please try again after some time or upgrade your API plan.';
+          errorMsg = 'Text-to-speech requests are temporarily unavailable. This may be due to high usage. Please try again in a few minutes.';
         }
         throw new Error(errorMsg);
       }
     } catch (error) {
       console.error('TTS Error:', error);
       const errorMsg = error instanceof Error ? error.message : 'Could not play audio. Please try again.';
-      const isQuotaError = errorMsg.includes('quota');
+      const isQuotaError = errorMsg.includes('temporarily unavailable');
       
       toast({
         variant: 'destructive',
-        title: isQuotaError ? 'Quota Exceeded' : 'Audio Failed',
-        description: errorMsg,
+        title: isQuotaError ? 'Audio Temporarily Unavailable' : 'Audio Failed',
+        description: isQuotaError 
+          ? 'Audio generation is experiencing high demand. Please try again in a few moments or copy the response text to read manually.'
+          : errorMsg,
         action: <Button size="sm" variant="outline" onClick={() => handleReportError(errorMsg)}>Report Error</Button>,
       });
       setActiveMessageId(null);

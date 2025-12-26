@@ -211,7 +211,7 @@ export async function reportErrorAction(errorData: {
   feature: string;
   userAgent?: string;
   timestamp?: number;
-}): Promise<{ success: boolean; message: string }> {
+}): Promise<{ success: boolean; message: string; mailtoLink?: string }> {
   try {
     const { errorMessage, feature, userAgent = 'Unknown', timestamp = Date.now() } = errorData;
     
@@ -226,42 +226,53 @@ ${errorMessage}
 
 ---
 Auto-generated error report from Ahsan AI Hub
+Platform: ahsan-ai-hub.vercel.app
     `.trim();
 
-    // Send email using Tawk's email system via fetch to a webhook or email service
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.RESEND_API_KEY || ''}`,
-      },
-      body: JSON.stringify({
-        from: 'noreply@ahsan-ai-hub.vercel.app',
-        to: 'tickets@ahsan-ai-hub.p.tawk.email',
-        subject,
-        text: body,
-        html: `<pre>${body}</pre>`,
-      }),
-    });
+    // Try to send email using Resend API if key is configured
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      try {
+        const response = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${resendKey}`,
+          },
+          body: JSON.stringify({
+            from: 'noreply@ahsan-ai-hub.vercel.app',
+            to: 'tickets@ahsan-ai-hub.p.tawk.email',
+            subject,
+            text: body,
+            html: `<pre>${body}</pre>`,
+          }),
+        });
 
-    if (!response.ok) {
-      // Fallback: Create a simple email submission via form
-      console.log('Error reporting:', { errorMessage, feature });
-      return { 
-        success: true, 
-        message: 'Error has been logged and will be reviewed by our team.' 
-      };
+        if (response.ok) {
+          return { 
+            success: true, 
+            message: 'Error report sent successfully. Our team will investigate.' 
+          };
+        }
+      } catch (fetchError) {
+        console.error('Failed to send email via Resend:', fetchError);
+      }
     }
 
+    // Fallback: Create mailto link for users to send manually
+    const mailtoLink = `mailto:tickets@ahsan-ai-hub.p.tawk.email?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    console.log('Error reporting (fallback):', { errorMessage, feature });
     return { 
       success: true, 
-      message: 'Error report sent successfully. Our team will investigate.' 
+      message: 'Error report prepared. You can send it manually using the link below.',
+      mailtoLink
     };
   } catch (error) {
     console.error('Failed to report error:', error);
     return { 
       success: true, 
-      message: 'Error has been logged locally. Our team will review logs.' 
+      message: 'Error details logged. Please contact support at tickets@ahsan-ai-hub.p.tawk.email' 
     };
   }
 }
