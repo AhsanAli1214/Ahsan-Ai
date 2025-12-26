@@ -342,6 +342,16 @@ export function ChatInterface({
   const handleSend = async () => {
     if (!input.trim()) return;
 
+    // Check online status before sending
+    if (!navigator.onLine) {
+      toast({
+        title: "You are offline",
+        description: "AI features require an active internet connection. Please check your network and try again.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     const newUserMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
