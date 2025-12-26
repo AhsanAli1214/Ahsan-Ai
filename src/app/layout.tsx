@@ -117,7 +117,9 @@ export default function RootLayout({
         <meta name="author" content="Ahsan AI Hub" />
         <link rel="canonical" href="https://ahsan-ai-hub.vercel.app" />
         <link rel="alternate" hrefLang="en" href="https://ahsan-ai-hub.vercel.app" />
-        <script
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
