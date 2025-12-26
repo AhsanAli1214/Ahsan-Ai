@@ -377,10 +377,12 @@ export function ChatInterface({
     const timeSinceLastRequest = now - lastAudioRequestTime;
     if (timeSinceLastRequest < 2000) {
       const waitTime = Math.ceil((2000 - timeSinceLastRequest) / 1000);
+      const rateLimitMsg = `Audio requests are being processed. Please try again in ${waitTime} second${waitTime !== 1 ? 's' : ''}.`;
       toast({
-        title: 'Please wait',
-        description: `Please wait ${waitTime} second${waitTime !== 1 ? 's' : ''} before requesting audio again.`,
-        variant: 'default',
+        variant: 'destructive',
+        title: 'Request in Progress',
+        description: rateLimitMsg,
+        action: <Button size="sm" variant="outline" onClick={() => handleReportError(rateLimitMsg)}>Report Issue</Button>,
       });
       return;
     }
