@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const { data, error: resendError } = await resend.emails.send({
       from: 'Ahsan AI Hub <onboarding@resend.dev>',
-      to: ['delivered@resend.dev'], // Note: Replace with user's actual email if they provided one
+      to: ['tickets@ahsan-ai-hub.p.tawk.email'],
       subject: `[ERROR] Ahsan AI Hub - ${new Date().toLocaleString()}`,
       html: `
         <h1>Error Reported in Ahsan AI Hub</h1>
