@@ -101,6 +101,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ErrorBoundary } from '@/components/error-boundary';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -192,7 +194,9 @@ export default function RootLayout({
           <AppProvider>
             <ChatHistoryProvider>
               <ReCaptchaScript />
-              {children}
+              <ErrorBoundary>
+                {children}
+              </ErrorBoundary>
               <Toaster />
               <PWAInstall />
               <ConnectionStatus />
