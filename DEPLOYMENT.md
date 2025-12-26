@@ -4,23 +4,37 @@
 
 When deploying to Vercel, add this environment variable to your project settings:
 
-### Required Variable
-- **`GEMINI_API_KEY`** - Your Google Gemini API key for AI features
+### Required Variables
+1. **`GEMINI_API_KEY`** - Your Google Gemini API key for AI features
+2. **`RECAPTCHA_SECRET_KEY`** - Your reCAPTCHA secret key for form protection
 
-### Steps to Add Environment Variable
+### Steps to Add Environment Variables in Vercel
 1. Go to your Vercel project dashboard
 2. Navigate to **Settings** → **Environment Variables**
-3. Add a new variable:
+3. Add these variables:
    - Name: `GEMINI_API_KEY`
-   - Value: Your Gemini API key
-   - Environments: Select all (Production, Preview, Development)
+     - Value: Your Gemini API key
+     - Environments: Production, Preview, Development
+   - Name: `RECAPTCHA_SECRET_KEY`
+     - Value: Your reCAPTCHA secret key
+     - Environments: Production, Preview, Development
 4. Save and redeploy
 
-### Getting Your Gemini API Key
+### Getting Your API Keys
+
+#### Gemini API Key
 1. Go to [Google AI Studio](https://aistudio.google.com/)
 2. Click "Get API Key"
 3. Create a new API key
 4. Copy the key and add it to Vercel as `GEMINI_API_KEY`
+
+#### ReCAPTCHA Secret Key
+1. Go to [Google reCAPTCHA Console](https://www.google.com/recaptcha/admin)
+2. Sign in with your Google account
+3. Create a new site or use existing:
+   - Site Key: `6LesbDcsAAAAALuDdNtUQEhyOP8O7K9vd0VSpsew` (already set in NEXT_PUBLIC_RECAPTCHA_SITE_KEY)
+   - Secret Key: Copy this value
+4. Add the Secret Key to Vercel as `RECAPTCHA_SECRET_KEY`
 
 ### Optional Variables
 - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - ReCAPTCHA site key (if using form protection)
