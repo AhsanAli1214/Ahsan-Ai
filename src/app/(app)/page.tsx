@@ -17,6 +17,9 @@ import {
   Cloud,
   Download,
   Smartphone,
+  Shield,
+  Lock,
+  Eye,
 } from 'lucide-react';
 import Link from 'next/link';
 import { AhsanAiHubLogo } from '@/components/icons';
@@ -129,6 +132,74 @@ export default function HomePage() {
                 Start Chatting
               </Link>
             </Button>
+          </div>
+
+          {/* Privacy-First Banner */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 p-6 md:p-8 shadow-lg">
+            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-primary/5 blur-3xl" />
+            <div className="absolute -left-20 -bottom-10 h-32 w-32 rounded-full bg-primary/5 blur-3xl" />
+            
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="flex-1">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-4">
+                    <Shield className="h-3.5 w-3.5 text-primary" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary">Our Core Values</span>
+                  </div>
+                  
+                  <h2 className="text-2xl md:text-3xl font-black text-foreground mb-4 leading-tight">
+                    100% Privacy-First AI Tools
+                  </h2>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <Lock className="h-4 w-4" />
+                      </div>
+                      <p className="text-sm font-semibold text-foreground">No Login Required</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <Eye className="h-4 w-4" />
+                      </div>
+                      <p className="text-sm font-semibold text-foreground">No Data Stored</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary flex-shrink-0">
+                        <Shield className="h-4 w-4" />
+                      </div>
+                      <p className="text-sm font-semibold text-foreground">100% Privacy-Protected</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="hidden md:flex flex-col gap-3 w-full md:w-auto">
+                  <Link href="/privacy">
+                    <Button variant="outline" className="w-full md:w-auto gap-2 rounded-xl font-semibold">
+                      Learn More
+                    </Button>
+                  </Link>
+                  <Link href="/data-rights">
+                    <Button variant="ghost" className="w-full md:w-auto gap-2 rounded-xl font-semibold">
+                      Our Commitment
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              
+              <div className="md:hidden mt-6 flex flex-col gap-3 w-full">
+                <Link href="/privacy" className="w-full">
+                  <Button variant="outline" className="w-full gap-2 rounded-xl font-semibold">
+                    Learn More
+                  </Button>
+                </Link>
+                <Link href="/data-rights" className="w-full">
+                  <Button variant="ghost" className="w-full gap-2 rounded-xl font-semibold">
+                    Our Commitment
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
 
           {/* Quick Actions Section */}
