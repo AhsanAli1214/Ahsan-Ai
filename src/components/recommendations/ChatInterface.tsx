@@ -477,22 +477,32 @@ export function ChatInterface({
     
     const handleViewportScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = viewport;
+      // Distance from bottom. If we're more than 150px from the bottom, show the button.
       const distanceToBottom = scrollHeight - scrollTop - clientHeight;
       setShowScrollButton(distanceToBottom > 150);
     };
     
     viewport.addEventListener('scroll', handleViewportScroll);
+    // Initial check
     handleViewportScroll();
-    return () => viewport.removeEventListener('scroll', handleViewportScroll);
+    
+    // Check after a short delay for content rendering
+    const timer = setTimeout(handleViewportScroll, 100);
+    
+    return () => {
+      viewport.removeEventListener('scroll', handleViewportScroll);
+      clearTimeout(timer);
+    };
   }, [messages.length, isLoading]);
 
   return (
     <div className="flex h-full w-full flex-col bg-background relative overflow-hidden">
-      <div className="flex-1 overflow-hidden" ref={scrollAreaRef}>
+      <div className="flex-1 overflow-hidden">
         <div 
           ref={scrollViewportRef}
-          className="h-full w-full overflow-y-auto pb-32 md:pb-24 scroll-smooth"
+          className="h-full w-full overflow-y-auto pb-32 md:pb-24 scroll-smooth no-scrollbar"
           onScroll={handleScroll}
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           <div className="mx-auto w-full max-w-4xl space-y-3 sm:space-y-4 px-3 sm:px-4 py-4 sm:py-6">
           {messages.length === 0 && !isLoading ? (
