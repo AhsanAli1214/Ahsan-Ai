@@ -241,11 +241,11 @@ export default function ContactPage() {
               Designed for performance. Optimized for speed. Built for the future of AI.
             </p>
             <div className="flex justify-center gap-6 text-xs text-muted-foreground/50 pt-4">
-              <button className="hover:text-primary transition-colors font-medium">Privacy Policy</button>
+              <Link href="/privacy" className="hover:text-primary transition-colors font-medium">Privacy Policy</Link>
               <span className="text-border/40">•</span>
-              <button className="hover:text-primary transition-colors font-medium">Terms of Service</button>
+              <Link href="/terms" className="hover:text-primary transition-colors font-medium">Terms of Service</Link>
               <span className="text-border/40">•</span>
-              <button className="hover:text-primary transition-colors font-medium">Data Rights</button>
+              <Link href="/data-rights" className="hover:text-primary transition-colors font-medium">Data Rights</Link>
             </div>
           </footer>
         </div>
