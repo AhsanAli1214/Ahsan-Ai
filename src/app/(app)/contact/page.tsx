@@ -21,6 +21,20 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Support - Reach Out to Ahsan AI Hub',
+  description: 'Contact Ahsan AI Hub support for technical issues, feedback, or collaboration. Connect with us on Instagram, Twitter, or email for the fastest response.',
+  keywords: [
+    'contact Ahsan AI Hub',
+    'AI support email',
+    'AI developer contact',
+    'technical support',
+    'AI tool feedback',
+  ],
+};
+
 export default function ContactPage() {
   const SUPPORT_EMAIL = "tickets@ahsan-ai-hub.p.tawk.email";
 

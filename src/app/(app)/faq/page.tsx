@@ -13,8 +13,16 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'FAQ | Ahsan Ai Hub',
-  description: 'Frequently Asked Questions about Ahsan Ai Hub.',
+  title: 'FAQ - Help & Support | Ahsan AI Hub',
+  description: 'Find answers to common questions about Ahsan AI Hub features, AI chat usage, privacy, security, and installation. Get help with our free AI tools.',
+  keywords: [
+    'Ahsan AI Hub FAQ',
+    'AI chat help',
+    'how to use AI tools',
+    'AI privacy support',
+    'install AI app',
+    'free AI support',
+  ],
 };
 
 const FAQData = [
