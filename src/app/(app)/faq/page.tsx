@@ -27,16 +27,16 @@ export const metadata: Metadata = {
 
 const FAQData = [
     { 
-        q: "What is Ahsan AI Hub?", 
-        a: "Ahsan AI Hub is an intelligent AI-powered platform that combines advanced Google Gemini technology with a modern, user-friendly interface. It's designed to help you with writing, coding, learning, brainstorming, content creation, and much more—all in one place." 
+        q: "What is Ahsan AI Hub and how can it help me?", 
+        a: "Ahsan AI Hub is a comprehensive, privacy-first AI platform. It provides free access to advanced AI tools for professional writing, code debugging, creative brainstorming, and instant problem-solving. Our mission is to provide high-quality AI assistance with 100% privacy and no login requirements." 
     },
     { 
-        q: "How do I start using the AI Chat?", 
-        a: "Simply navigate to the 'AI Chat' section from the home page or sidebar. Type your question or request in the input box at the bottom and press Enter. The AI will generate a response instantly. You can continue the conversation naturally by asking follow-up questions." 
+        q: "How does the AI Chat work on Ahsan AI Hub?", 
+        a: "Our AI Chat uses advanced Gemini technology to provide human-like responses. Simply visit the AI Chat page, type your prompt, and get instant answers. You can even customize the AI's personality (Creative, Professional, Teacher, or Friendly) in the settings for a tailored experience." 
     },
     { 
-        q: "What are Content Tools?", 
-        a: "Content Tools are specialized AI features designed for specific tasks like rewriting text, generating summaries, creating marketing copy, brainstorming ideas, and more. Each tool is optimized for its particular use case to help you create high-quality content quickly." 
+        q: "Are the AI content tools on Ahsan AI Hub really free?", 
+        a: "Yes! All tools on Ahsan AI Hub, including the Text Rewriter, Code Explainer, Idea Generator, and Email Writer, are completely free to use. We prioritize accessibility and privacy, meaning you can start using them immediately without creating an account." 
     },
     { 
         q: "Can I customize how the AI responds?", 

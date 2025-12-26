@@ -38,12 +38,43 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const SUPPORT_EMAIL = "tickets@ahsan-ai-hub.p.tawk.email";
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Ahsan AI Hub",
+    "description": "Direct contact channels for Ahsan AI Hub support and collaboration.",
+    "url": "https://ahsan-ai-hub.vercel.app/contact",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Ahsan AI Hub",
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "email": SUPPORT_EMAIL,
+          "contactType": "customer support"
+        }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/ahsan.ali.wadani",
+        "https://x.com/Ahsan_Ali_12?s=09",
+        "https://www.facebook.com/profile.php?id=100091175299202&mibextid=PzaGJu"
+      ]
+    }
+  };
+
+  return (
+    <div className="flex h-full w-full flex-col bg-background selection:bg-primary/20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
+      />
+      <AppHeader title="Contact & Support" />
   const contactMethods = [
     {
       icon: Mail,
       title: "Email Support",
       value: SUPPORT_EMAIL,
-      description: "For official inquiries and technical support tickets.",
+      description: "For official inquiries and technical support tickets. We respond to all queries within 24 hours.",
       color: "text-blue-500",
       bg: "bg-blue-500/10",
       link: `mailto:${SUPPORT_EMAIL}`,
@@ -51,9 +82,9 @@ export default function ContactPage() {
     },
     {
       icon: MessageSquare,
-      title: "Instagram DM",
+      title: "Instagram Support",
       value: "@ahsan.ali.wadani",
-      description: "The fastest way to get a quick response for casual chat.",
+      description: "Get quick assistance and stay updated on the latest AI features through our Instagram community.",
       color: "text-pink-500",
       bg: "bg-pink-500/10",
       link: "https://www.instagram.com/ahsan.ali.wadani",
@@ -61,18 +92,18 @@ export default function ContactPage() {
     },
     {
       icon: Twitter,
-      title: "Twitter / X",
+      title: "X (Twitter) Updates",
       value: "@Ahsan_Ali_12",
-      description: "Follow for live updates, tips, and AI news.",
+      description: "Follow us for real-time updates, AI news, and productivity tips from the Ahsan AI Hub team.",
       color: "text-sky-500",
       bg: "bg-sky-500/10",
       link: "https://x.com/Ahsan_Ali_12?s=09",
     },
     {
       icon: Facebook,
-      title: "Facebook",
+      title: "Facebook Community",
       value: "Ahsan Ali",
-      description: "Join our community and stay connected.",
+      description: "Join our growing community on Facebook to share ideas and get the most out of our AI tools.",
       color: "text-blue-600",
       bg: "bg-blue-600/10",
       link: "https://www.facebook.com/profile.php?id=100091175299202&mibextid=PzaGJu",
