@@ -261,17 +261,18 @@ export function ChatInterface({
   }, []);
   
   const scrollToBottom = (behavior: 'smooth' | 'auto' = 'auto') => {
-    const scrollElement = scrollViewportRef.current || scrollAreaRef.current;
+    const scrollElement = scrollViewportRef.current;
     if (scrollElement) {
-      setTimeout(() => {
-        scrollElement.scrollTop = scrollElement.scrollHeight;
-      }, 0);
+      scrollElement.scrollTo({
+        top: scrollElement.scrollHeight,
+        behavior: behavior
+      });
     }
   }
   
   useEffect(() => {
-    scrollToBottom(enableAnimations ? 'smooth' : 'auto');
-  }, [messages, isLoading, enableAnimations]);
+    scrollToBottom('auto');
+  }, [messages.length, isLoading]);
 
   useEffect(() => {
     if (audio) {
@@ -411,8 +412,8 @@ export function ChatInterface({
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const element = e.currentTarget;
     const { scrollTop, scrollHeight, clientHeight } = element;
-    const atBottom = scrollHeight - scrollTop - clientHeight < 50;
-    setShowScrollButton(!atBottom);
+    const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+    setShowScrollButton(distanceToBottom > 150);
   }
   
   useEffect(() => {
@@ -421,15 +422,14 @@ export function ChatInterface({
     
     const handleViewportScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = viewport;
-      // Show button if more than 200px from bottom
-      const atBottom = scrollHeight - scrollTop - clientHeight < 200;
-      setShowScrollButton(!atBottom);
+      const distanceToBottom = scrollHeight - scrollTop - clientHeight;
+      setShowScrollButton(distanceToBottom > 150);
     };
     
     viewport.addEventListener('scroll', handleViewportScroll);
-    handleViewportScroll(); // Initial check
+    handleViewportScroll();
     return () => viewport.removeEventListener('scroll', handleViewportScroll);
-  }, [messages, isLoading]);
+  }, [messages.length, isLoading]);
 
   return (
     <div className="flex h-full w-full flex-col bg-background relative overflow-hidden">
