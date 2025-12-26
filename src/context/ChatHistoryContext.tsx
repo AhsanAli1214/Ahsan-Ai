@@ -28,6 +28,7 @@ interface ChatHistoryContextType {
   deleteAllSessions: () => void;
   switchSession: (id: string) => void;
   addMessage: (message: Message) => void;
+  updateMessage: (messageId: string, updates: Partial<Message>) => void;
   updateCurrentSessionTitle: (title: string) => void;
   clearCurrentSession: () => void;
   loadSessions: () => void;
@@ -143,6 +144,22 @@ export function ChatHistoryProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const updateMessage = (messageId: string, updates: Partial<Message>) => {
+    setSessionsState(prev =>
+      prev.map(session =>
+        session.id === currentSessionId
+          ? {
+              ...session,
+              messages: session.messages.map(msg =>
+                msg.id === messageId ? { ...msg, ...updates } : msg
+              ),
+              updatedAt: Date.now()
+            }
+          : session
+      )
+    );
+  };
+
   const updateCurrentSessionTitle = (title: string) => {
     setSessionsState(prev =>
       prev.map(session =>
@@ -188,6 +205,7 @@ export function ChatHistoryProvider({ children }: { children: ReactNode }) {
         deleteAllSessions,
         switchSession,
         addMessage,
+        updateMessage,
         updateCurrentSessionTitle,
         clearCurrentSession,
         loadSessions,
