@@ -1,10 +1,23 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize only when API key is available to avoid build-time errors
+const getResend = () => {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('RESEND_API_KEY is missing');
+    return null;
+  }
+  return new Resend(apiKey);
+};
 
 export async function POST(req: Request) {
   try {
+    const resend = getResend();
+    if (!resend) {
+      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 });
+    }
+
     const body = await req.json();
     const { error, stack, url, componentStack, userAgent } = body;
 
@@ -34,3 +47,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+// Ensure the route is handled as dynamic to avoid build-time execution
+export const dynamic = 'force-dynamic';
