@@ -177,12 +177,76 @@ export default function ContactPage() {
             </a>
           </div>
 
+          {/* Privacy & Legal Section */}
+          <div className="mt-20 pt-12 border-t border-border/40">
+            <div className="space-y-8">
+              {/* Compliance Notice */}
+              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-8 space-y-4">
+                <h3 className="text-lg font-black text-foreground">Your Privacy & Security</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  At Ahsan AI Hub, we are committed to protecting your data and privacy. We comply with international data protection standards and implement industry-leading security measures to safeguard your personal information.
+                </p>
+              </div>
+
+              {/* Terms & Conditions */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Card className="border-border/50 bg-card/40 backdrop-blur-md rounded-2xl p-6">
+                  <CardContent className="p-0 space-y-3">
+                    <h4 className="font-black text-foreground text-base">Privacy Policy</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      We collect and process data to provide our services. Your information is protected with modern encryption and is never shared with third parties without your consent. Learn how we handle your data.
+                    </p>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-border/50 bg-card/40 backdrop-blur-md rounded-2xl p-6">
+                  <CardContent className="p-0 space-y-3">
+                    <h4 className="font-black text-foreground text-base">Terms of Service</h4>
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      By using Ahsan AI Hub, you agree to our terms and conditions. Our service is provided as-is and we reserve the right to modify terms with notice. Please review our full terms before using our platform.
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Data Rights */}
+              <div className="text-center space-y-4">
+                <h4 className="font-black text-foreground">Your Rights</h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+                  <div className="space-y-2">
+                    <div className="text-primary font-black">Access</div>
+                    <p className="text-muted-foreground">View your data anytime</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-primary font-black">Control</div>
+                    <p className="text-muted-foreground">Manage preferences</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-primary font-black">Delete</div>
+                    <p className="text-muted-foreground">Request deletion</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="text-primary font-black">Export</div>
+                    <p className="text-muted-foreground">Download your data</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Footer Branding */}
-          <footer className="mt-24 pb-12 text-center space-y-4 border-t border-border/40 pt-12">
-            <p className="text-sm font-bold text-muted-foreground/60 uppercase tracking-[0.3em]">Ahsan AI Hub • Studio Edition</p>
+          <footer className="mt-12 pb-12 text-center space-y-4 border-t border-border/40 pt-12">
+            <p className="text-sm font-bold text-muted-foreground/60 uppercase tracking-[0.3em]">Ahsan AI Hub</p>
             <p className="text-xs text-muted-foreground/40 max-w-md mx-auto leading-relaxed">
               Designed for performance. Optimized for speed. Built for the future of AI.
             </p>
+            <div className="flex justify-center gap-6 text-xs text-muted-foreground/50 pt-4">
+              <button className="hover:text-primary transition-colors font-medium">Privacy Policy</button>
+              <span className="text-border/40">•</span>
+              <button className="hover:text-primary transition-colors font-medium">Terms of Service</button>
+              <span className="text-border/40">•</span>
+              <button className="hover:text-primary transition-colors font-medium">Data Rights</button>
+            </div>
           </footer>
         </div>
       </main>
