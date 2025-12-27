@@ -5,13 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Cloud, Download, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export function PWAInstallButton() {
+export function PWAInstallButton({ className }: { className?: string }) {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -105,7 +106,7 @@ export function PWAInstallButton() {
       <Button
         disabled
         size="lg"
-        className="w-full bg-emerald-600 text-white shadow-lg py-6 text-base font-semibold rounded-2xl transition-all"
+        className={cn("w-full bg-emerald-600 text-white shadow-lg py-6 text-base font-semibold rounded-2xl transition-all", className)}
       >
         <Cloud className="mr-2 h-5 w-5" />
         ✓ App Installed Successfully
@@ -114,16 +115,17 @@ export function PWAInstallButton() {
   }
 
   return (
-    <div className="w-full space-y-3">
+    <div className={cn("w-full space-y-3", className)}>
       <Button
         onClick={handleInstallClick}
         disabled={isLoading || !deferredPrompt}
         size="lg"
-        className={`w-full font-semibold text-base py-6 transition-all duration-300 rounded-2xl flex items-center justify-center gap-2 ${
+        className={cn(
+          "w-full font-semibold text-base py-6 transition-all duration-300 rounded-2xl flex items-center justify-center gap-2",
           !deferredPrompt
             ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-50'
             : 'bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl text-primary-foreground hover:scale-105 active:scale-95'
-        }`}
+        )}
       >
         <Download className="h-5 w-5" />
         {isLoading ? 'Installing...' : 'Install App to Home Screen'}
