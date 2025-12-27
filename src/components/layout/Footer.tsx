@@ -6,15 +6,15 @@ export function Footer() {
 
   const footerSections = {
     products: [
-      { label: 'AI Chat', href: '/' },
+      { label: 'AI Chat', href: '/recommendations' },
       { label: 'Content Tools', href: '/content-tools' },
-      { label: 'Translation', href: '/translation' },
-      { label: 'Text to Speech', href: '/text-to-speech' },
+      { label: 'Translation', href: '/content-tools' },
+      { label: 'Text to Speech', href: '/content-tools' },
     ],
     resources: [
       { label: 'Documentation', href: '/docs' },
-      { label: 'Blog', href: 'https://ahsan-tech-hub.blogspot.com/', external: true },
-      { label: 'API Reference', href: '/api' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'API Reference', href: '/api-reference' },
       { label: 'Community', href: '/community' },
     ],
     company: [
@@ -35,7 +35,7 @@ export function Footer() {
     { icon: Twitter, href: 'https://x.com/Ahsan_Ali_12?s=09', label: 'X (Twitter)' },
     { icon: Instagram, href: 'https://www.instagram.com/ahsan.ali.wadani', label: 'Instagram' },
     { icon: Facebook, href: 'https://www.facebook.com/profile.php?id=100091175299202&mibextid=PzaGJu', label: 'Facebook' },
-    { icon: Github, href: 'https://github.com/ahsan-ali-12', label: 'GitHub' },
+    { icon: Github, href: 'https://github.com/AhsanAli1214', label: 'GitHub' },
   ];
 
   return (
