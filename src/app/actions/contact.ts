@@ -120,7 +120,7 @@ ${validatedData.message}
       body: JSON.stringify({
         from: 'Ahsan AI Hub <onboarding@resend.dev>',
         to: 'tickets@ahsan-ai-hub.p.tawk.email',
-        replyTo: validatedData.email,
+        reply_to: validatedData.email,
         subject: `[${categoryMap[validatedData.category] || 'Contact'}] ${validatedData.subject}`,
         html: emailBody,
       }),
