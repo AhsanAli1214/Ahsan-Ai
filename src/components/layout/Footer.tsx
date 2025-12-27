@@ -119,12 +119,9 @@ export function Footer() {
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      target={item.external ? '_blank' : undefined}
-                      rel={item.external ? 'noopener noreferrer' : undefined}
                       className="text-sm text-muted-foreground hover:text-foreground transition-colors font-medium inline-flex items-center gap-1 group"
                     >
                       {item.label}
-                      {item.external && <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />}
                     </Link>
                   </li>
                 ))}
