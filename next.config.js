@@ -107,15 +107,6 @@ const nextConfig = {
           },
         ],
       },
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Link',
-            value: '</fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin'
-          },
-        ],
-      },
     ];
   },
   redirects: async () => {

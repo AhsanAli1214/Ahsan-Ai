@@ -13,24 +13,16 @@ Allow: /*.ico
 Allow: /manifest.json
 Allow: /sitemap.xml
 
-# Block API routes from indexing
+# Block API and specific routes
 Disallow: /api/
 Disallow: /admin/
+Disallow: /_next/
+Allow: /_next/static/
 
 # Search engine crawl behavior
-Crawl-delay: 1
 User-agent: Googlebot
-Crawl-delay: 0
-
-# Sitemaps
-Sitemap: https://ahsan-ai-hub.vercel.app/sitemap.xml
-
-# Allow Google Image Bot for logos
-User-agent: Googlebot-Image
 Allow: /
 Disallow: /api/
 
-# Allow all media
-User-agent: *
-Allow: /icon-*.png
-Allow: /tool-icons/
+# Sitemaps
+Sitemap: https://ahsan-ai-hub.vercel.app/sitemap.xml
