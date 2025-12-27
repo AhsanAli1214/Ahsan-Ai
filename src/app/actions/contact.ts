@@ -3,7 +3,7 @@
 import { z } from 'zod';
 
 const ContactFormSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters').max(100),
+  name: z.string().min(1, 'Name is required').max(100),
   email: z.string().email('Please enter a valid email address'),
   subject: z.string().min(5, 'Subject must be at least 5 characters').max(100),
   category: z.enum(['bug_report', 'feature_request', 'general_inquiry', 'collaboration', 'feedback']),

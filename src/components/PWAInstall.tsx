@@ -39,6 +39,7 @@ export function PWAInstall() {
     }
 
     const handleBeforeInstallPrompt = (e: Event) => {
+      console.log('beforeinstallprompt event fired');
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setShowInstallPrompt(true);
@@ -74,7 +75,14 @@ export function PWAInstall() {
   };
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    console.log('Install button clicked', !!deferredPrompt);
+    if (!deferredPrompt) {
+      toast({
+        title: "Install not ready",
+        description: "Your browser hasn't prepared the installation prompt yet. Try again in a few seconds or use your browser's 'Add to Home Screen' menu.",
+      });
+      return;
+    }
 
     try {
       await deferredPrompt.prompt();

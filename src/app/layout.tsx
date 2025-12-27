@@ -155,7 +155,12 @@ export default function RootLayout({
         />
         <Script id="pwa-register" strategy="afterInteractive" dangerouslySetInnerHTML={{__html: `
           if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(err => {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, function(err) {
+                console.log('ServiceWorker registration failed: ', err);
+              });
             });
           }
         `}} />
