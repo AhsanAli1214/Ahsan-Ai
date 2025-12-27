@@ -115,14 +115,14 @@ export default function RootLayout({
         <meta name="msapplication-TileImage" content="/icon-192.png" />
         <link rel="preconnect" href="https://i.postimg.cc" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.postimg.cc" />
-        <link rel="icon" type="image/png" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
-        <link rel="mask-icon" href="/icon-maskable-512.png" color="#3b82f6" />
-        <link rel="shortcut icon" href="/icon-192.png" type="image/png" />
+        <link rel="icon" type="image/png" href="/icon-192.png?v=2025-12-27" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png?v=2025-12-27" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png?v=2025-12-27" />
+        <link rel="apple-touch-icon" href="/icon-192.png?v=2025-12-27" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png?v=2025-12-27" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png?v=2025-12-27" />
+        <link rel="mask-icon" href="/icon-maskable-512.png?v=2025-12-27" color="#3b82f6" />
+        <link rel="shortcut icon" href="/icon-192.png?v=2025-12-27" type="image/png" />
         <Script
           id="theme-init"
           strategy="beforeInteractive"
