@@ -112,13 +112,17 @@ export default function RootLayout({
         <meta name="application-name" content="Ahsan Ai Hub" />
         <meta name="msapplication-TileColor" content="#3b82f6" />
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta name="msapplication-TileImage" content="/icon-192.png" />
         <link rel="preconnect" href="https://i.postimg.cc" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://i.postimg.cc" />
+        <link rel="icon" type="image/png" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png" />
-        <link rel="mask-icon" href="/icon-512.png" color="#3b82f6" />
-        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+        <link rel="mask-icon" href="/icon-maskable-512.png" color="#3b82f6" />
+        <link rel="shortcut icon" href="/icon-192.png" type="image/png" />
         <Script
           id="theme-init"
           strategy="beforeInteractive"
@@ -140,11 +144,7 @@ export default function RootLayout({
         <Script id="pwa-register" strategy="lazyOnload" dangerouslySetInnerHTML={{__html: `
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-              navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-              }, function(err) {
-                console.log('ServiceWorker registration failed: ', err);
-              });
+              navigator.serviceWorker.register('/sw.js');
             });
           }
         `}} />
@@ -161,7 +161,7 @@ export default function RootLayout({
                   },
                 });
               } catch (e) {
-                console.error('OneSignal initialization error:', e);
+                // Silent error handling for OneSignal
               }
             });
         `}} />
