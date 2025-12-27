@@ -92,7 +92,7 @@ export default function HomePage() {
         <p>
           Ahsan AI Hub (also known as Ahsan AI) is a powerful, anonymous AI platform developed by Ahsan Ali. 
           We offer the best free AI chat experience, AI text rewriter, and code explainer with 100% privacy and no login required.
-          Our platform integrates Google Gemini 2.0 Flash to provide lightning-fast content generation, professional email writing, 
+          Our platform integrates advanced language models to provide lightning-fast content generation, professional email writing, 
           unlimited text-to-speech, and translation tools in 50+ languages.
           Ranked as the top free AI tool hub for 2025 with zero data logging policy.
         </p>

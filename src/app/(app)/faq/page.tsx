@@ -59,7 +59,7 @@ const FAQData = [
   { 
     cat: 'features',
     q: "What AI model powers Ahsan AI Hub?", 
-    a: "We use Google's cutting-edge Gemini 2.5 Flash model through the Google Genkit framework. This ensures lightning-fast response times and high intelligence for complex tasks like coding and creative writing." 
+    a: "We use cutting-edge language models through the Google Genkit framework. This ensures lightning-fast response times and high intelligence for complex tasks like coding and creative writing." 
   },
   { 
     cat: 'features',
@@ -108,7 +108,7 @@ const FAQData = [
   { 
     cat: 'technical',
     q: "Can I use Ahsan AI Hub while offline?", 
-    a: "While the interface and your saved chat history work offline, generating new AI responses requires an active internet connection to communicate with the Gemini models." 
+    a: "While the interface and your saved chat history work offline, generating new AI responses requires an active internet connection to communicate with the AI models." 
   },
   { 
     cat: 'technical',

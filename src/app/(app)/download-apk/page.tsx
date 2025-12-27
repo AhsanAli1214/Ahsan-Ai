@@ -37,7 +37,7 @@ const FEATURES = [
   {
     icon: MessageCircle,
     title: 'AI Chat',
-    description: 'Intelligent conversations with advanced AI powered by Google Gemini',
+    description: 'Intelligent conversations with advanced AI',
     color: 'text-blue-500',
   },
   {

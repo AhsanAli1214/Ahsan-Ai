@@ -157,7 +157,7 @@ export function Footer() {
                 Built with ❤️ • Privacy-First • No Data Tracking
               </p>
               <p className="text-[11px] text-muted-foreground/50">
-                Powered by Google Gemini API • Hosted on Vercel
+                Powered by Advanced AI • Hosted on Vercel
               </p>
             </div>
           </div>

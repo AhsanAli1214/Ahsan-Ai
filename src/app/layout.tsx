@@ -38,11 +38,11 @@ export const metadata: Metadata = {
     default: 'Ahsan Ai Hub',
     template: 'Ahsan Ai Hub'
   },
-  description: 'Ahsan Ai Hub: The #1 privacy-first platform for free AI chat, 9+ generation tools, translation, and text-to-speech. Powered by Gemini 2.0 Flash. No login, zero tracking.',
+  description: 'Ahsan Ai Hub: The #1 privacy-first platform for free AI chat, 9+ generation tools, translation, and text-to-speech. Powered by advanced AI. No login, zero tracking.',
   keywords: [
     'Ahsan Ai Hub', 'free AI chat', 'Ahsan AI', 'best free AI tools 2025',
     'AI text rewriter', 'AI code explainer', 'privacy-first AI', 'no login AI',
-    'Gemini 2.0 Flash free', 'AI email writer', 'AI story generator',
+    'advanced AI free', 'AI email writer', 'AI story generator',
     'free translation tools', 'unlimited text to speech', 'anonymous AI',
     'AI productivity hub', 'Ahsan Ali AI'
   ],

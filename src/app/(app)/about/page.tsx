@@ -186,7 +186,7 @@ export default function AboutPage() {
                   Every line of code in this project is written with security in mind. I've eliminated server-side storage for chats and replaced it with local browser storage, putting you in total control of your data.
                 </p>
                 <p className="leading-relaxed">
-                  By using Google's Gemini 2.5 Flash via Genkit, we ensure high-speed responses while maintaining a lightweight footprint that works perfectly on any device.
+                  By using cutting-edge language models via Genkit, we ensure high-speed responses while maintaining a lightweight footprint that works perfectly on any device.
                 </p>
               </CardContent>
             </Card>
@@ -205,7 +205,7 @@ export default function AboutPage() {
               <Card className="border-accent/20 bg-card/50 p-6 space-y-4">
                 <h3 className="text-lg font-bold text-foreground">Free AI Tools for Everyone</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Ahsan AI Hub provides completely free access to advanced AI tools powered by Google's Gemini 2.0 Flash. No login required, no data stored on servers. Perfect for professionals, students, and creative minds.
+                  Ahsan AI Hub provides completely free access to advanced AI tools. No login required, no data stored on servers. Perfect for professionals, students, and creative minds.
                 </p>
                 <div className="pt-2 space-y-2 text-sm text-muted-foreground">
                   <p>✓ 100% Privacy-First - All data stays local</p>
