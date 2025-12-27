@@ -5,12 +5,16 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "display_override": ["standalone", "window-controls-overlay", "minimal-ui"],
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
+  "background_color": "#3b82f6",
   "theme_color": "#3b82f6",
   "prefer_related_applications": false,
+  "prefer_related_applications_android": false,
   "categories": ["productivity", "utilities"],
+  "launch_handler": {
+    "client_mode": ["auto"]
+  },
   "shortcuts": [
     {
       "name": "AI Chat",
@@ -79,6 +83,20 @@
       "type": "image/png",
       "form_factor": "wide",
       "label": "Ahsan AI Hub Dashboard"
+    }
+  ],
+  "splash_screens": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 }

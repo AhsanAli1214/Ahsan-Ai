@@ -136,11 +136,11 @@ export function PWAInstallButton({ className }: { className?: string }) {
           <div className="flex gap-3 text-sm">
             <AlertCircle className="h-5 w-5 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
             <div className="text-blue-700 dark:text-blue-300">
-              <p className="font-semibold mb-1">How to Install:</p>
+              <p className="font-semibold mb-1">How to Install as Native App:</p>
               <ul className="space-y-1 text-xs opacity-90">
-                <li>• <strong>Chrome/Edge:</strong> Tap menu (⋮) → "Install app"</li>
-                <li>• <strong>Safari (iOS):</strong> Tap Share → "Add to Home Screen"</li>
-                <li>• <strong>Firefox:</strong> Tap menu → "Install" or use home screen shortcut</li>
+                <li>• <strong>Android Chrome:</strong> Look for "Install app" in address bar or menu (⋮)</li>
+                <li>• <strong>Android Firefox:</strong> Tap menu → "Install" for full native app</li>
+                <li>• <strong>Desktop Chrome/Edge:</strong> Click "Install Ahsan Ai Hub" button in address bar</li>
               </ul>
             </div>
           </div>

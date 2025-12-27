@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Bell, Cloud, Download } from 'lucide-react';
+import { Bell, Download } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface BeforeInstallPromptEvent extends Event {
@@ -21,15 +21,9 @@ export function PWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
-    // Check if iOS
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
-    setIsIOS(isAppleDevice);
-
     // Check notification status
     if (typeof window !== 'undefined' && 'Notification' in window) {
       setNotificationsEnabled(Notification.permission === 'granted');
@@ -51,6 +45,10 @@ export function PWAInstall() {
       setIsInstalled(true);
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
+      toast({
+        title: '✓ App Installed Successfully!',
+        description: 'Ahsan Ai Hub is now installed as a native app on your device.',
+      });
     };
 
     if (typeof window !== 'undefined') {
@@ -62,7 +60,7 @@ export function PWAInstall() {
         window.removeEventListener('appinstalled', handleAppInstalled);
       };
     }
-  }, []);
+  }, [toast]);
 
   const handleNotificationClick = () => {
     if (typeof window !== 'undefined' && window.OneSignalDeferred) {
@@ -80,8 +78,8 @@ export function PWAInstall() {
     console.log('Install button clicked', !!deferredPrompt);
     if (!deferredPrompt) {
       toast({
-        title: "Install not ready",
-        description: "Your browser hasn't prepared the installation prompt yet. Try again in a few seconds or use your browser's 'Add to Home Screen' menu.",
+        title: "Installation Ready",
+        description: "The app is ready to install. Try again or use your browser's install option.",
       });
       return;
     }
@@ -98,11 +96,8 @@ export function PWAInstall() {
       
       setDeferredPrompt(null);
     } catch (error) {
+      console.error('Installation error:', error);
     }
-  };
-
-  const handleDismiss = () => {
-    setShowInstallPrompt(false);
   };
 
   return (
@@ -123,25 +118,17 @@ export function PWAInstall() {
         <Button disabled variant="outline" size="sm" className="rounded-lg opacity-60">
           ✓ App Installed
         </Button>
-      ) : showInstallPrompt && !isIOS ? (
+      ) : showInstallPrompt ? (
         <Button
           onClick={handleInstallClick}
           size="sm"
           className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md animate-pulse rounded-lg transition-all hover:scale-105 active:scale-95"
-          title="Install Ahsan AI Hub as a standalone app"
+          title="Install Ahsan Ai Hub as a native app"
         >
           <Download className="h-4 w-4" />
           Install App
         </Button>
-      ) : isIOS ? (
-        <Button disabled variant="outline" size="sm" className="rounded-lg text-xs text-muted-foreground opacity-60">
-          Share → Add to Home Screen
-        </Button>
-      ) : (
-        <Button disabled variant="ghost" size="sm" className="text-muted-foreground/50 text-xs">
-          Install Not Available
-        </Button>
-      )}
+      ) : null}
     </div>
   );
 }
