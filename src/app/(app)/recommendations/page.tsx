@@ -1,23 +1,19 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { ChatInterface } from '@/components/recommendations/ChatInterface';
 
-export default function RecommendationsPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
-  const initialPrompt = searchParams?.initialPrompt || '';
+export default function RecommendationsPage() {
+  const searchParams = useSearchParams();
+  const initialPrompt = searchParams.get('initialPrompt') || '';
 
   return (
     <div className="flex h-full flex-col bg-background md:pb-0">
       <AppHeader title="AI Chat" />
       <div className="flex-1 overflow-hidden">
         <ChatInterface
-          initialPrompt={
-            Array.isArray(initialPrompt) ? initialPrompt[0] : initialPrompt
-          }
+          initialPrompt={initialPrompt}
         />
       </div>
     </div>
