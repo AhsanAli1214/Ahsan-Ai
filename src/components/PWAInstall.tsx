@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Bell, Cloud, X } from 'lucide-react';
+import { Bell, Cloud, Download } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -19,9 +19,15 @@ export function PWAInstall() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showInstallPrompt, setShowInstallPrompt] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
+    // Check if iOS
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isAppleDevice = /iphone|ipad|ipod/.test(userAgent);
+    setIsIOS(isAppleDevice);
+
     // Check notification status
     if (typeof window !== 'undefined' && 'Notification' in window) {
       setNotificationsEnabled(Notification.permission === 'granted');
@@ -44,13 +50,15 @@ export function PWAInstall() {
       setDeferredPrompt(null);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    window.addEventListener('appinstalled', handleAppInstalled);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.addEventListener('appinstalled', handleAppInstalled);
 
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.removeEventListener('appinstalled', handleAppInstalled);
-    };
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        window.removeEventListener('appinstalled', handleAppInstalled);
+      };
+    }
   }, []);
 
   const handleNotificationClick = () => {
@@ -103,19 +111,24 @@ export function PWAInstall() {
 
       {isInstalled ? (
         <Button disabled variant="outline" size="sm" className="rounded-lg opacity-60">
-          App Installed
+          ✓ App Installed
         </Button>
-      ) : showInstallPrompt ? (
+      ) : showInstallPrompt && !isIOS ? (
         <Button
           onClick={handleInstallClick}
           size="sm"
-          className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md animate-pulse rounded-lg"
+          className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md animate-pulse rounded-lg transition-all hover:scale-105 active:scale-95"
+          title="Install Ahsan AI Hub as a standalone app"
         >
-          <Cloud className="h-4 w-4" />
+          <Download className="h-4 w-4" />
           Install App
         </Button>
+      ) : isIOS ? (
+        <Button disabled variant="outline" size="sm" className="rounded-lg text-xs text-muted-foreground opacity-60">
+          Share → Add to Home Screen
+        </Button>
       ) : (
-        <Button disabled variant="ghost" size="sm" className="text-muted-foreground/50">
+        <Button disabled variant="ghost" size="sm" className="text-muted-foreground/50 text-xs">
           Install Not Available
         </Button>
       )}

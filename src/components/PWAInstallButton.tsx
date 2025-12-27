@@ -27,29 +27,34 @@ export function PWAInstallButton() {
       return;
     }
 
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-    };
-
-    const handleAppInstalled = () => {
-      setIsInstalled(true);
-      setDeferredPrompt(null);
-      toast({
-        title: '✓ App Installed Successfully!',
-        description: 'You can now launch Ahsan AI Hub from your home screen.',
-      });
-    };
-
-    if (typeof window !== 'undefined') {
-      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.addEventListener('appinstalled', handleAppInstalled);
-
-      return () => {
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        window.removeEventListener('appinstalled', handleAppInstalled);
+    // Add a small delay to ensure the event is properly captured
+    const timer = setTimeout(() => {
+      const handleBeforeInstallPrompt = (e: Event) => {
+        e.preventDefault();
+        setDeferredPrompt(e as BeforeInstallPromptEvent);
       };
-    }
+
+      const handleAppInstalled = () => {
+        setIsInstalled(true);
+        setDeferredPrompt(null);
+        toast({
+          title: '✓ App Installed Successfully!',
+          description: 'Ahsan AI Hub is now installed. You can launch it from your home screen or app drawer.',
+        });
+      };
+
+      if (typeof window !== 'undefined') {
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        window.addEventListener('appinstalled', handleAppInstalled);
+
+        return () => {
+          window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+          window.removeEventListener('appinstalled', handleAppInstalled);
+        };
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
   }, [toast]);
 
   const handleInstallClick = async () => {
@@ -100,7 +105,7 @@ export function PWAInstallButton() {
       <Button
         disabled
         size="lg"
-        className="w-full bg-emerald-600 text-white shadow-lg py-6 text-base font-semibold rounded-2xl"
+        className="w-full bg-emerald-600 text-white shadow-lg py-6 text-base font-semibold rounded-2xl transition-all"
       >
         <Cloud className="mr-2 h-5 w-5" />
         ✓ App Installed Successfully
@@ -116,19 +121,26 @@ export function PWAInstallButton() {
         size="lg"
         className={`w-full font-semibold text-base py-6 transition-all duration-300 rounded-2xl flex items-center justify-center gap-2 ${
           !deferredPrompt
-            ? 'bg-gray-400 cursor-not-allowed text-gray-600'
-            : 'bg-blue-700 hover:bg-blue-800 shadow-lg hover:shadow-xl text-white'
+            ? 'bg-muted text-muted-foreground cursor-not-allowed opacity-50'
+            : 'bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl text-primary-foreground hover:scale-105 active:scale-95'
         }`}
       >
-        <Cloud className="h-5 w-5 animate-pulse" />
-        {isLoading ? 'Installing...' : '⚡ Install App Now'}
+        <Download className="h-5 w-5" />
+        {isLoading ? 'Installing...' : 'Install App to Home Screen'}
       </Button>
       
       {!deferredPrompt && (
-        <Card className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800">
-          <div className="flex gap-2 text-sm text-amber-700 dark:text-amber-300">
-            <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-            <p><strong>Tip:</strong> Use "Download APK" option or install from your browser menu (⋮) → "Install app"</p>
+        <Card className="p-4 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800/50">
+          <div className="flex gap-3 text-sm">
+            <AlertCircle className="h-5 w-5 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
+            <div className="text-blue-700 dark:text-blue-300">
+              <p className="font-semibold mb-1">How to Install:</p>
+              <ul className="space-y-1 text-xs opacity-90">
+                <li>• <strong>Chrome/Edge:</strong> Tap menu (⋮) → "Install app"</li>
+                <li>• <strong>Safari (iOS):</strong> Tap Share → "Add to Home Screen"</li>
+                <li>• <strong>Firefox:</strong> Tap menu → "Install" or use home screen shortcut</li>
+              </ul>
+            </div>
           </div>
         </Card>
       )}
