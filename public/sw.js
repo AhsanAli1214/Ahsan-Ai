@@ -9,6 +9,17 @@ const ASSETS_TO_CACHE = [
   '/settings',
   '/chat-history',
   '/recommendations',
+  '/features',
+  '/privacy',
+  '/terms',
+  '/data-rights',
+  '/cookies',
+  '/download-apk',
+  '/api-reference',
+  '/community',
+  '/blog',
+  '/careers',
+  '/docs',
   OFFLINE_URL,
   '/icon-192.png?v=2025-12-27',
   '/icon-512.png?v=2025-12-27',
@@ -63,8 +74,8 @@ self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request).catch(() => {
-        return caches.open(CACHE_NAME).then((cache) => {
-          return cache.match(OFFLINE_URL);
+        return caches.match(event.request).then((response) => {
+          return response || caches.open(CACHE_NAME).then((cache) => cache.match(OFFLINE_URL));
         });
       })
     );

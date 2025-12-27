@@ -108,6 +108,7 @@ export default function HomePage() {
         </nav>
       </div>
       
+      <ConnectionStatus />
       <div className="flex-1 overflow-y-auto p-4 lg:p-6">
         <div className="mx-auto max-w-4xl space-y-8">
           {/* Hero Section */}
