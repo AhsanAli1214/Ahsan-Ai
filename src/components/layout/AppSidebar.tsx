@@ -68,7 +68,7 @@ export function AppSidebar() {
           <div className="relative">
             <Plus className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
           </div>
-          <span className="hidden group-data-[state=expanded]/sidebar:inline text-sm">Start Chat</span>
+          <span className="group-data-[state=collapsed]/sidebar:hidden inline text-sm font-bold">New Chat</span>
         </Button>
       </SidebarHeader>
       <SidebarContent>

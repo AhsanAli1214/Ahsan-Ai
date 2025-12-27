@@ -240,7 +240,7 @@ Platform: ahsan-ai-hub.vercel.app
             'Authorization': `Bearer ${resendKey}`,
           },
           body: JSON.stringify({
-            from: 'noreply@ahsan-ai-hub.vercel.app',
+            from: 'Ahsan AI Hub <onboarding@resend.dev>',
             to: 'tickets@ahsan-ai-hub.p.tawk.email',
             subject,
             text: body,

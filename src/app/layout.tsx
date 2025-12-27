@@ -36,7 +36,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://ahsan-ai-hub.vercel.app'),
   title: {
-    default: 'Ahsan AI Hub - #1 Free AI Chat & Content Creation Platform',
+    default: 'Ahsan AI Hub',
     template: '%s | Ahsan AI Hub'
   },
   description: 'Ahsan AI Hub is the #1 privacy-first AI platform with free AI chat, 9+ content generation tools, text-to-speech, and translation. No login required, zero data logging, powered by Google Gemini 2.0 Flash.',

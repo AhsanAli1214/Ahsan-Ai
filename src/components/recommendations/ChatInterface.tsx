@@ -580,8 +580,8 @@ export function ChatInterface({
         </div>
       )}
       <div className="fixed bottom-0 left-0 right-0 z-30 px-3 sm:px-4 py-3 sm:py-4 w-full pb-[calc(1rem+env(safe-area-inset-bottom))] mb-20 md:mb-0">
-        <div className="mx-auto w-full max-w-4xl">
-           <div className="flex items-end gap-2 sm:gap-3">
+        <div className="mx-auto w-full max-w-4xl flex justify-center">
+           <div className="flex items-end gap-2 sm:gap-3 w-full">
             <Textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
