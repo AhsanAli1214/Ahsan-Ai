@@ -1,17 +1,10 @@
 'use client';
 
-import type { Metadata } from 'next';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Lock, ArrowLeft } from 'lucide-react';
-
-export const metadata: Metadata = {
-  title: 'Privacy Policy - Ahsan AI Hub',
-  description: 'Our privacy policy explains how Ahsan AI Hub protects your data. We collect zero personal information and maintain 100% privacy.',
-  keywords: ['privacy policy', 'data protection', 'no data tracking', 'privacy first'],
-};
 
 export default function PrivacyPage() {
   const sections = [

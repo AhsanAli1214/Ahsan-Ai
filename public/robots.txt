@@ -1,10 +1,36 @@
+# Allow all bots to crawl the entire site
 User-agent: *
 Allow: /
 Allow: /_next/static/
-Allow: /api/sitemap
+Allow: /public/
+Allow: /*.png
+Allow: /*.jpg
+Allow: /*.jpeg
+Allow: /*.gif
+Allow: /*.webp
+Allow: /*.svg
+Allow: /*.ico
+Allow: /manifest.json
+Allow: /sitemap.xml
+
+# Block API routes from indexing
 Disallow: /api/
 Disallow: /admin/
+
+# Search engine crawl behavior
 Crawl-delay: 1
+User-agent: Googlebot
+Crawl-delay: 0
 
 # Sitemaps
 Sitemap: https://ahsan-ai-hub.vercel.app/sitemap.xml
+
+# Allow Google Image Bot for logos
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /api/
+
+# Allow all media
+User-agent: *
+Allow: /icon-*.png
+Allow: /tool-icons/
