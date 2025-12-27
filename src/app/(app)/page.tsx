@@ -184,16 +184,6 @@ export default function HomePage() {
 
                     <div className="group flex items-start gap-4 p-4 rounded-2xl bg-background/40 border border-border/40 hover:border-primary/40 transition-all duration-300">
                       <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 group-hover:scale-110 transition-transform">
-                        <Zap className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <p className="font-bold text-foreground">Gemini 2.0 Flash</p>
-                        <p className="text-xs text-muted-foreground mt-1">Powered by ultra-fast, next-gen Google AI models.</p>
-                      </div>
-                    </div>
-
-                    <div className="group flex items-start gap-4 p-4 rounded-2xl bg-background/40 border border-border/40 hover:border-primary/40 transition-all duration-300">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary shrink-0 group-hover:scale-110 transition-transform">
                         <Smartphone className="h-5 w-5" />
                       </div>
                       <div>
