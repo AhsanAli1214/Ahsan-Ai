@@ -1,10 +1,17 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { FileText, ArrowLeft } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Terms of Service - Ahsan AI Hub',
+  description: 'Terms of Service for Ahsan AI Hub. Read about acceptable use, disclaimer, and service availability.',
+  keywords: ['terms of service', 'terms and conditions', 'disclaimer', 'acceptable use'],
+};
 
 export default function TermsPage() {
   const sections = [

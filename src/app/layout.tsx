@@ -36,22 +36,26 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://ahsan-ai-hub.vercel.app'),
   title: {
-    default: 'Ahsan AI Hub - #1 Best Free AI Chat & Content Creation Platform',
+    default: 'Ahsan AI Hub - #1 Free AI Chat & Content Creation Platform',
     template: '%s | Ahsan AI Hub'
   },
-  description: 'Ahsan AI Hub is the world\'s leading privacy-first AI platform. Get unrestricted access to "Ahsan AI" tools for writing, coding, and brainstorming with zero data logging and no account required.',
+  description: 'Ahsan AI Hub is the #1 privacy-first AI platform with free AI chat, 9+ content generation tools, text-to-speech, and translation. No login required, zero data logging, powered by Google Gemini 2.0 Flash.',
   keywords: [
-    'Ahsan AI Hub',
-    'Ahsan AI',
-    'Wadani AI',
-    'Ahsan Ali AI Hub',
-    'free AI chat no login',
-    'best free AI text rewriter',
-    'privacy-protected AI assistant',
-    'Gemini powered Ahsan AI',
-    'AI tool hub 2025',
-    'anonymous AI chat',
-    'Ahsan Ali Developer AI',
+    'free AI chat',
+    'AI content generator',
+    'text to speech',
+    'translation tool',
+    'AI writing assistant',
+    'no login AI',
+    'privacy-first AI',
+    'Gemini AI',
+    'free AI tools',
+    'online AI chat',
+    'AI brainstorming tool',
+    'email writer AI',
+    'code generator AI',
+    'AI story writer',
+    'social media caption generator',
   ],
   manifest: '/manifest.json',
   robots: {
@@ -64,6 +68,7 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-video-preview': -1,
     },
+    nocache: false,
   },
   appleWebApp: {
     capable: true,
@@ -72,14 +77,16 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
+    email: false,
+    address: false,
   },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://ahsan-ai-hub.vercel.app',
     siteName: 'Ahsan AI Hub',
-    title: 'Ahsan AI Hub - Advanced AI Chat & Content Generation Platform',
-    description: 'Powerful AI tools for chat, content creation, writing, email marketing, and problem-solving. Get instant help with 10+ AI-powered tools.',
+    title: 'Ahsan AI Hub - Free AI Chat, Writing & Translation Tools',
+    description: 'The ultimate free AI platform with chat, content generation, writing, translation, text-to-speech, and 9+ creative tools. No login, no data tracking, zero fees.',
     images: [
       {
         url: '/icon-512.png',
@@ -92,12 +99,19 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Ahsan AI Hub - Advanced AI Platform',
-    description: 'Powerful AI tools for chat, content creation, writing, and more',
+    site: '@Ahsan_Ali_12',
+    title: 'Ahsan AI Hub - Free AI Chat & Tools',
+    description: 'Free AI platform with 10+ tools: chat, writing, translation, text-to-speech, and more. No login required.',
     images: ['/icon-512.png'],
   },
   alternates: {
     canonical: 'https://ahsan-ai-hub.vercel.app',
+    languages: {
+      'en-US': 'https://ahsan-ai-hub.vercel.app',
+    },
+  },
+  verification: {
+    google: 'C3kD33pr8zGcgloDD-hhPTHJVKhicxKot5N39asPcX4',
   },
 };
 

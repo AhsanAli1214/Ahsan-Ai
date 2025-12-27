@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import type { Metadata } from 'next';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -28,6 +29,12 @@ import { CardHeader, CardTitle, CardDescription, CardContent } from '@/component
 import dynamic from 'next/dynamic';
 const OneSignalButton = dynamic(() => import('@/components/OneSignalButton').then(mod => mod.OneSignalButton), { ssr: false });
 const PWAInstallButton = dynamic(() => import('@/components/PWAInstallButton').then(mod => mod.PWAInstallButton), { ssr: false });
+
+export const metadata: Metadata = {
+  title: 'Ahsan AI Hub - Free AI Chat & Tools',
+  description: 'Access 10+ free AI tools including chat, writing, translation, text-to-speech, and more. No login required, privacy-first platform powered by Google Gemini.',
+  keywords: ['free AI', 'AI chat', 'content generator', 'writing assistant', 'translation tool'],
+};
 
 const QUICK_ACTIONS = [
   {

@@ -21,8 +21,13 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { AhsanAiHubLogo } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "About | Ahsan AI Hub",
-  description: "Learn more about Ahsan Ali, the developer behind Ahsan AI Hub, and the mission to democratize AI.",
+  title: "About Ahsan AI Hub - Creator Ahsan Ali",
+  description: "Meet Ahsan Ali, the developer behind Ahsan AI Hub. Learn about our mission to democratize AI, privacy-first platform design, and the journey of creating free AI tools.",
+  keywords: ['about Ahsan AI', 'Ahsan Ali developer', 'AI hub creator', 'free AI mission'],
+  openGraph: {
+    title: "About Ahsan AI Hub - Creator Ahsan Ali",
+    description: "Discover the story behind Ahsan AI Hub and Ahsan Ali's mission to bring powerful AI tools to everyone.",
+  },
 };
 
 const SOCIAL_LINKS = [

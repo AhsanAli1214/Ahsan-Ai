@@ -13,8 +13,21 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'FAQ - Help & Support | Ahsan AI Hub',
-  description: 'Find answers to common questions about Ahsan AI Hub features, AI chat usage, privacy, security, and installation. Get help with our free AI tools.',
+  title: 'FAQ - Help Center | Ahsan AI Hub',
+  description: 'Frequently asked questions about Ahsan AI Hub. Get answers about features, privacy, security, AI chat, text-to-speech, translation, and troubleshooting.',
+  keywords: [
+    'FAQ Ahsan AI Hub',
+    'AI chat help',
+    'privacy questions',
+    'technical support',
+    'how to use AI',
+    'feature guide',
+    'troubleshooting AI',
+  ],
+  openGraph: {
+    title: 'FAQ - Help Center | Ahsan AI Hub',
+    description: 'Find answers to all your questions about using Ahsan AI Hub tools and features.',
+  },
 };
 
 const FAQ_CATEGORIES = [

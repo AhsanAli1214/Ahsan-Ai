@@ -4,6 +4,7 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
+  allowedDevOrigins: ['*'],
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -72,6 +73,10 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
           },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800'
+          },
         ],
       },
       {
@@ -84,6 +89,15 @@ const nextConfig = {
         ],
       },
       {
+        source: '/_next/static/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          },
+        ],
+      },
+      {
         source: '/static/:path*',
         headers: [
           {
@@ -92,21 +106,26 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Link',
+            value: '</fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin'
+          },
+        ],
+      },
+    ];
+  },
+  redirects: async () => {
+    return [
+      {
+        source: '/index.html',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
 
 module.exports = nextConfig;
-
-// Additional cache configuration
-module.exports = {
-  ...nextConfig,
-  rewrites: async () => {
-    return [
-      {
-        source: '/:path*',
-        destination: '/:path*',
-      },
-    ];
-  },
-};
