@@ -69,14 +69,26 @@ export function ContactForm() {
     setError(null);
 
     try {
-      // Validate with a small delay to ensure state is caught
-      if (!formData.name.trim()) {
+      const trimmedName = formData.name.trim();
+      const trimmedEmail = formData.email.trim();
+      const trimmedSubject = formData.subject.trim();
+      const trimmedMessage = formData.message.trim();
+
+      if (!trimmedName) {
         setError('Please enter your name');
         setIsSubmitting(false);
         return;
       }
       
-      const result = await sendContactForm(formData);
+      const payload = {
+        ...formData,
+        name: trimmedName,
+        email: trimmedEmail,
+        subject: trimmedSubject,
+        message: trimmedMessage
+      };
+
+      const result = await sendContactForm(payload);
 
       if (result.success) {
         setSubmitted(true);
