@@ -27,6 +27,7 @@ import {
   CheckCircle2,
   Lightbulb,
   Upload,
+  Volume2,
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import {
