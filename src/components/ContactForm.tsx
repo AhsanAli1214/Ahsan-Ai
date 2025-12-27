@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { sendContactForm, type ContactFormInput } from '@/app/actions/contact';
+import { sendContactForm } from '@/app/actions/contact';
 import { 
   Send, 
   CheckCircle2, 
@@ -17,7 +17,8 @@ import {
   AlertTriangle,
   Lightbulb,
   Zap,
-  MessageCircle
+  MessageCircle,
+  ArrowRight
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -31,12 +32,12 @@ interface FormData {
   message: string;
 }
 
-const CATEGORIES: { value: FormCategory; label: string; icon: React.ElementType; description: string; color: string }[] = [
-  { value: 'bug_report', label: 'Bug Report', icon: AlertTriangle, description: 'Report a technical issue', color: 'text-red-500' },
-  { value: 'feature_request', label: 'Feature Request', icon: Lightbulb, description: 'Suggest new features', color: 'text-yellow-500' },
-  { value: 'general_inquiry', label: 'General Inquiry', icon: MessageCircle, description: 'General questions', color: 'text-blue-500' },
-  { value: 'collaboration', label: 'Collaboration', icon: Zap, description: 'Partnership opportunities', color: 'text-purple-500' },
-  { value: 'feedback', label: 'Feedback', icon: MessageSquare, description: 'Share your thoughts', color: 'text-green-500' },
+const CATEGORIES: { value: FormCategory; label: string; icon: React.ElementType; description: string; color: string; bgColor: string }[] = [
+  { value: 'bug_report', label: 'Bug Report', icon: AlertTriangle, description: 'Report a technical issue', color: 'text-red-500', bgColor: 'bg-red-500/10' },
+  { value: 'feature_request', label: 'Feature Request', icon: Lightbulb, description: 'Suggest new features', color: 'text-yellow-500', bgColor: 'bg-yellow-500/10' },
+  { value: 'general_inquiry', label: 'General Inquiry', icon: MessageCircle, description: 'General questions', color: 'text-blue-500', bgColor: 'bg-blue-500/10' },
+  { value: 'collaboration', label: 'Collaboration', icon: Zap, description: 'Partnership opportunities', color: 'text-purple-500', bgColor: 'bg-purple-500/10' },
+  { value: 'feedback', label: 'Feedback', icon: MessageSquare, description: 'Share your thoughts', color: 'text-green-500', bgColor: 'bg-green-500/10' },
 ];
 
 export function ContactForm() {
@@ -56,8 +57,8 @@ export function ContactForm() {
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    setError(null);
-  }, []);
+    if (error) setError(null);
+  }, [error]);
 
   const handleCategoryChange = useCallback((category: FormCategory) => {
     setFormData(prev => ({ ...prev, category }));
@@ -65,27 +66,24 @@ export function ContactForm() {
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Final check for the persistent name error
+    const trimmedName = formData.name.trim();
+    if (!trimmedName) {
+      setError('Your name is required to send a message.');
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
     try {
-      const trimmedName = formData.name.trim();
-      const trimmedEmail = formData.email.trim();
-      const trimmedSubject = formData.subject.trim();
-      const trimmedMessage = formData.message.trim();
-
-      if (!trimmedName) {
-        setError('Please enter your name');
-        setIsSubmitting(false);
-        return;
-      }
-      
       const payload = {
         ...formData,
         name: trimmedName,
-        email: trimmedEmail,
-        subject: trimmedSubject,
-        message: trimmedMessage
+        email: formData.email.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim()
       };
 
       const result = await sendContactForm(payload);
@@ -93,12 +91,10 @@ export function ContactForm() {
       if (result.success) {
         setSubmitted(true);
         toast({
-          title: 'Message Sent Successfully! ✨',
+          title: 'Message Sent Successfully!',
           description: result.message,
-          variant: 'default',
         });
 
-        // Reset form after 2 seconds
         setTimeout(() => {
           setFormData({
             name: '',
@@ -108,127 +104,93 @@ export function ContactForm() {
             message: '',
           });
           setSubmitted(false);
-        }, 2000);
+        }, 3000);
       } else {
-        setError(result.error || 'Failed to send message. Please try again.');
-        toast({
-          title: 'Message Failed',
-          description: result.error || 'Could not send your message. Please try again.',
-          variant: 'destructive',
-        });
+        setError(result.error || 'Failed to send message. Please check your details.');
       }
     } catch (err) {
-      const errorMsg = 'An unexpected error occurred. Please try again.';
-      setError(errorMsg);
-      toast({
-        title: 'Error',
-        description: errorMsg,
-        variant: 'destructive',
-      });
+      setError('A system error occurred. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
-  }, [toast]);
+  }, [formData, toast]);
 
   if (submitted) {
     return (
-      <Card className="border-green-500/20 bg-green-500/5 backdrop-blur-sm overflow-hidden">
-        <div className="p-8 sm:p-12 text-center space-y-6">
-          <div className="flex justify-center">
-            <div className="rounded-full bg-green-500/20 p-6 animate-in fade-in zoom-in duration-500">
-              <CheckCircle2 className="h-12 w-12 text-green-500" />
-            </div>
+      <Card className="border-primary/20 bg-primary/5 backdrop-blur-xl overflow-hidden p-12 text-center animate-in fade-in zoom-in duration-500 rounded-[2.5rem]">
+        <div className="flex flex-col items-center gap-6">
+          <div className="rounded-full bg-primary/20 p-6">
+            <CheckCircle2 className="h-16 w-16 text-primary" />
           </div>
           <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-foreground">Thank You! 🎉</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              Your message has been received successfully. We appreciate your input and will review it shortly. Our team will get back to you as soon as possible.
+            <h3 className="text-3xl font-black text-foreground uppercase tracking-tight">Message Received! 🎉</h3>
+            <p className="text-muted-foreground text-lg max-w-md mx-auto">
+              Thank you for reaching out. Your message has been sent directly to our team. We'll get back to you soon!
             </p>
           </div>
-          <p className="text-sm text-muted-foreground/70">Redirecting back to form...</p>
+          <Button variant="outline" onClick={() => setSubmitted(false)} className="rounded-xl border-2 font-bold px-8">
+            Send Another
+          </Button>
         </div>
       </Card>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Form Header */}
-      <div className="space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight flex items-center gap-3">
-          <Mail className="h-8 w-8 text-primary" />
-          Send us a Message
+    <div className="max-w-4xl mx-auto space-y-12">
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest">
+          <Mail className="h-3 w-3" />
+          Get In Touch
+        </div>
+        <h2 className="text-4xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
+          How can we <span className="text-primary">help you</span> today?
         </h2>
-        <p className="text-muted-foreground max-w-2xl">
-          Have a question, suggestion, or found a bug? We'd love to hear from you. Fill out the form below and we'll get back to you shortly.
+        <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-medium">
+          Have questions, feedback, or a partnership idea? Our team is ready to listen and assist you.
         </p>
       </div>
 
-      <Card className="border-border/50 bg-card/40 backdrop-blur-md overflow-hidden">
-        <form onSubmit={handleSubmit} className="p-6 sm:p-8 lg:p-10 space-y-8">
-          {/* Error Alert */}
+      <Card className="border-border/40 bg-card/60 backdrop-blur-2xl overflow-hidden rounded-[2.5rem] shadow-2xl border-2">
+        <form onSubmit={handleSubmit} className="p-8 md:p-12 space-y-10">
           {error && (
-            <div className="flex gap-4 p-4 rounded-2xl border border-red-500/20 bg-red-500/5">
-              <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-              <p className="text-sm text-red-700">{error}</p>
+            <div className="flex items-center gap-4 p-5 rounded-2xl border-2 border-red-500/20 bg-red-500/5 animate-in slide-in-from-top-2">
+              <AlertCircle className="h-6 w-6 text-red-500 shrink-0" />
+              <p className="text-sm font-bold text-red-700">{error}</p>
             </div>
           )}
 
-          {/* Name and Email Row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label htmlFor="name" className="block text-sm font-bold text-foreground">
-                Your Name *
-              </label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-3">
+              <label htmlFor="name" className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Full Name</label>
               <Input
                 id="name"
                 name="name"
-                type="text"
-                placeholder="John Doe"
+                placeholder="Ahsan Ali"
                 value={formData.name}
                 onChange={handleInputChange}
                 required
-                className="h-12 rounded-xl bg-background/50 border-border/40 focus:border-primary/40 focus:ring-primary/20"
+                className="h-14 rounded-2xl bg-background/40 border-2 border-border/40 focus:border-primary/60 focus:ring-4 focus:ring-primary/5 transition-all font-medium text-lg px-6"
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-bold text-foreground">
-                Email Address *
-              </label>
+            <div className="space-y-3">
+              <label htmlFor="email" className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Email Address</label>
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder="hello@example.com"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
-                className="h-12 rounded-xl bg-background/50 border-border/40 focus:border-primary/40 focus:ring-primary/20"
+                className="h-14 rounded-2xl bg-background/40 border-2 border-border/40 focus:border-primary/60 focus:ring-4 focus:ring-primary/5 transition-all font-medium text-lg px-6"
               />
             </div>
           </div>
 
-          {/* Subject */}
-          <div className="space-y-2">
-            <label htmlFor="subject" className="block text-sm font-bold text-foreground">
-              Subject *
-            </label>
-            <Input
-              id="subject"
-              name="subject"
-              type="text"
-              placeholder="e.g., Login feature not working, Suggestion for improvement"
-              value={formData.subject}
-              onChange={handleInputChange}
-              required
-              className="h-12 rounded-xl bg-background/50 border-border/40 focus:border-primary/40 focus:ring-primary/20"
-            />
-          </div>
-
-          {/* Category Selection */}
           <div className="space-y-3">
-            <label className="block text-sm font-bold text-foreground">Category *</label>
+            <label className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Choose Category</label>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {CATEGORIES.map(cat => (
                 <button
@@ -236,84 +198,108 @@ export function ContactForm() {
                   type="button"
                   onClick={() => handleCategoryChange(cat.value)}
                   className={cn(
-                    "group relative p-4 rounded-xl border-2 transition-all duration-300 flex flex-col items-center gap-2",
+                    "group relative p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center gap-3",
                     formData.category === cat.value
-                      ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
-                      : "border-border/40 bg-background/30 hover:border-primary/40 hover:bg-background/50"
+                      ? "border-primary bg-primary/10 shadow-lg shadow-primary/10 scale-105"
+                      : "border-border/40 bg-background/20 hover:border-primary/40 hover:bg-background/40"
                   )}
                 >
-                  <cat.icon className={cn("h-5 w-5 transition-transform group-hover:scale-110", cat.color)} />
-                  <span className="text-xs font-bold text-center leading-tight">{cat.label}</span>
+                  <div className={cn("p-2 rounded-xl transition-colors", cat.bgColor)}>
+                    <cat.icon className={cn("h-5 w-5 transition-transform group-hover:scale-110", cat.color)} />
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-center leading-tight">{cat.label}</span>
+                  {formData.category === cat.value && (
+                    <div className="absolute -top-1.5 -right-1.5 bg-primary rounded-full p-1 text-white shadow-lg">
+                      <CheckCircle2 className="h-3 w-3" />
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Message */}
-          <div className="space-y-2">
-            <label htmlFor="message" className="block text-sm font-bold text-foreground">
-              Message *
-            </label>
+          <div className="space-y-3">
+            <label htmlFor="subject" className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Subject</label>
+            <Input
+              id="subject"
+              name="subject"
+              placeholder="How can we help?"
+              value={formData.subject}
+              onChange={handleInputChange}
+              required
+              className="h-14 rounded-2xl bg-background/40 border-2 border-border/40 focus:border-primary/60 focus:ring-4 focus:ring-primary/5 transition-all font-medium text-lg px-6"
+            />
+          </div>
+
+          <div className="space-y-3">
+            <label htmlFor="message" className="text-xs font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Your Message</label>
             <Textarea
               id="message"
               name="message"
-              placeholder="Tell us more about your message, suggestion, or issue. The more details, the better we can help!"
+              placeholder="Tell us everything..."
               value={formData.message}
               onChange={handleInputChange}
               required
-              rows={6}
-              className="rounded-xl bg-background/50 border-border/40 focus:border-primary/40 focus:ring-primary/20 resize-none"
+              rows={5}
+              className="rounded-2xl bg-background/40 border-2 border-border/40 focus:border-primary/60 focus:ring-4 focus:ring-primary/5 transition-all font-medium text-lg px-6 py-4 resize-none min-h-[150px]"
             />
-            <p className="text-xs text-muted-foreground text-right">
-              {formData.message.length}/5000 characters
-            </p>
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-4 flex gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-6 pt-4">
             <Button
               type="submit"
-              disabled={isSubmitting || !formData.name || !formData.email || !formData.subject || !formData.message}
-              className="h-12 px-8 rounded-xl font-bold uppercase tracking-wider flex-1 md:flex-none shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all"
+              disabled={isSubmitting || !formData.name.trim() || !formData.email.trim()}
+              className="w-full sm:w-auto h-16 px-12 rounded-2xl font-black uppercase tracking-[0.2em] text-sm shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all gap-3 bg-primary"
             >
               {isSubmitting ? (
                 <>
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                  <Loader2 className="h-5 w-5 animate-spin" />
                   Sending...
                 </>
               ) : (
                 <>
-                  <Send className="h-5 w-5 mr-2" />
                   Send Message
+                  <ArrowRight className="h-5 w-5" />
                 </>
               )}
             </Button>
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setFormData({ name: '', email: '', subject: '', category: 'general_inquiry', message: '' })}
-              disabled={isSubmitting}
-              className="h-12 px-8 rounded-xl font-bold uppercase tracking-wider"
-            >
-              Clear
-            </Button>
-          </div>
-
-          {/* Form Footer */}
-          <div className="pt-6 border-t border-border/40 space-y-3">
-            <p className="text-xs text-muted-foreground/70">
-              ✓ Your email will only be used to respond to your message
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              ✓ We typically respond within 24 hours
-            </p>
-            <p className="text-xs text-muted-foreground/70">
-              ✓ For urgent issues, contact us on Instagram @ahsan.ali.wadani
+            
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 text-center sm:text-left">
+              Secure Submission • 100% Privacy-First • Fast Response
             </p>
           </div>
         </form>
       </Card>
+      
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12">
+        <div className="p-6 rounded-[2rem] bg-accent/30 border border-border/40 flex flex-col items-center text-center gap-4">
+          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
+            <Zap className="h-6 w-6" />
+          </div>
+          <div>
+            <h4 className="font-black uppercase tracking-widest text-xs mb-1">Fast Response</h4>
+            <p className="text-sm text-muted-foreground">We typically reply within 24 hours.</p>
+          </div>
+        </div>
+        <div className="p-6 rounded-[2rem] bg-accent/30 border border-border/40 flex flex-col items-center text-center gap-4">
+          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
+            <MessageSquare className="h-6 w-6" />
+          </div>
+          <div>
+            <h4 className="font-black uppercase tracking-widest text-xs mb-1">Expert Help</h4>
+            <p className="text-sm text-muted-foreground">Direct access to our lead developer.</p>
+          </div>
+        </div>
+        <div className="p-6 rounded-[2rem] bg-accent/30 border border-border/40 flex flex-col items-center text-center gap-4">
+          <div className="p-3 rounded-2xl bg-primary/10 text-primary">
+            <Mail className="h-6 w-6" />
+          </div>
+          <div>
+            <h4 className="font-black uppercase tracking-widest text-xs mb-1">Private Chat</h4>
+            <p className="text-sm text-muted-foreground">Your data is never shared with third parties.</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
