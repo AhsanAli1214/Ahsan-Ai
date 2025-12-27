@@ -148,7 +148,7 @@ export default function RootLayout({
             });
           }
         `}} />
-        {/* <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" strategy="lazyOnload" />
+        <Script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" strategy="lazyOnload" />
         <Script id="onesignal-init" strategy="lazyOnload" dangerouslySetInnerHTML={{__html: `
             window.OneSignalDeferred = window.OneSignalDeferred || [];
             OneSignalDeferred.push(async function(OneSignal) {
@@ -164,7 +164,7 @@ export default function RootLayout({
                 // Silent error handling for OneSignal
               }
             });
-        `}} /> */}
+        `}} />
         <Script id="schema-webapp" type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'WebApplication',
