@@ -12,16 +12,24 @@ Allow: /*.svg
 Allow: /*.ico
 Allow: /manifest.json
 Allow: /sitemap.xml
+Allow: /_next/data/
 
-# Block API and specific routes
+# Specific allow for reCAPTCHA assets (even if they are external, helps crawlers)
+Allow: /recaptcha/
+
+# Block API and sensitive routes
 Disallow: /api/
 Disallow: /admin/
 Disallow: /_next/
 Allow: /_next/static/
+Allow: /_next/image/
 
 # Search engine crawl behavior
 User-agent: Googlebot
 Allow: /
+Allow: /_next/static/
+Allow: /_next/image/
+Allow: /_next/data/
 Disallow: /api/
 
 # Sitemaps
