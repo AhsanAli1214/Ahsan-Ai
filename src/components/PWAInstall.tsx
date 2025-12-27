@@ -24,8 +24,10 @@ export function PWAInstall() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     // Check notification status
-    if (typeof window !== 'undefined' && 'Notification' in window) {
+    if ('Notification' in window) {
       setNotificationsEnabled(Notification.permission === 'granted');
     }
 
@@ -35,8 +37,8 @@ export function PWAInstall() {
     }
 
     const handleBeforeInstallPrompt = (e: Event) => {
-      console.log('beforeinstallprompt event fired');
       e.preventDefault();
+      console.log('beforeinstallprompt event fired - PWA is installable');
       setDeferredPrompt(e as BeforeInstallPromptEvent);
       setShowInstallPrompt(true);
     };
@@ -47,24 +49,21 @@ export function PWAInstall() {
       setShowInstallPrompt(false);
       setDeferredPrompt(null);
       
-      // Delay toast to ensure it shows after any dialogs
       setTimeout(() => {
         toast({
-          title: '✓ App Installed Successfully!',
-          description: 'Ahsan Ai Hub is now installed as a native app on your device. You can find it in your app drawer.',
+          title: '✓ App Installed!',
+          description: 'Ahsan Ai Hub is now on your device. Open it from your app drawer.',
         });
-      }, 500);
+      }, 300);
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-      window.addEventListener('appinstalled', handleAppInstalled);
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
 
-      return () => {
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        window.removeEventListener('appinstalled', handleAppInstalled);
-      };
-    }
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
   }, [toast]);
 
   const handleNotificationClick = () => {
